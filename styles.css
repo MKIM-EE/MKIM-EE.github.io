@@ -57,7 +57,7 @@ body {
 
 /* 본문 콘텐츠 */
 .content {
-    max-width: 900px;
+    max-width: 1000px;
     margin: 100px auto 40px; /* 네비게이션 바 높이 고려 상단 여백 */
     padding: 0 1.25rem;
 }
@@ -88,6 +88,23 @@ li {
     font-size: 1rem;
     color: #333;
 }
+
+.paper-link {
+    color: #007acc;
+    text-decoration: none;
+    font-weight: 600;
+    font-size: 0.9rem;
+    transition: color 0.3s ease;
+    vertical-align: middle;
+}
+
+.paper-link:hover,
+.paper-link:focus {
+    color: #004080;
+    text-decoration: underline;
+    outline: none;
+}
+
 
 /* 메인 페이지 복귀용 링크 스타일 */
 .back-link {
