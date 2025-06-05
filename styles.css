@@ -5,6 +5,11 @@
     box-sizing: border-box;
 }
 
+/* 부드러운 스크롤 */
+html {
+    scroll-behavior: smooth;
+}
+
 body {
     font-family: "Avenir", "Helvetica Neue", Helvetica, Arial, sans-serif;
     color: #222;
@@ -81,6 +86,20 @@ li {
     margin-bottom: 0.5rem;
     font-size: 1rem;
     color: #333;
+}
+
+/* 메인 페이지 복귀용 링크 스타일 */
+.back-link {
+    margin-bottom: 1rem;
+    display: inline-block;
+    font-size: 0.9rem;
+    color: #007acc;
+    text-decoration: none;
+}
+.back-link:hover,
+.back-link:focus {
+    text-decoration: underline;
+    outline: none;
 }
 
 /* 반응형 간단 처리 */
