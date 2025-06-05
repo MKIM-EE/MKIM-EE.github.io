@@ -1,0 +1,102 @@
+/* 기본 리셋 */
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+body {
+    font-family: "Avenir", "Helvetica Neue", Helvetica, Arial, sans-serif;
+    color: #222;
+    line-height: 1.6;
+    background-color: #fafafa;
+}
+
+/* 상단 네비게이션 바 */
+.top-nav {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    background-color: white;
+    border-bottom: 1px solid #ddd;
+    box-shadow: 0 2px 4px rgba(0,0,0,0.05);
+    z-index: 1000;
+}
+
+.nav-list {
+    display: flex;
+    justify-content: center;
+    list-style: none;
+    padding: 0.75rem 1rem;
+}
+
+.nav-item + .nav-item {
+    margin-left: 2rem;
+}
+
+.nav-item a {
+    text-decoration: none;
+    color: #333;
+    font-weight: 600;
+    font-size: 1rem;
+    transition: color 0.3s ease;
+}
+
+.nav-item a:hover,
+.nav-item a:focus {
+    color: #007acc;
+    outline: none;
+}
+
+/* 본문 콘텐츠 */
+.content {
+    max-width: 900px;
+    margin: 80px auto 40px; /* 네비게이션 바 높이 고려 상단 여백 */
+    padding: 0 1.25rem;
+}
+
+/* 각 섹션 제목 */
+h1 {
+    font-size: 2rem;
+    margin-bottom: 1rem;
+    color: #222;
+    border-bottom: 2px solid #007acc;
+    padding-bottom: 0.3rem;
+}
+
+h2 {
+    margin-top: 1.5rem;
+    margin-bottom: 0.5rem;
+    color: #444;
+}
+
+/* 리스트 스타일 */
+ul, ol {
+    margin-left: 1.5rem;
+    margin-bottom: 1.5rem;
+}
+
+li {
+    margin-bottom: 0.5rem;
+    font-size: 1rem;
+    color: #333;
+}
+
+/* 반응형 간단 처리 */
+@media (max-width: 600px) {
+    .nav-list {
+        flex-direction: column;
+        align-items: center;
+    }
+
+    .nav-item + .nav-item {
+        margin-left: 0;
+        margin-top: 0.75rem;
+    }
+
+    .content {
+        margin-top: 100px;
+        padding: 0 1rem;
+    }
+}
