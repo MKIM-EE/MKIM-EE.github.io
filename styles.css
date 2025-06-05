@@ -137,3 +137,97 @@ li {
         padding: 0 1rem;
     }
 }
+/* 숨겨진 체크박스 */
+#menu-toggle {
+  display: none;
+}
+
+/* 햄버거 버튼 스타일 */
+.hamburger {
+  display: none; /* 데스크탑 기본 숨김 */
+  cursor: pointer;
+  width: 30px;
+  height: 22px;
+  position: relative;
+}
+
+.hamburger span,
+.hamburger span::before,
+.hamburger span::after {
+  display: block;
+  position: absolute;
+  height: 4px;
+  width: 100%;
+  background-color: #333;
+  border-radius: 2px;
+  transition: all 0.3s ease;
+}
+
+.hamburger span {
+  top: 50%;
+  margin-top: -2px;
+}
+
+.hamburger span::before {
+  content: "";
+  top: -8px;
+}
+
+.hamburger span::after {
+  content: "";
+  top: 8px;
+}
+
+/* 체크 시 햄버거 X 모양 변환 */
+#menu-toggle:checked + .hamburger span {
+  background-color: transparent;
+}
+
+#menu-toggle:checked + .hamburger span::before {
+  transform: rotate(45deg);
+  top: 0;
+}
+
+#menu-toggle:checked + .hamburger span::after {
+  transform: rotate(-45deg);
+  top: 0;
+}
+
+/* 모바일 화면에서 햄버거 보이게 하기 */
+@media (max-width: 600px) {
+  .hamburger {
+    display: block;
+  }
+
+  /* 모바일에서는 메뉴 숨김 */
+  .nav-list {
+    display: none;
+    flex-direction: column;
+    width: 100%;
+    background: white;
+    position: absolute;
+    top: 100%;
+    left: 0;
+    border-top: 1px solid #ddd;
+    box-shadow: 0 4px 6px rgba(0,0,0,0.1);
+    padding: 0.5rem 0;
+    margin: 0;
+  }
+
+  /* 메뉴가 열렸을 때 보이도록 */
+  #menu-toggle:checked ~ .nav-list {
+    display: flex;
+  }
+
+  /* 메뉴 아이템 스타일 조정 */
+  .nav-item {
+    padding: 0.75rem 1rem;
+  }
+}
+
+/* 데스크탑에서는 메뉴 항상 보이기 */
+@media (min-width: 601px) {
+  .nav-list {
+    display: flex !important;
+  }
+}
