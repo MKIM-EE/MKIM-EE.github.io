@@ -149,6 +149,8 @@ li {
   width: 30px;
   height: 22px;
   position: relative;
+  margin-left: 0.5rem;
+  margin-top: 0.8rem;
 }
 
 .hamburger span,
