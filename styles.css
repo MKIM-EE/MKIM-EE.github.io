@@ -78,11 +78,16 @@ h2 {
 }
 
 /* 리스트 스타일 */
-ul, ol {
+ol {
+    margin-left: 1.5rem;
+    margin-bottom: 1.5rem;
+    display: flex;
+    flex-direction: column-reverse;
+}
+ul {
     margin-left: 1.5rem;
     margin-bottom: 1.5rem;
 }
-
 li {
     margin-bottom: 0.5rem;
     font-size: 1rem;
