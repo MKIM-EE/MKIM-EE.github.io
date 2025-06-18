@@ -239,3 +239,13 @@ li {
     display: flex !important;
   }
 }
+
+.profile-container {
+    display: flex;
+    align-items: flex-start; /* 수직 정렬 */
+    gap: 2rem; /* 이미지와 텍스트 간격 */
+}
+
+.profile-text p {
+    margin: 1rem 0 1rem 0;
+}
