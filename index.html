@@ -1,111 +1,223 @@
 <!DOCTYPE html>
 <html lang="ko">
+
 <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1" />
-    <title>Kim, Minseung</title>
+    <title>Kim, Minseung | Ph.D. Student @ Hanyang Univ.</title>
+    <meta name="description"
+        content="Personal webpage of Minseung Kim, Ph.D. student at Hanyang University specializing in Power Electronics and Renewable Energy." />
     <link rel="stylesheet" href="styles.css" />
 </head>
-<body>
 
-    <!-- 네비게이션 바 -->
+<body data-theme="light">
+
+    <!-- Navigation Bar -->
     <nav class="top-nav">
-    <input type="checkbox" id="menu-toggle" />
-    <label for="menu-toggle" class="hamburger">
-        <span></span>
-    </label>
-    <ul class="nav-list">
-        <li class="nav-item"><a href="/">Main page</a></li>
-        <li class="nav-item"><a href="/publications">Publications</a></li>
-    </ul>
+        <div class="nav-container">
+            <div class="hamburger" id="hamburger">
+                <span></span>
+                <span></span>
+                <span></span>
+            </div>
+            <ul class="nav-list" id="nav-list">
+                <li class="nav-item"><a href="index.html">About</a></li>
+                <li class="nav-item"><a href="publications.html">Publications</a></li>
+            </ul>
+            <button class="theme-toggle" id="theme-toggle" aria-label="Toggle dark mode">
+                <svg id="sun-icon" xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24"
+                    fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                    <circle cx="12" cy="12" r="5"></circle>
+                    <line x1="12" y1="1" x2="12" y2="3"></line>
+                    <line x1="12" y1="21" x2="12" y2="23"></line>
+                    <line x1="4.22" y1="4.22" x2="5.64" y2="5.64"></line>
+                    <line x1="18.36" y1="18.36" x2="19.78" y2="19.78"></line>
+                    <line x1="1" y1="12" x2="3" y2="12"></line>
+                    <line x1="21" y1="12" x2="23" y2="12"></line>
+                    <line x1="4.22" y1="19.78" x2="5.64" y2="18.36"></line>
+                    <line x1="18.36" y1="5.64" x2="19.78" y2="4.22"></line>
+                </svg>
+                <svg id="moon-icon" style="display:none" xmlns="http://www.w3.org/2000/svg" width="20" height="20"
+                    viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"
+                    stroke-linejoin="round">
+                    <path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z"></path>
+                </svg>
+            </button>
+        </div>
     </nav>
 
-
-    <!-- 본문 -->
+    <!-- Main Content -->
     <main class="content">
 
         <section id="introduction">
             <h1>Minseung Kim</h1>
-                <div class="profile-container">
-                    <img src="photo_24.jpg" alt="사진" width="150" />
-                    <div class="profile-text">
-                        <p>
-                            Ph.D. Student<br />
-                            Department of Electrical and Electronic Engineering, Hanyang University
-                        </p>
-                        <p>
-                            minseung224@hanyang.ac.kr
-                        </p>
-                        <a href="https://scholar.google.com/citations?user=jCp59vcAAAAJ&hl=en" target="_blank" rel="noopener noreferrer" class="paper-link" aria-label="Google Scholar profile (opens in new tab)">
+            <div class="profile-container">
+                <div class="profile-img-wrapper">
+                    <img src="photo_24.jpg" alt="Minseung Kim" />
+                </div>
+                <div class="profile-text">
+                    <p>
+                        <strong>Ph.D. Student</strong><br />
+                        Department of Electrical and Electronic Engineering, Hanyang University
+                    </p>
+                    <p>
+                        minseung224@hanyang.ac.kr
+                    </p>
+                    <div class="profile-links">
+                        <a href="https://scholar.google.com/citations?user=jCp59vcAAAAJ&hl=en" target="_blank"
+                            rel="noopener noreferrer" class="profile-link">
                             Google Scholar
-                        </a><br />
-                        <a href="https://ieeexplore.ieee.org/author/37067883700" target="_blank" rel="noopener noreferrer" class="paper-link" aria-label="IEEE Xplore profile (opens in new tab)">
+                        </a>
+                        <a href="https://ieeexplore.ieee.org/author/37067883700" target="_blank"
+                            rel="noopener noreferrer" class="profile-link">
                             IEEE Xplore
-                        </a><br />                    
-                        <a href="https://www.linkedin.com/in/mkim224/" target="_blank" rel="noopener noreferrer" class="paper-link" aria-label="LinkedIn (opens in new tab)">
+                        </a>
+                        <a href="https://www.linkedin.com/in/mkim224/" target="_blank" rel="noopener noreferrer"
+                            class="profile-link">
                             LinkedIn
                         </a>
                     </div>
                 </div>
+            </div>
+
             <h2>Education</h2>
-            <ul>
-                <li>B.S. in Department of Electrical and Control Engineering, <b>Mokpo National University</b> (2019 - 2022)</li>
-                <li>M.S. in Department of Electrical Engineering, <b>Mokpo National University</b> (2022 - 2024)</li>
-                <li>Ph.D. in Department of Electrical and Electronic Engineering, <b>Hanyang University</b> (2024 - )</li>
-            </ul>
+            <div class="timeline">
+                <div class="timeline-item">
+                    <div class="timeline-date">2024 - Present</div>
+                    <div class="timeline-title">Ph.D. in Electrical and Electronic Engineering</div>
+                    <div class="timeline-description">Hanyang University</div>
+                </div>
+                <div class="timeline-item">
+                    <div class="timeline-date">2022 - 2024</div>
+                    <div class="timeline-title">M.S. in Electrical Engineering</div>
+                    <div class="timeline-description">Mokpo National University</div>
+                </div>
+                <div class="timeline-item">
+                    <div class="timeline-date">2019 - 2022</div>
+                    <div class="timeline-title">B.S. in Electrical and Control Engineering</div>
+                    <div class="timeline-description">Mokpo National University</div>
+                </div>
+            </div>
         </section>
 
-        <section id="research">
+        <section id="academic">
             <h2>Academic Service</h2>
-            <ul>
-                <li>Peer Reviewer: IEEE Access</li>
-            </ul>
+            <div class="activities-list">
+                <div class="activity-item">
+                    <strong>Peer Reviewer</strong>: IEEE Access
+                </div>
+            </div>
+
             <h2>Academic Activities</h2>
-            <ul class="reverse">
-               <li>
-                    대한전기학회 전기기기 및 에너지변환시스템 부문회 추계학술대회<br />
-                    경주, 대한민국, 2021.11.
-                </li>
-                <li>
-                    대한전기학회 전력기술부문회 동계세미나<br />
-                    인천, 대한민국, 2022.02.
-                </li>   
-                <li>
-                    대한전기학회 전력계통연구회 춘계학술대회 제1회 우수 연구개발 과제<br />
-                    제주, 대한민국, 2022.04.
-                </li>
-                <li>
-                    한국신재생에너지학회 춘계학술대회<br />
-                    대구, 대한민국, 2022.04.
-                </li>
-                <li>
-                    제 53회 대한전기학회 하계학술대회<br />
-                    여수, 대한민국, 2022.07.
-                </li>
-                <li>
-                    대한전기학회 추계학술대회<br />
-                    제주, 대한민국, 2023.10.
-                </li>
-                <li>
-                    2024년도 전력전자학술대회<br />
-                    제주, 대한민국, 2024.07.
-                </li>
-                <li>
-                    20th International Conference on AC and DC Power Transmission (ACDC 2024)<br />
-                    Shanghai, China, 2024.07.
-                </li>
-                <li>
-                    20th IEEE Energy Conversion Congress & Expo (ECCE ASIA 2025)<br />
-                    Bangaluru, India, 2025.05.
-                </li>
-                <li>
-                    2025년도 전력전자학술대회<br />
-                    평창, 대한민국, 2025.07.
-                </li>
-            </ul>
+            <div class="activities-list">
+                <div class="activity-item">
+                    <strong>2025.07.</strong> &bull; 2025년도 전력전자학술대회, 평창, 대한민국
+                </div>
+                <div class="activity-item">
+                    <strong>2025.05.</strong> &bull; 20th IEEE Energy Conversion Congress & Expo (ECCE ASIA 2025),
+                    Bangaluru, India
+                </div>
+                <div class="activity-item">
+                    <strong>2024.07.</strong> &bull; 20th International Conference on AC and DC Power Transmission (ACDC
+                    2024), Shanghai, China
+                </div>
+                <div class="activity-item">
+                    <strong>2024.07.</strong> &bull; 2024년도 전력전자학술대회, 제주, 대한민국
+                </div>
+                <div class="activity-item">
+                    <strong>2023.10.</strong> &bull; 대한전기학회 추계학술대회, 제주, 대한민국
+                </div>
+                <div class="activity-item">
+                    <strong>2022.07.</strong> &bull; 제 53회 대한전기학회 하계학술대회, 여수, 대한민국
+                </div>
+                <div class="activity-item">
+                    <strong>2022.04.</strong> &bull; 한국신재생에너지학회 춘계학술대회, 대구, 대한민국
+                </div>
+                <div class="activity-item">
+                    <strong>2022.04.</strong> &bull; 대한전기학회 전력계통연구회 춘계학술대회 제1회 우수 연구개발 과제, 제주, 대한민국
+                </div>
+                <div class="activity-item">
+                    <strong>2022.02.</strong> &bull; 대한전기학회 전력기술부문회 동계세미나, 인천, 대한민국
+                </div>
+                <div class="activity-item">
+                    <strong>2021.11.</strong> &bull; 대한전기학회 전기기기 및 에너지변환시스템 부문회 추계학술대회, 경주, 대한민국
+                </div>
+            </div>
         </section>
 
     </main>
 
+    <button class="back-to-top" id="back-to-top" aria-label="Back to top">
+        <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none"
+            stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+            <line x1="12" y1="19" x2="12" y2="5"></line>
+            <polyline points="5 12 12 5 19 12"></polyline>
+        </svg>
+    </button>
+
+    <script>
+        // Theme Toggle
+        const themeToggle = document.getElementById('theme-toggle');
+        const sunIcon = document.getElementById('sun-icon');
+        const moonIcon = document.getElementById('moon-icon');
+        const body = document.body;
+
+        themeToggle.addEventListener('click', () => {
+            const currentTheme = body.getAttribute('data-theme');
+            const newTheme = currentTheme === 'light' ? 'dark' : 'light';
+            body.setAttribute('data-theme', newTheme);
+
+            if (newTheme === 'dark') {
+                sunIcon.style.display = 'none';
+                moonIcon.style.display = 'block';
+            } else {
+                sunIcon.style.display = 'block';
+                moonIcon.style.display = 'none';
+            }
+
+            localStorage.setItem('theme', newTheme);
+        });
+
+        // Hamburger Menu
+        const hamburger = document.getElementById('hamburger');
+        const navList = document.getElementById('nav-list');
+
+        hamburger.addEventListener('click', () => {
+            navList.classList.toggle('active');
+        });
+
+        // Close menu when clicking a link
+        document.querySelectorAll('.nav-item a').forEach(link => {
+            link.addEventListener('click', () => {
+                navList.classList.remove('active');
+            });
+        });
+
+        // Back to Top Button
+        const backToTop = document.getElementById('back-to-top');
+
+        window.addEventListener('scroll', () => {
+            if (window.scrollY > 300) {
+                backToTop.classList.add('visible');
+            } else {
+                backToTop.classList.remove('visible');
+            }
+        });
+
+        backToTop.addEventListener('click', () => {
+            window.scrollTo({ top: 0, behavior: 'smooth' });
+        });
+
+        // Persist Theme
+        const savedTheme = localStorage.getItem('theme');
+        if (savedTheme) {
+            body.setAttribute('data-theme', savedTheme);
+            if (savedTheme === 'dark') {
+                sunIcon.style.display = 'none';
+                moonIcon.style.display = 'block';
+            }
+        }
+    </script>
 </body>
+
 </html>
