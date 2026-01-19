@@ -1,0 +1,605 @@
+<!DOCTYPE html>
+<html lang="ko">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>관리자 페이지 (사용자 친화 버전) | Kim, Minseung</title>
+    <link rel="stylesheet" href="styles.css">
+    <style>
+        .admin-container {
+            max-width: 1000px;
+            margin: 0 auto;
+            padding: 2rem;
+        }
+
+        .admin-section {
+            background: var(--card-bg);
+            border-radius: 12px;
+            padding: 2rem;
+            margin-bottom: 2rem;
+            box-shadow: 0 4px 20px var(--shadow-color);
+        }
+
+        .tab-menu {
+            display: flex;
+            gap: 10px;
+            margin-bottom: 20px;
+            border-bottom: 1px solid var(--border-color);
+            padding-bottom: 10px;
+        }
+
+        .tab-btn {
+            padding: 10px 20px;
+            border: none;
+            background: none;
+            color: var(--text-color);
+            cursor: pointer;
+            font-weight: 600;
+            opacity: 0.6;
+        }
+
+        .tab-btn.active {
+            opacity: 1;
+            border-bottom: 3px solid var(--primary-color);
+        }
+
+        .form-group {
+            margin-bottom: 1.5rem;
+            border-bottom: 1px dashed var(--border-color);
+            padding-bottom: 1rem;
+        }
+
+        .form-group:last-child {
+            border-bottom: none;
+        }
+
+        .form-row {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 10px;
+            margin-bottom: 10px;
+        }
+
+        .form-row.full {
+            grid-template-columns: 1fr;
+        }
+
+        label {
+            display: block;
+            margin-bottom: 5px;
+            font-size: 0.9rem;
+            font-weight: 600;
+        }
+
+        input,
+        textarea,
+        select {
+            width: 100%;
+            padding: 10px;
+            border: 1px solid var(--border-color);
+            border-radius: 6px;
+            background: var(--bg-color);
+            color: var(--text-color);
+        }
+
+        .item-card {
+            background: rgba(0, 0, 0, 0.02);
+            border: 1px solid var(--border-color);
+            padding: 15px;
+            border-radius: 8px;
+            margin-bottom: 15px;
+            position: relative;
+        }
+
+        [data-theme="dark"] .item-card {
+            background: rgba(255, 255, 255, 0.05);
+        }
+
+        .remove-btn {
+            position: absolute;
+            top: 10px;
+            right: 10px;
+            background: #dc3545;
+            color: white;
+            border: none;
+            border-radius: 4px;
+            cursor: pointer;
+            padding: 5px 10px;
+            font-size: 0.8rem;
+        }
+
+        .add-btn {
+            background: var(--primary-color);
+            color: white;
+            border: none;
+            padding: 10px 20px;
+            border-radius: 6px;
+            cursor: pointer;
+            margin-top: 10px;
+        }
+
+        .sticky-actions {
+            position: sticky;
+            bottom: 20px;
+            display: flex;
+            gap: 10px;
+            justify-content: center;
+            background: var(--card-bg);
+            padding: 15px;
+            border-radius: 50px;
+            box-shadow: 0 4px 30px rgba(0, 0, 0, 0.2);
+            z-index: 100;
+        }
+
+        .btn {
+            padding: 12px 24px;
+            border: none;
+            border-radius: 30px;
+            cursor: pointer;
+            font-weight: 700;
+            transition: transform 0.2s;
+        }
+
+        .btn:hover {
+            transform: translateY(-2px);
+        }
+
+        .btn-save {
+            background: var(--primary-color);
+            color: white;
+        }
+
+        .btn-download {
+            background: #28a745;
+            color: white;
+        }
+
+        .btn-cancel {
+            background: #6c757d;
+            color: white;
+        }
+
+        #load-helper {
+            background: #fff3cd;
+            color: #856404;
+            padding: 15px;
+            border-radius: 8px;
+            margin-bottom: 20px;
+            display: none;
+        }
+
+        .status-msg {
+            fixed: top 20px;
+            right: 20px;
+            padding: 15px 25px;
+            border-radius: 8px;
+            color: white;
+            z-index: 1000;
+            display: none;
+            animation: slideIn 0.3s;
+        }
+
+        @keyframes slideIn {
+            from {
+                transform: translateX(100%);
+            }
+
+            to {
+                transform: translateX(0);
+            }
+        }
+
+        .auth-overlay {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: var(--bg-color);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            z-index: 2000;
+        }
+
+        .auth-box {
+            max-width: 400px;
+            width: 90%;
+            padding: 2.5rem;
+            background: var(--card-bg);
+            border-radius: 20px;
+            box-shadow: 0 10px 40px var(--shadow-color);
+            text-align: center;
+        }
+    </style>
+</head>
+
+<body data-theme="light">
+    <!-- Auth Overlay -->
+    <div id="auth-overlay" class="auth-overlay">
+        <div class="auth-box">
+            <h2 style="margin-bottom: 1rem;">관리자 인증</h2>
+            <p style="margin-bottom: 2rem; opacity: 0.8;">GitHub에 변경사항을 저장하려면<br>Personal Access Token (PAT)이 필요합니다.</p>
+            <input type="password" id="github-token" placeholder="ghp_xxxxxxxxxxxx"
+                style="margin-bottom: 1.5rem; text-align: center;">
+            <div style="display: flex; flex-direction: column; gap: 10px;">
+                <button class="btn btn-save" onclick="authenticate()">GitHub 연동 로그인</button>
+                <button class="btn btn-cancel" onclick="skipAuth()">오프라인 수정 (다운로드 모드)</button>
+            </div>
+        </div>
+    </div>
+
+    <nav class="top-nav">
+        <div class="nav-container">
+            <ul class="nav-list">
+                <li class="nav-item"><a href="index.html">메인으로 가기</a></li>
+                <li class="nav-item"><strong style="color: var(--primary-color);">Admin Panel v2.0</strong></li>
+            </ul>
+        </div>
+    </nav>
+
+    <div class="admin-container">
+        <h1>웹사이트 내용 수정</h1>
+        <p style="margin-bottom: 2rem; opacity: 0.7;">수정한 내용은 하단의 'JSON 다운로드'를 눌러 로컬에 저장하거나, GitHub에 직접 반영할 수 있습니다.</p>
+
+        <div id="load-helper">
+            <strong>⚠️ 로컬 파일 로드 실패 (CORS)</strong><br>
+            로컬 브라우저 보안 정책으로 인해 파일을 직접 불러올 수 없습니다. <br>
+            수정할 <b>data/</b> 폴더 내의 JSON 파일 내용을 아래에 붙여넣어 주세요.
+            <textarea id="manual-json-input" style="height: 100px; margin-top: 10px;"
+                placeholder="여기에 파일 내용을 복사해서 붙여넣으세요."></textarea>
+            <button class="add-btn" onclick="applyManualLoad()">데이터 적용하기</button>
+        </div>
+
+        <div class="tab-menu">
+            <button class="tab-btn active" onclick="switchTab('profile')">프로필 및 학술 활동</button>
+            <button class="tab-btn" onclick="switchTab('publications')">논문 및 특허 실적</button>
+        </div>
+
+        <!-- Profile Tab -->
+        <div id="profile-tab" class="tab-content">
+            <div class="admin-section">
+                <h3>기본 프로필</h3>
+                <div class="form-row">
+                    <div><label>이름</label><input type="text" id="prof-name"></div>
+                    <div><label>직함</label><input type="text" id="prof-title"></div>
+                </div>
+                <div class="form-row">
+                    <div><label>소속</label><input type="text" id="prof-affiliation"></div>
+                    <div><label>이메일</label><input type="text" id="prof-email"></div>
+                </div>
+            </div>
+
+            <div class="admin-section">
+                <h3>학력 (Education)</h3>
+                <div id="edu-list"></div>
+                <button class="add-btn" onclick="addItem('edu')">+ 학력 추가</button>
+            </div>
+
+            <div class="admin-section">
+                <h3>학술 활동 (Academic Activities)</h3>
+                <div id="activity-list"></div>
+                <button class="add-btn" onclick="addItem('activity')">+ 활동 추가</button>
+            </div>
+        </div>
+
+        <!-- Publications Tab -->
+        <div id="publications-tab" class="tab-content" style="display:none;">
+            <div class="admin-section">
+                <h3>Journal (SCI/KCI)</h3>
+                <div id="journal-list"></div>
+                <button class="add-btn" onclick="addItem('journal')">+ 저널 논문 추가</button>
+            </div>
+            <div class="admin-section">
+                <h3>Conference (국내/국제 학술대회)</h3>
+                <div id="conf-list"></div>
+                <button class="add-btn" onclick="addItem('conf')">+ 학술대회 추가</button>
+            </div>
+            <div class="admin-section">
+                <h3>Patents (특허)</h3>
+                <div id="patent-list"></div>
+                <button class="add-btn" onclick="addItem('patent')">+ 특허 추가</button>
+            </div>
+        </div>
+
+        <div class="sticky-actions">
+            <button class="btn btn-download" onclick="downloadJSON()">JSON 다운로드 (로컬 백업)</button>
+            <button id="github-save-btn" class="btn btn-save" onclick="saveToGitHub()" style="display:none;">GitHub에
+                반영하기</button>
+            <button class="btn btn-cancel" onclick="logout()">로그아웃</button>
+        </div>
+    </div>
+
+    <div id="toast" class="status-msg"></div>
+
+    <script>
+        let currentData = { profile: {}, publications: {} };
+        let activeTab = 'profile';
+        const OWNER = 'MKIM-EE';
+        const REPO = 'MKIM-EE.github.io';
+        let GITHUB_TOKEN = localStorage.getItem('github_token');
+
+        if (GITHUB_TOKEN) {
+            document.getElementById('auth-overlay').style.display = 'none';
+            document.getElementById('github-save-btn').style.display = 'block';
+        }
+
+        function authenticate() {
+            const token = document.getElementById('github-token').value.trim();
+            if (token) {
+                localStorage.setItem('github_token', token);
+                location.reload();
+            }
+        }
+
+        function skipAuth() {
+            document.getElementById('auth-overlay').style.display = 'none';
+            showToast('오프라인 수정 모드입니다. 수정 후 다운로드 기능을 이용해 주세요.', '#31708f');
+        }
+
+        function logout() {
+            localStorage.removeItem('github_token');
+            location.reload();
+        }
+
+        function switchTab(tab) {
+            activeTab = tab;
+            document.querySelectorAll('.tab-btn').forEach(b => b.classList.toggle('active', b.innerText.includes(tab === 'profile' ? '프로필' : '논문')));
+            document.getElementById('profile-tab').style.display = tab === 'profile' ? 'block' : 'none';
+            document.getElementById('publications-tab').style.display = tab === 'publications' ? 'block' : 'none';
+        }
+
+        async function init() {
+            try {
+                const [profRes, pubRes] = await Promise.all([
+                    fetch('data/profile.json').then(r => r.json()),
+                    fetch('data/publications.json').then(r => r.json())
+                ]);
+                currentData.profile = profRes;
+                currentData.publications = pubRes;
+                renderAll();
+            } catch (error) {
+                console.warn('Initial fetch failed, probably CORS:', error);
+                document.getElementById('load-helper').style.display = 'block';
+            }
+        }
+
+        function applyManualLoad() {
+            try {
+                const input = document.getElementById('manual-json-input').value;
+                const parsed = JSON.parse(input);
+                if (parsed.profile) currentData.profile = parsed;
+                if (parsed.journals) currentData.publications = parsed;
+                renderAll();
+                showToast('데이터가 수동 로드되었습니다.', '#28a745');
+                document.getElementById('load-helper').style.display = 'none';
+            } catch (e) {
+                showToast('JSON 형식이 잘못되었습니다: ' + e.message, '#dc3545');
+            }
+        }
+
+        function renderAll() {
+            // Profile
+            document.getElementById('prof-name').value = currentData.profile.profile?.name || '';
+            document.getElementById('prof-title').value = currentData.profile.profile?.title || '';
+            document.getElementById('prof-affiliation').value = currentData.profile.profile?.affiliation || '';
+            document.getElementById('prof-email').value = currentData.profile.profile?.email || '';
+
+            // Education
+            const eduList = document.getElementById('edu-list');
+            eduList.innerHTML = (currentData.profile.education || []).map((e, i) => `
+                <div class="item-card">
+                    <button class="remove-btn" onclick="removeItem('edu', ${i})">삭제</button>
+                    <div class="form-row">
+                        <div><label>기간</label><input type="text" value="${e.date}" onchange="updateItem('edu', ${i}, 'date', this.value)"></div>
+                        <div><label>학기/전공</label><input type="text" value="${e.title}" onchange="updateItem('edu', ${i}, 'title', this.value)"></div>
+                    </div>
+                    <label>소속</label><input type="text" value="${e.description}" onchange="updateItem('edu', ${i}, 'description', this.value)">
+                </div>
+            `).join('');
+
+            // Activities
+            const actList = document.getElementById('activity-list');
+            actList.innerHTML = (currentData.profile.academic_activities || []).map((a, i) => `
+                <div class="item-card">
+                    <button class="remove-btn" onclick="removeItem('activity', ${i})">삭제</button>
+                    <div class="form-row">
+                        <div><label>날짜</label><input type="text" value="${a.date}" onchange="updateItem('activity', ${i}, 'date', this.value)"></div>
+                        <div><label>활동명/장소</label><input type="text" value="${a.description}" onchange="updateItem('activity', ${i}, 'description', this.value)"></div>
+                    </div>
+                </div>
+            `).join('');
+
+            // Journals
+            const journalList = document.getElementById('journal-list');
+            const sci = (currentData.publications.journals?.sci || []).map(j => ({ ...j, category: 'sci' }));
+            const kci = (currentData.publications.journals?.kci || []).map(j => ({ ...j, category: 'kci' }));
+            journalList.innerHTML = [...sci, ...kci].map((j, i) => `
+                <div class="item-card">
+                    <button class="remove-btn" onclick="removeItem('journal', ${i})">삭제</button>
+                    <div class="form-row">
+                        <div><label>분류</label><select onchange="updateItem('journal', ${i}, 'category', this.value)">
+                            <option value="sci" ${j.category === 'sci' ? 'selected' : ''}>SCI</option>
+                            <option value="kci" ${j.category === 'kci' ? 'selected' : ''}>KCI</option>
+                        </select></div>
+                        <div><label>날짜/권호</label><input type="text" value="${j.venue}" onchange="updateItem('journal', ${i}, 'venue', this.value)"></div>
+                    </div>
+                    <label>제목</label><input type="text" value="${j.title}" onchange="updateItem('journal', ${i}, 'title', this.value)">
+                    <label>저자</label><input type="text" value="${j.authors || ''}" onchange="updateItem('journal', ${i}, 'authors', this.value)">
+                    <label>링크 (DOI)</label><input type="text" value="${j.link || ''}" onchange="updateItem('journal', ${i}, 'link', this.value)">
+                </div>
+            `).join('');
+
+            // Conferences
+            const confList = document.getElementById('conf-list');
+            const intl = (currentData.publications.conferences?.international || []).map(c => ({ ...c, category: 'international' }));
+            const dom = (currentData.publications.conferences?.domestic || []).map(c => ({ ...c, category: 'domestic' }));
+            confList.innerHTML = [...intl, ...dom].map((c, i) => `
+                <div class="item-card">
+                    <button class="remove-btn" onclick="removeItem('conf', ${i})">삭제</button>
+                    <div class="form-row">
+                        <div><label>분류</label><select onchange="updateItem('conf', ${i}, 'category', this.value)">
+                            <option value="international" ${c.category === 'international' ? 'selected' : ''}>국제 학회</option>
+                            <option value="domestic" ${c.category === 'domestic' ? 'selected' : ''}>국내 학회</option>
+                        </select></div>
+                        <div><label>학회명/일시</label><input type="text" value="${c.venue}" onchange="updateItem('conf', ${i}, 'venue', this.value)"></div>
+                    </div>
+                    <label>논문 제목</label><input type="text" value="${c.title}" onchange="updateItem('conf', ${i}, 'title', this.value)">
+                </div>
+            `).join('');
+
+            // Patents
+            const patentList = document.getElementById('patent-list');
+            const reg = (currentData.publications.patents?.registration || []).map(p => ({ ...p, category: 'registration' }));
+            const app = (currentData.publications.patents?.application || []).map(p => ({ ...p, category: 'application' }));
+            patentList.innerHTML = [...reg, ...app].map((p, i) => `
+                <div class="item-card">
+                    <button class="remove-btn" onclick="removeItem('patent', ${i})">삭제</button>
+                    <div class="form-row">
+                        <div><label>구분</label><select onchange="updateItem('patent', ${i}, 'category', this.value)">
+                            <option value="registration" ${p.category === 'registration' ? 'selected' : ''}>등록</option>
+                            <option value="application" ${p.category === 'application' ? 'selected' : ''}>출원</option>
+                        </select></div>
+                        <div><label>번호</label><input type="text" value="${p.number || ''}" onchange="updateItem('patent', ${i}, 'number', this.value)"></div>
+                    </div>
+                    <label>특허명</label><input type="text" value="${p.title}" onchange="updateItem('patent', ${i}, 'title', this.value)">
+                    <label>발명자/일자</label><input type="text" value="${p.venue}" onchange="updateItem('patent', ${i}, 'venue', this.value)">
+                </div>
+            `).join('');
+        }
+
+        function addItem(type) {
+            if (type === 'edu') currentData.profile.education.unshift({ date: '', title: '', description: '' });
+            if (type === 'activity') currentData.profile.academic_activities.unshift({ date: '', description: '' });
+            if (type === 'journal') currentData.publications.journals.sci.unshift({ title: '', authors: '', venue: '', category: 'sci' });
+            if (type === 'conf') currentData.publications.conferences.international.unshift({ title: '', venue: '', category: 'international' });
+            if (type === 'patent') currentData.publications.patents.registration.unshift({ title: '', venue: '', category: 'registration' });
+            renderAll();
+        }
+
+        function removeItem(type, index) {
+            if (type === 'edu') currentData.profile.education.splice(index, 1);
+            if (type === 'activity') currentData.profile.academic_activities.splice(index, 1);
+            if (type === 'journal') {
+                const total = [...currentData.publications.journals.sci, ...currentData.publications.journals.kci];
+                total.splice(index, 1);
+                currentData.publications.journals.sci = total.filter(j => j.category === 'sci');
+                currentData.publications.journals.kci = total.filter(j => j.category === 'kci');
+            }
+            if (type === 'conf') {
+                const total = [...currentData.publications.conferences.international, ...currentData.publications.conferences.domestic];
+                total.splice(index, 1);
+                currentData.publications.conferences.international = total.filter(c => c.category === 'international');
+                currentData.publications.conferences.domestic = total.filter(c => c.category === 'domestic');
+            }
+            if (type === 'patent') {
+                const total = [...currentData.publications.patents.registration, ...currentData.publications.patents.application];
+                total.splice(index, 1);
+                currentData.publications.patents.registration = total.filter(p => p.category === 'registration');
+                currentData.publications.patents.application = total.filter(p => p.category === 'application');
+            }
+            renderAll();
+        }
+
+        function updateItem(type, index, field, value) {
+            // Logic to update nested objects (simplified here for brevity, but needed for robustness)
+            if (activeTab === 'profile') {
+                if (type === 'edu') currentData.profile.education[index][field] = value;
+                if (type === 'activity') currentData.profile.academic_activities[index][field] = value;
+            } else {
+                let list;
+                if (type === 'journal') {
+                    list = [...currentData.publications.journals.sci, ...currentData.publications.journals.kci];
+                    list[index][field] = value;
+                    currentData.publications.journals.sci = list.filter(j => j.category === 'sci');
+                    currentData.publications.journals.kci = list.filter(j => j.category === 'kci');
+                }
+                if (type === 'conf') {
+                    list = [...currentData.publications.conferences.international, ...currentData.publications.conferences.domestic];
+                    list[index][field] = value;
+                    currentData.publications.conferences.international = list.filter(c => c.category === 'international');
+                    currentData.publications.conferences.domestic = list.filter(c => c.category === 'domestic');
+                }
+                if (type === 'patent') {
+                    list = [...currentData.publications.patents.registration, ...currentData.publications.patents.application];
+                    list[index][field] = value;
+                    currentData.publications.patents.registration = list.filter(p => p.category === 'registration');
+                    currentData.publications.patents.application = list.filter(p => p.category === 'application');
+                }
+            }
+        }
+
+        function downloadJSON() {
+            // Update profile root fields before collection
+            currentData.profile.profile = {
+                name: document.getElementById('prof-name').value,
+                title: document.getElementById('prof-title').value,
+                affiliation: document.getElementById('prof-affiliation').value,
+                email: document.getElementById('prof-email').value,
+                links: currentData.profile.profile?.links || []
+            };
+
+            const target = activeTab === 'profile' ? currentData.profile : currentData.publications;
+            const fileName = activeTab === 'profile' ? 'profile.json' : 'publications.json';
+
+            const blob = new Blob([JSON.stringify(target, null, 2)], { type: 'application/json' });
+            const url = URL.createObjectURL(blob);
+            const a = document.createElement('a');
+            a.href = url;
+            a.download = fileName;
+            a.click();
+            showToast(fileName + ' 파일이 다운로드되었습니다. data/ 폴더에 덮어씌워주세요!', '#28a745');
+        }
+
+        async function saveToGitHub() {
+            const fileName = activeTab === 'profile' ? 'profile.json' : 'publications.json';
+            const filePath = `data/${fileName}`;
+            const targetData = activeTab === 'profile' ? currentData.profile : currentData.publications;
+
+            showToast('GitHub에 저장 중...', '#ffc107');
+
+            try {
+                // Get SHA
+                const res = await fetch(`https://api.github.com/repos/${OWNER}/${REPO}/contents/${filePath}`, {
+                    headers: { 'Authorization': `token ${GITHUB_TOKEN}` }
+                });
+                const remoteFile = await res.json();
+
+                const response = await fetch(`https://api.github.com/repos/${OWNER}/${REPO}/contents/${filePath}`, {
+                    method: 'PUT',
+                    headers: {
+                        'Authorization': `token ${GITHUB_TOKEN}`,
+                        'Content-Type': 'application/json',
+                    },
+                    body: JSON.stringify({
+                        message: `Update ${filePath} via Admin Panel Form`,
+                        content: btoa(unescape(encodeURIComponent(JSON.stringify(targetData, null, 2)))),
+                        sha: remoteFile.sha
+                    })
+                });
+
+                if (response.ok) {
+                    showToast('성공적으로 저장되었습니다!', '#28a745');
+                } else {
+                    const error = await response.json();
+                    throw new Error(error.message);
+                }
+            } catch (error) {
+                showToast('GitHub 저장 실패: ' + error.message, '#dc3545');
+            }
+        }
+
+        function showToast(msg, color) {
+            const toast = document.getElementById('toast');
+            toast.innerText = msg;
+            toast.style.background = color;
+            toast.style.display = 'block';
+            setTimeout(() => toast.style.display = 'none', 4000);
+        }
+
+        init();
+    </script>
+</body>
+
+</html>

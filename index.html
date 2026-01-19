@@ -50,98 +50,41 @@
     <main class="content">
 
         <section id="introduction">
-            <h1>Minseung Kim</h1>
+            <h1 id="profile-name">Minseung Kim</h1>
             <div class="profile-container">
                 <div class="profile-img-wrapper">
                     <img src="photo_24.jpg" alt="Minseung Kim" />
                 </div>
                 <div class="profile-text">
                     <p>
-                        <strong>Ph.D. Student</strong><br />
-                        Department of Electrical and Electronic Engineering, Hanyang University
+                        <strong id="profile-title">Ph.D. Student</strong><br />
+                        <span id="profile-affiliation">Department of Electrical and Electronic Engineering, Hanyang
+                            University</span>
                     </p>
-                    <p>
+                    <p id="profile-email">
                         minseung224@hanyang.ac.kr
                     </p>
-                    <div class="profile-links">
-                        <a href="https://scholar.google.com/citations?user=jCp59vcAAAAJ&hl=en" target="_blank"
-                            rel="noopener noreferrer" class="profile-link">
-                            Google Scholar
-                        </a>
-                        <a href="https://ieeexplore.ieee.org/author/37067883700" target="_blank"
-                            rel="noopener noreferrer" class="profile-link">
-                            IEEE Xplore
-                        </a>
-                        <a href="https://www.linkedin.com/in/mkim224/" target="_blank" rel="noopener noreferrer"
-                            class="profile-link">
-                            LinkedIn
-                        </a>
+                    <div class="profile-links" id="profile-links">
+                        <!-- Links will be rendered here -->
                     </div>
                 </div>
             </div>
 
             <h2>Education</h2>
-            <div class="timeline">
-                <div class="timeline-item">
-                    <div class="timeline-date">2024 - Present</div>
-                    <div class="timeline-title">Ph.D. in Electrical and Electronic Engineering</div>
-                    <div class="timeline-description">Hanyang University</div>
-                </div>
-                <div class="timeline-item">
-                    <div class="timeline-date">2022 - 2024</div>
-                    <div class="timeline-title">M.S. in Electrical Engineering</div>
-                    <div class="timeline-description">Mokpo National University</div>
-                </div>
-                <div class="timeline-item">
-                    <div class="timeline-date">2019 - 2022</div>
-                    <div class="timeline-title">B.S. in Electrical and Control Engineering</div>
-                    <div class="timeline-description">Mokpo National University</div>
-                </div>
+            <div class="timeline" id="education-timeline">
+                <!-- Education items will be rendered here -->
             </div>
         </section>
 
         <section id="academic">
             <h2>Academic Service</h2>
-            <div class="activities-list">
-                <div class="activity-item">
-                    <strong>Peer Reviewer</strong>: IEEE Access
-                </div>
+            <div class="activities-list" id="academic-service-list">
+                <!-- Service items will be rendered here -->
             </div>
 
             <h2>Academic Activities</h2>
-            <div class="activities-list">
-                <div class="activity-item">
-                    <strong>2025.07.</strong> &bull; 2025년도 전력전자학술대회, 평창, 대한민국
-                </div>
-                <div class="activity-item">
-                    <strong>2025.05.</strong> &bull; 20th IEEE Energy Conversion Congress & Expo (ECCE ASIA 2025),
-                    Bangaluru, India
-                </div>
-                <div class="activity-item">
-                    <strong>2024.07.</strong> &bull; 20th International Conference on AC and DC Power Transmission (ACDC
-                    2024), Shanghai, China
-                </div>
-                <div class="activity-item">
-                    <strong>2024.07.</strong> &bull; 2024년도 전력전자학술대회, 제주, 대한민국
-                </div>
-                <div class="activity-item">
-                    <strong>2023.10.</strong> &bull; 대한전기학회 추계학술대회, 제주, 대한민국
-                </div>
-                <div class="activity-item">
-                    <strong>2022.07.</strong> &bull; 제 53회 대한전기학회 하계학술대회, 여수, 대한민국
-                </div>
-                <div class="activity-item">
-                    <strong>2022.04.</strong> &bull; 한국신재생에너지학회 춘계학술대회, 대구, 대한민국
-                </div>
-                <div class="activity-item">
-                    <strong>2022.04.</strong> &bull; 대한전기학회 전력계통연구회 춘계학술대회 제1회 우수 연구개발 과제, 제주, 대한민국
-                </div>
-                <div class="activity-item">
-                    <strong>2022.02.</strong> &bull; 대한전기학회 전력기술부문회 동계세미나, 인천, 대한민국
-                </div>
-                <div class="activity-item">
-                    <strong>2021.11.</strong> &bull; 대한전기학회 전기기기 및 에너지변환시스템 부문회 추계학술대회, 경주, 대한민국
-                </div>
+            <div class="activities-list" id="academic-activities-list">
+                <!-- Activities will be rendered here -->
             </div>
         </section>
 
@@ -156,25 +99,80 @@
     </button>
 
     <script>
+        // Data Fetching and Rendering
+        async function loadProfile() {
+            try {
+                const response = await fetch('data/profile.json');
+                const data = await response.json();
+
+                // Render Profile
+                document.getElementById('profile-name').textContent = data.profile.name;
+                document.getElementById('profile-title').textContent = data.profile.title;
+                document.getElementById('profile-affiliation').textContent = data.profile.affiliation;
+                document.getElementById('profile-email').textContent = data.profile.email;
+
+                const linksContainer = document.getElementById('profile-links');
+                linksContainer.innerHTML = data.profile.links.map(link => `
+                    <a href="${link.url}" target="_blank" rel="noopener noreferrer" class="profile-link">
+                        ${link.label}
+                    </a>
+                `).join('');
+
+                // Render Education
+                const eduContainer = document.getElementById('education-timeline');
+                eduContainer.innerHTML = data.education.map(item => `
+                    <div class="timeline-item">
+                        <div class="timeline-date">${item.date}</div>
+                        <div class="timeline-title">${item.title}</div>
+                        <div class="timeline-description">${item.description}</div>
+                    </div>
+                `).join('');
+
+                // Render Academic Service
+                const serviceContainer = document.getElementById('academic-service-list');
+                serviceContainer.innerHTML = data.academic_service.map(item => `
+                    <div class="activity-item">
+                        <strong>${item.role}</strong>: ${item.venue}
+                    </div>
+                `).join('');
+
+                // Render Academic Activities
+                const activitiesContainer = document.getElementById('academic-activities-list');
+                activitiesContainer.innerHTML = data.academic_activities.map(item => `
+                    <div class="activity-item">
+                        <strong>${item.date}</strong> &bull; ${item.description}
+                    </div>
+                `).join('');
+
+            } catch (error) {
+                console.error('Error loading profile:', error);
+            }
+        }
+
+        // Initialize
+        loadProfile();
+
         // Theme Toggle
         const themeToggle = document.getElementById('theme-toggle');
         const sunIcon = document.getElementById('sun-icon');
         const moonIcon = document.getElementById('moon-icon');
         const body = document.body;
 
-        themeToggle.addEventListener('click', () => {
-            const currentTheme = body.getAttribute('data-theme');
-            const newTheme = currentTheme === 'light' ? 'dark' : 'light';
-            body.setAttribute('data-theme', newTheme);
-
-            if (newTheme === 'dark') {
+        function updateTheme(theme) {
+            body.setAttribute('data-theme', theme);
+            if (theme === 'dark') {
                 sunIcon.style.display = 'none';
                 moonIcon.style.display = 'block';
             } else {
                 sunIcon.style.display = 'block';
                 moonIcon.style.display = 'none';
             }
+        }
 
+        themeToggle.addEventListener('click', () => {
+            const currentTheme = body.getAttribute('data-theme');
+            const newTheme = currentTheme === 'light' ? 'dark' : 'light';
+            updateTheme(newTheme);
             localStorage.setItem('theme', newTheme);
         });
 
@@ -211,11 +209,7 @@
         // Persist Theme
         const savedTheme = localStorage.getItem('theme');
         if (savedTheme) {
-            body.setAttribute('data-theme', savedTheme);
-            if (savedTheme === 'dark') {
-                sunIcon.style.display = 'none';
-                moonIcon.style.display = 'block';
-            }
+            updateTheme(savedTheme);
         }
     </script>
 </body>
