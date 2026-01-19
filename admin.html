@@ -4,7 +4,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>관리자 페이지 (사용자 친화 버전) | Kim, Minseung</title>
+    <title>Admin Control Panel | Kim, Minseung</title>
     <link rel="stylesheet" href="styles.css">
     <style>
         .admin-container {
@@ -21,128 +21,178 @@
             box-shadow: 0 4px 20px var(--shadow-color);
         }
 
+        /* Tab Styles */
         .tab-menu {
             display: flex;
             gap: 10px;
             margin-bottom: 20px;
             border-bottom: 1px solid var(--border-color);
-            padding-bottom: 10px;
+            padding-bottom: 5px;
+            flex-wrap: wrap;
         }
 
         .tab-btn {
-            padding: 10px 20px;
+            padding: 12px 20px;
             border: none;
             background: none;
             color: var(--text-color);
             cursor: pointer;
-            font-weight: 600;
-            opacity: 0.6;
+            font-weight: 700;
+            opacity: 0.5;
+            transition: all 0.2s;
+            font-size: 1rem;
         }
 
         .tab-btn.active {
             opacity: 1;
+            color: var(--primary-color);
             border-bottom: 3px solid var(--primary-color);
         }
 
-        .form-group {
-            margin-bottom: 1.5rem;
-            border-bottom: 1px dashed var(--border-color);
-            padding-bottom: 1rem;
+        .sub-tab-menu {
+            display: flex;
+            gap: 8px;
+            margin: -10px 0 20px 0;
+            background: rgba(0, 0, 0, 0.03);
+            padding: 5px;
+            border-radius: 8px;
+            width: fit-content;
         }
 
-        .form-group:last-child {
-            border-bottom: none;
+        [data-theme="dark"] .sub-tab-menu {
+            background: rgba(255, 255, 255, 0.05);
+        }
+
+        .sub-tab-btn {
+            padding: 8px 15px;
+            border: none;
+            background: none;
+            color: var(--text-color);
+            cursor: pointer;
+            border-radius: 6px;
+            font-size: 0.85rem;
+            font-weight: 600;
+            opacity: 0.6;
+        }
+
+        .sub-tab-btn.active {
+            background: var(--card-bg);
+            opacity: 1;
+            box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+            color: var(--primary-color);
+        }
+
+        /* Form Styles */
+        .form-group {
+            margin-bottom: 1.2rem;
         }
 
         .form-row {
             display: grid;
             grid-template-columns: 1fr 1fr;
-            gap: 10px;
-            margin-bottom: 10px;
-        }
-
-        .form-row.full {
-            grid-template-columns: 1fr;
+            gap: 15px;
+            margin-bottom: 12px;
         }
 
         label {
             display: block;
-            margin-bottom: 5px;
-            font-size: 0.9rem;
-            font-weight: 600;
+            margin-bottom: 6px;
+            font-size: 0.85rem;
+            font-weight: 700;
+            opacity: 0.8;
         }
 
         input,
         textarea,
         select {
             width: 100%;
-            padding: 10px;
+            padding: 12px;
             border: 1px solid var(--border-color);
-            border-radius: 6px;
+            border-radius: 8px;
             background: var(--bg-color);
             color: var(--text-color);
+            font-size: 0.95rem;
+        }
+
+        input:focus {
+            border-color: var(--primary-color);
+            outline: none;
         }
 
         .item-card {
-            background: rgba(0, 0, 0, 0.02);
+            background: rgba(0, 0, 0, 0.01);
             border: 1px solid var(--border-color);
-            padding: 15px;
-            border-radius: 8px;
-            margin-bottom: 15px;
+            padding: 20px;
+            border-radius: 12px;
+            margin-bottom: 20px;
             position: relative;
+            border-left: 4px solid var(--primary-color);
         }
 
         [data-theme="dark"] .item-card {
-            background: rgba(255, 255, 255, 0.05);
+            background: rgba(255, 255, 255, 0.02);
         }
 
         .remove-btn {
             position: absolute;
-            top: 10px;
-            right: 10px;
-            background: #dc3545;
+            top: 15px;
+            right: 15px;
+            background: #ff4d4f;
             color: white;
             border: none;
-            border-radius: 4px;
+            border-radius: 6px;
             cursor: pointer;
-            padding: 5px 10px;
+            padding: 6px 12px;
             font-size: 0.8rem;
+            font-weight: 700;
         }
 
         .add-btn {
             background: var(--primary-color);
             color: white;
             border: none;
-            padding: 10px 20px;
-            border-radius: 6px;
+            padding: 12px 24px;
+            border-radius: 10px;
             cursor: pointer;
+            font-weight: 700;
             margin-top: 10px;
+            display: flex;
+            align-items: center;
+            gap: 8px;
         }
 
         .sticky-actions {
             position: sticky;
-            bottom: 20px;
+            bottom: 25px;
             display: flex;
-            gap: 10px;
+            gap: 15px;
             justify-content: center;
             background: var(--card-bg);
-            padding: 15px;
+            padding: 18px 30px;
             border-radius: 50px;
-            box-shadow: 0 4px 30px rgba(0, 0, 0, 0.2);
-            z-index: 100;
+            box-shadow: 0 10px 40px rgba(0, 0, 0, 0.3);
+            z-index: 1000;
+            border: 1px solid var(--border-color);
         }
 
         .btn {
-            padding: 12px 24px;
+            padding: 12px 28px;
             border: none;
             border-radius: 30px;
             cursor: pointer;
-            font-weight: 700;
-            transition: transform 0.2s;
+            font-weight: 800;
+            transition: all 0.2s;
+            font-size: 0.95rem;
         }
 
         .btn:hover {
-            transform: translateY(-2px);
+            transform: translateY(-3px);
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.1);
+        }
+
+        .btn-download {
+            background: #52c41a;
+            color: white;
         }
 
         .btn-save {
@@ -150,44 +200,31 @@
             color: white;
         }
 
-        .btn-download {
-            background: #28a745;
-            color: white;
-        }
-
         .btn-cancel {
-            background: #6c757d;
+            background: #8c8c8c;
             color: white;
         }
 
         #load-helper {
-            background: #fff3cd;
-            color: #856404;
-            padding: 15px;
-            border-radius: 8px;
-            margin-bottom: 20px;
-            display: none;
+            background: #fff7e6;
+            border: 1px solid #ffe7ba;
+            color: #d46b08;
+            padding: 20px;
+            border-radius: 12px;
+            margin-bottom: 30px;
         }
 
         .status-msg {
-            fixed: top 20px;
-            right: 20px;
-            padding: 15px 25px;
-            border-radius: 8px;
+            position: fixed;
+            top: 30px;
+            right: 30px;
+            padding: 18px 30px;
+            border-radius: 12px;
             color: white;
-            z-index: 1000;
+            z-index: 5000;
             display: none;
-            animation: slideIn 0.3s;
-        }
-
-        @keyframes slideIn {
-            from {
-                transform: translateX(100%);
-            }
-
-            to {
-                transform: translateX(0);
-            }
+            font-weight: 700;
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.2);
         }
 
         .auth-overlay {
@@ -200,17 +237,30 @@
             display: flex;
             align-items: center;
             justify-content: center;
-            z-index: 2000;
+            z-index: 10000;
         }
 
         .auth-box {
-            max-width: 400px;
+            max-width: 450px;
             width: 90%;
-            padding: 2.5rem;
+            padding: 3rem;
             background: var(--card-bg);
-            border-radius: 20px;
-            box-shadow: 0 10px 40px var(--shadow-color);
+            border-radius: 24px;
+            box-shadow: 0 20px 60px var(--shadow-color);
             text-align: center;
+        }
+
+        @media (max-width: 600px) {
+            .form-row {
+                grid-template-columns: 1fr;
+            }
+
+            .sticky-actions {
+                flex-direction: column;
+                border-radius: 20px;
+                width: 90%;
+                margin: 0 auto;
+            }
         }
     </style>
 </head>
@@ -219,95 +269,102 @@
     <!-- Auth Overlay -->
     <div id="auth-overlay" class="auth-overlay">
         <div class="auth-box">
-            <h2 style="margin-bottom: 1rem;">관리자 인증</h2>
-            <p style="margin-bottom: 2rem; opacity: 0.8;">GitHub에 변경사항을 저장하려면<br>Personal Access Token (PAT)이 필요합니다.</p>
+            <h1 style="margin-bottom: 1.5rem; font-weight: 800;">Admin Authentication</h1>
+            <p style="margin-bottom: 2.5rem; opacity: 0.7; line-height: 1.6;">GitHub Personal Access Token (PAT)을
+                입력하여<br>실시간 서버 커밋 권한을 획득하세요.</p>
             <input type="password" id="github-token" placeholder="ghp_xxxxxxxxxxxx"
-                style="margin-bottom: 1.5rem; text-align: center;">
-            <div style="display: flex; flex-direction: column; gap: 10px;">
+                style="margin-bottom: 2rem; text-align: center; border-radius: 15px;">
+            <div style="display: flex; flex-direction: column; gap: 12px;">
                 <button class="btn btn-save" onclick="authenticate()">GitHub 연동 로그인</button>
                 <button class="btn btn-cancel" onclick="skipAuth()">오프라인 수정 (다운로드 모드)</button>
             </div>
         </div>
     </div>
 
+    <!-- Main Navigation -->
     <nav class="top-nav">
         <div class="nav-container">
             <ul class="nav-list">
-                <li class="nav-item"><a href="index.html">메인으로 가기</a></li>
-                <li class="nav-item"><strong style="color: var(--primary-color);">Admin Panel v2.0</strong></li>
+                <li class="nav-item"><a href="index.html">← 메인 페이지</a></li>
+                <li class="nav-item"><strong style="color: var(--primary-color); font-weight: 800;">Site
+                        Manager</strong></li>
             </ul>
         </div>
     </nav>
 
     <div class="admin-container">
-        <h1>웹사이트 내용 수정</h1>
-        <p style="margin-bottom: 2rem; opacity: 0.7;">수정한 내용은 하단의 'JSON 다운로드'를 눌러 로컬에 저장하거나, GitHub에 직접 반영할 수 있습니다.</p>
+        <h1 style="font-weight: 900; margin-bottom: 10px; font-size: 2.5rem;">Content Management</h1>
+        <p style="margin-bottom: 40px; opacity: 0.6; font-size: 1.1rem;">웹사이트의 모든 정보를 시각적으로 편집하세요.</p>
 
-        <div id="load-helper">
-            <strong>⚠️ 로컬 파일 로드 실패 (CORS)</strong><br>
-            로컬 브라우저 보안 정책으로 인해 파일을 직접 불러올 수 없습니다. <br>
-            수정할 <b>data/</b> 폴더 내의 JSON 파일 내용을 아래에 붙여넣어 주세요.
-            <textarea id="manual-json-input" style="height: 100px; margin-top: 10px;"
-                placeholder="여기에 파일 내용을 복사해서 붙여넣으세요."></textarea>
-            <button class="add-btn" onclick="applyManualLoad()">데이터 적용하기</button>
+        <!-- CORS Helper -->
+        <div id="load-helper" style="display:none;">
+            <h4 style="margin-bottom: 10px;">🛡️ 로컬 보안 정책 (CORS) 안내</h4>
+            <p style="margin-bottom: 15px; font-size: 0.95rem;">로컬 파일 시스템 보안으로 인해 자동으로 데이터를 불러올 수 없습니다. <b>편집할 .json 파일의
+                    내용 전체</b>를 아래에 붙여넣어 주세요.</p>
+            <textarea id="manual-json-input" style="height: 120px; font-family: monospace; font-size: 0.85rem;"
+                placeholder='{"profile": {...}, "education": [...]}'></textarea>
+            <button class="add-btn" onclick="applyManualLoad()">데이터 파싱 및 적용</button>
         </div>
 
+        <!-- Main Tabs -->
         <div class="tab-menu">
-            <button class="tab-btn active" onclick="switchTab('profile')">프로필 및 학술 활동</button>
-            <button class="tab-btn" onclick="switchTab('publications')">논문 및 특허 실적</button>
+            <button class="tab-btn active" id="tab-btn-profile" onclick="switchTab('profile')">Profile &
+                Education</button>
+            <button class="tab-btn" id="tab-btn-publications" onclick="switchTab('publications')">Publications &
+                Patents</button>
         </div>
 
-        <!-- Profile Tab -->
-        <div id="profile-tab" class="tab-content">
+        <!-- Sub Tabs for Publications -->
+        <div id="pub-sub-tabs" class="sub-tab-menu" style="display:none;">
+            <button class="sub-tab-btn active" id="sub-tab-journal" onclick="switchSubTab('journal')">Journals</button>
+            <button class="sub-tab-btn" id="sub-tab-conference"
+                onclick="switchSubTab('conference')">Conferences</button>
+            <button class="sub-tab-btn" id="sub-tab-patent" onclick="switchSubTab('patent')">Patents</button>
+        </div>
+
+        <!-- Tab Contents -->
+        <div id="profile-content" class="tab-content">
             <div class="admin-section">
-                <h3>기본 프로필</h3>
+                <h3>👤 Basic Profile</h3>
                 <div class="form-row">
-                    <div><label>이름</label><input type="text" id="prof-name"></div>
-                    <div><label>직함</label><input type="text" id="prof-title"></div>
+                    <div><label>성명</label><input type="text" id="prof-name"
+                            oninput="syncMainData('profile', 'name', this.value)"></div>
+                    <div><label>직함</label><input type="text" id="prof-title"
+                            oninput="syncMainData('profile', 'title', this.value)"></div>
                 </div>
                 <div class="form-row">
-                    <div><label>소속</label><input type="text" id="prof-affiliation"></div>
-                    <div><label>이메일</label><input type="text" id="prof-email"></div>
+                    <div><label>소속 기관</label><input type="text" id="prof-affiliation"
+                            oninput="syncMainData('profile', 'affiliation', this.value)"></div>
+                    <div><label>대표 이메일</label><input type="text" id="prof-email"
+                            oninput="syncMainData('profile', 'email', this.value)"></div>
                 </div>
             </div>
 
             <div class="admin-section">
-                <h3>학력 (Education)</h3>
+                <h3>🎓 Education History</h3>
                 <div id="edu-list"></div>
-                <button class="add-btn" onclick="addItem('edu')">+ 학력 추가</button>
+                <button class="add-btn" onclick="addItem('edu')">+ 교육 사항 추가</button>
             </div>
 
             <div class="admin-section">
-                <h3>학술 활동 (Academic Activities)</h3>
+                <h3>🎖️ Academic Service & Activities</h3>
                 <div id="activity-list"></div>
-                <button class="add-btn" onclick="addItem('activity')">+ 활동 추가</button>
+                <button class="add-btn" onclick="addItem('activity')">+ 활동 사항 추가</button>
             </div>
         </div>
 
-        <!-- Publications Tab -->
-        <div id="publications-tab" class="tab-content" style="display:none;">
-            <div class="admin-section">
-                <h3>Journal (SCI/KCI)</h3>
-                <div id="journal-list"></div>
-                <button class="add-btn" onclick="addItem('journal')">+ 저널 논문 추가</button>
-            </div>
-            <div class="admin-section">
-                <h3>Conference (국내/국제 학술대회)</h3>
-                <div id="conf-list"></div>
-                <button class="add-btn" onclick="addItem('conf')">+ 학술대회 추가</button>
-            </div>
-            <div class="admin-section">
-                <h3>Patents (특허)</h3>
-                <div id="patent-list"></div>
-                <button class="add-btn" onclick="addItem('patent')">+ 특허 추가</button>
-            </div>
+        <div id="publications-content" class="tab-content" style="display:none;">
+            <!-- Content will be rendered based on active SubTab -->
+            <div id="pub-list-container"></div>
+            <button id="add-pub-btn" class="add-btn"></button>
         </div>
 
+        <!-- Sticky Footer -->
         <div class="sticky-actions">
-            <button class="btn btn-download" onclick="downloadJSON()">JSON 다운로드 (로컬 백업)</button>
-            <button id="github-save-btn" class="btn btn-save" onclick="saveToGitHub()" style="display:none;">GitHub에
-                반영하기</button>
-            <button class="btn btn-cancel" onclick="logout()">로그아웃</button>
+            <button class="btn btn-download" onclick="downloadJSON()">Current JSON Download</button>
+            <button id="github-save-btn" class="btn btn-save" onclick="saveToGitHub()" style="display:none;">GitHub
+                Commit & Push</button>
+            <button class="btn btn-cancel" onclick="logout()">Sign Out</button>
         </div>
     </div>
 
@@ -316,6 +373,7 @@
     <script>
         let currentData = { profile: {}, publications: {} };
         let activeTab = 'profile';
+        let activeSubTab = 'journal';
         const OWNER = 'MKIM-EE';
         const REPO = 'MKIM-EE.github.io';
         let GITHUB_TOKEN = localStorage.getItem('github_token');
@@ -335,7 +393,7 @@
 
         function skipAuth() {
             document.getElementById('auth-overlay').style.display = 'none';
-            showToast('오프라인 수정 모드입니다. 수정 후 다운로드 기능을 이용해 주세요.', '#31708f');
+            showToast('수정 전용 모드입니다. 저장 시 파일을 직접 교체하셔야 합니다.', '#31708f');
         }
 
         function logout() {
@@ -345,22 +403,35 @@
 
         function switchTab(tab) {
             activeTab = tab;
-            document.querySelectorAll('.tab-btn').forEach(b => b.classList.toggle('active', b.innerText.includes(tab === 'profile' ? '프로필' : '논문')));
-            document.getElementById('profile-tab').style.display = tab === 'profile' ? 'block' : 'none';
-            document.getElementById('publications-tab').style.display = tab === 'publications' ? 'block' : 'none';
+            document.querySelectorAll('.tab-btn').forEach(b => b.classList.remove('active'));
+            document.getElementById('tab-btn-' + tab).classList.add('active');
+
+            document.getElementById('profile-content').style.display = tab === 'profile' ? 'block' : 'none';
+            document.getElementById('publications-content').style.display = tab === 'publications' ? 'block' : 'none';
+            document.getElementById('pub-sub-tabs').style.display = tab === 'publications' ? 'flex' : 'none';
+
+            if (tab === 'publications') renderPubItems();
+        }
+
+        function switchSubTab(sub) {
+            activeSubTab = sub;
+            document.querySelectorAll('.sub-tab-btn').forEach(b => b.classList.remove('active'));
+            document.getElementById('sub-tab-' + sub).classList.add('active');
+            renderPubItems();
         }
 
         async function init() {
             try {
                 const [profRes, pubRes] = await Promise.all([
-                    fetch('data/profile.json').then(r => r.json()),
-                    fetch('data/publications.json').then(r => r.json())
+                    fetch('data/profile.json?t=' + Date.now()).then(r => r.json()),
+                    fetch('data/publications.json?t=' + Date.now()).then(r => r.json())
                 ]);
                 currentData.profile = profRes;
                 currentData.publications = pubRes;
-                renderAll();
+                renderProfileFields();
+                renderProfileLists();
             } catch (error) {
-                console.warn('Initial fetch failed, probably CORS:', error);
+                console.warn('Initial load failed:', error);
                 document.getElementById('load-helper').style.display = 'block';
             }
         }
@@ -369,177 +440,183 @@
             try {
                 const input = document.getElementById('manual-json-input').value;
                 const parsed = JSON.parse(input);
-                if (parsed.profile) currentData.profile = parsed;
-                if (parsed.journals) currentData.publications = parsed;
-                renderAll();
-                showToast('데이터가 수동 로드되었습니다.', '#28a745');
-                document.getElementById('load-helper').style.display = 'none';
+                if (parsed.profile) {
+                    currentData.profile = parsed;
+                    renderProfileFields();
+                    renderProfileLists();
+                    showToast('Profile 데이터 로드 완료', '#28a745');
+                } else if (parsed.journals || parsed.patents) {
+                    currentData.publications = parsed;
+                    if (activeTab === 'publications') renderPubItems();
+                    showToast('Publications 데이터 로드 완료', '#28a745');
+                } else {
+                    throw new Error('알 수 없는 데이터 구조입니다.');
+                }
             } catch (e) {
-                showToast('JSON 형식이 잘못되었습니다: ' + e.message, '#dc3545');
+                showToast('로드 실패: ' + e.message, '#dc3545');
             }
         }
 
-        function renderAll() {
-            // Profile
-            document.getElementById('prof-name').value = currentData.profile.profile?.name || '';
-            document.getElementById('prof-title').value = currentData.profile.profile?.title || '';
-            document.getElementById('prof-affiliation').value = currentData.profile.profile?.affiliation || '';
-            document.getElementById('prof-email').value = currentData.profile.profile?.email || '';
+        // Profile Rendering
+        function renderProfileFields() {
+            const p = currentData.profile.profile || {};
+            document.getElementById('prof-name').value = p.name || '';
+            document.getElementById('prof-title').value = p.title || '';
+            document.getElementById('prof-affiliation').value = p.affiliation || '';
+            document.getElementById('prof-email').value = p.email || '';
+        }
 
-            // Education
+        function syncMainData(group, field, val) {
+            if (!currentData.profile.profile) currentData.profile.profile = {};
+            currentData.profile.profile[field] = val;
+        }
+
+        function renderProfileLists() {
             const eduList = document.getElementById('edu-list');
             eduList.innerHTML = (currentData.profile.education || []).map((e, i) => `
                 <div class="item-card">
                     <button class="remove-btn" onclick="removeItem('edu', ${i})">삭제</button>
                     <div class="form-row">
-                        <div><label>기간</label><input type="text" value="${e.date}" onchange="updateItem('edu', ${i}, 'date', this.value)"></div>
-                        <div><label>학기/전공</label><input type="text" value="${e.title}" onchange="updateItem('edu', ${i}, 'title', this.value)"></div>
+                        <div><label>기간 (예: 2024 - Present)</label><input type="text" value="${e.date}" oninput="updateProfileItem('education', ${i}, 'date', this.value)"></div>
+                        <div><label>학위 및 전공</label><input type="text" value="${e.title}" oninput="updateProfileItem('education', ${i}, 'title', this.value)"></div>
                     </div>
-                    <label>소속</label><input type="text" value="${e.description}" onchange="updateItem('edu', ${i}, 'description', this.value)">
+                    <label>기관 명칭</label><input type="text" value="${e.description}" oninput="updateProfileItem('education', ${i}, 'description', this.value)">
                 </div>
             `).join('');
 
-            // Activities
             const actList = document.getElementById('activity-list');
             actList.innerHTML = (currentData.profile.academic_activities || []).map((a, i) => `
                 <div class="item-card">
                     <button class="remove-btn" onclick="removeItem('activity', ${i})">삭제</button>
                     <div class="form-row">
-                        <div><label>날짜</label><input type="text" value="${a.date}" onchange="updateItem('activity', ${i}, 'date', this.value)"></div>
-                        <div><label>활동명/장소</label><input type="text" value="${a.description}" onchange="updateItem('activity', ${i}, 'description', this.value)"></div>
+                        <div style="grid-column: span 1;"><label>날짜 (예: 2024.11.)</label><input type="text" value="${a.date}" oninput="updateProfileItem('academic_activities', ${i}, 'date', this.value)"></div>
+                        <div style="grid-column: span 1;"><label>활동 내역/장소</label><input type="text" value="${a.description}" oninput="updateProfileItem('academic_activities', ${i}, 'description', this.value)"></div>
                     </div>
                 </div>
             `).join('');
+        }
 
-            // Journals
-            const journalList = document.getElementById('journal-list');
-            const sci = (currentData.publications.journals?.sci || []).map(j => ({ ...j, category: 'sci' }));
-            const kci = (currentData.publications.journals?.kci || []).map(j => ({ ...j, category: 'kci' }));
-            journalList.innerHTML = [...sci, ...kci].map((j, i) => `
-                <div class="item-card">
-                    <button class="remove-btn" onclick="removeItem('journal', ${i})">삭제</button>
-                    <div class="form-row">
-                        <div><label>분류</label><select onchange="updateItem('journal', ${i}, 'category', this.value)">
-                            <option value="sci" ${j.category === 'sci' ? 'selected' : ''}>SCI</option>
-                            <option value="kci" ${j.category === 'kci' ? 'selected' : ''}>KCI</option>
-                        </select></div>
-                        <div><label>날짜/권호</label><input type="text" value="${j.venue}" onchange="updateItem('journal', ${i}, 'venue', this.value)"></div>
-                    </div>
-                    <label>제목</label><input type="text" value="${j.title}" onchange="updateItem('journal', ${i}, 'title', this.value)">
-                    <label>저자</label><input type="text" value="${j.authors || ''}" onchange="updateItem('journal', ${i}, 'authors', this.value)">
-                    <label>링크 (DOI)</label><input type="text" value="${j.link || ''}" onchange="updateItem('journal', ${i}, 'link', this.value)">
-                </div>
-            `).join('');
+        function updateProfileItem(listName, index, field, val) {
+            currentData.profile[listName][index][field] = val;
+        }
 
-            // Conferences
-            const confList = document.getElementById('conf-list');
-            const intl = (currentData.publications.conferences?.international || []).map(c => ({ ...c, category: 'international' }));
-            const dom = (currentData.publications.conferences?.domestic || []).map(c => ({ ...c, category: 'domestic' }));
-            confList.innerHTML = [...intl, ...dom].map((c, i) => `
-                <div class="item-card">
-                    <button class="remove-btn" onclick="removeItem('conf', ${i})">삭제</button>
-                    <div class="form-row">
-                        <div><label>분류</label><select onchange="updateItem('conf', ${i}, 'category', this.value)">
-                            <option value="international" ${c.category === 'international' ? 'selected' : ''}>국제 학회</option>
-                            <option value="domestic" ${c.category === 'domestic' ? 'selected' : ''}>국내 학회</option>
-                        </select></div>
-                        <div><label>학회명/일시</label><input type="text" value="${c.venue}" onchange="updateItem('conf', ${i}, 'venue', this.value)"></div>
-                    </div>
-                    <label>논문 제목</label><input type="text" value="${c.title}" onchange="updateItem('conf', ${i}, 'title', this.value)">
-                </div>
-            `).join('');
+        // Publications Rendering (Separated by SubTab)
+        function renderPubItems() {
+            const container = document.getElementById('pub-list-container');
+            const addBtn = document.getElementById('add-pub-btn');
+            let html = '';
 
-            // Patents
-            const patentList = document.getElementById('patent-list');
-            const reg = (currentData.publications.patents?.registration || []).map(p => ({ ...p, category: 'registration' }));
-            const app = (currentData.publications.patents?.application || []).map(p => ({ ...p, category: 'application' }));
-            patentList.innerHTML = [...reg, ...app].map((p, i) => `
-                <div class="item-card">
-                    <button class="remove-btn" onclick="removeItem('patent', ${i})">삭제</button>
-                    <div class="form-row">
-                        <div><label>구분</label><select onchange="updateItem('patent', ${i}, 'category', this.value)">
-                            <option value="registration" ${p.category === 'registration' ? 'selected' : ''}>등록</option>
-                            <option value="application" ${p.category === 'application' ? 'selected' : ''}>출원</option>
-                        </select></div>
-                        <div><label>번호</label><input type="text" value="${p.number || ''}" onchange="updateItem('patent', ${i}, 'number', this.value)"></div>
+            if (activeSubTab === 'journal') {
+                const sci = (currentData.publications.journals.sci || []).map((x, i) => ({ ...x, _idx: i, _type: 'sci' }));
+                const kci = (currentData.publications.journals.kci || []).map((x, i) => ({ ...x, _idx: i, _type: 'kci' }));
+                html = [...sci, ...kci].map(j => `
+                    <div class="item-card">
+                        <button class="remove-btn" onclick="removePub('journal', '${j._type}', ${j._idx})">삭제</button>
+                        <div class="form-row">
+                            <div><label>분류</label><select onchange="movePub('journal', '${j._type}', ${j._idx}, this.value)">
+                                <option value="sci" ${j._type === 'sci' ? 'selected' : ''}>SCI (International)</option>
+                                <option value="kci" ${j._type === 'kci' ? 'selected' : ''}>KCI (Domestic)</option>
+                            </select></div>
+                            <div><label>게재 정보 (날짜/권호)</label><input type="text" value="${j.venue}" oninput="updatePub('journals', '${j._type}', ${j._idx}, 'venue', this.value)"></div>
+                        </div>
+                        <label>논문 제목</label><input type="text" value="${j.title}" oninput="updatePub('journals', '${j._type}', ${j._idx}, 'title', this.value)">
+                        <label>저자 목록 (본인 성함은 &lt;strong&gt; 태그로 생략 가능)</label><input type="text" value="${j.authors}" oninput="updatePub('journals', '${j._type}', ${j._idx}, 'authors', this.value)">
+                        <div class="form-row">
+                            <div><label>Link URL</label><input type="text" value="${j.link || ''}" oninput="updatePub('journals', '${j._type}', ${j._idx}, 'link', this.value)"></div>
+                            <div><label>DOI / IF Display Text</label><input type="text" value="${j.doi || ''}" oninput="updatePub('journals', '${j._type}', ${j._idx}, 'doi', this.value)"></div>
+                        </div>
                     </div>
-                    <label>특허명</label><input type="text" value="${p.title}" onchange="updateItem('patent', ${i}, 'title', this.value)">
-                    <label>발명자/일자</label><input type="text" value="${p.venue}" onchange="updateItem('patent', ${i}, 'venue', this.value)">
-                </div>
-            `).join('');
+                `).join('');
+                addBtn.innerText = '+ New Journal Paper';
+                addBtn.onclick = () => addPub('journal', 'sci');
+            }
+            else if (activeSubTab === 'conference') {
+                const intl = (currentData.publications.conferences.international || []).map((x, i) => ({ ...x, _idx: i, _type: 'international' }));
+                const dom = (currentData.publications.conferences.domestic || []).map((x, i) => ({ ...x, _idx: i, _type: 'domestic' }));
+                html = [...intl, ...dom].map(c => `
+                    <div class="item-card">
+                        <button class="remove-btn" onclick="removePub('conference', '${c._type}', ${c._idx})">삭제</button>
+                        <div class="form-row">
+                            <div><label>구분</label><select onchange="movePub('conference', '${c._type}', ${c._idx}, this.value)">
+                                <option value="international" ${c._type === 'international' ? 'selected' : ''}>International</option>
+                                <option value="domestic" ${c._type === 'domestic' ? 'selected' : ''}>Domestic</option>
+                            </select></div>
+                            <div><label>학회 및 기간</label><input type="text" value="${c.venue}" oninput="updatePub('conferences', '${c._type}', ${c._idx}, 'venue', this.value)"></div>
+                        </div>
+                        <label>발표 제목</label><input type="text" value="${c.title}" oninput="updatePub('conferences', '${c._type}', ${c._idx}, 'title', this.value)">
+                    </div>
+                `).join('');
+                addBtn.innerText = '+ New Conference Paper';
+                addBtn.onclick = () => addPub('conference', 'international');
+            }
+            else if (activeSubTab === 'patent') {
+                const reg = (currentData.publications.patents.registration || []).map((x, i) => ({ ...x, _idx: i, _type: 'registration' }));
+                const app = (currentData.publications.patents.application || []).map((x, i) => ({ ...x, _idx: i, _type: 'application' }));
+                html = [...reg, ...app].map(p => `
+                    <div class="item-card">
+                        <button class="remove-btn" onclick="removePub('patent', '${p._type}', ${p._idx})">삭제</button>
+                        <div class="form-row">
+                            <div><label>상태</label><select onchange="movePub('patent', '${p._type}', ${p._idx}, this.value)">
+                                <option value="registration" ${p._type === 'registration' ? 'selected' : ''}>Registered (등록)</option>
+                                <option value="application" ${p._type === 'application' ? 'selected' : ''}>Applied (출원)</option>
+                            </select></div>
+                            <div><label>특허 번호</label><input type="text" value="${p.number || ''}" oninput="updatePub('patents', '${p._type}', ${p._idx}, 'number', this.value)"></div>
+                        </div>
+                        <label>발명 명칭</label><input type="text" value="${p.title}" oninput="updatePub('patents', '${p._type}', ${p._idx}, 'title', this.value)">
+                        <label>발명자 및 날짜</label><input type="text" value="${p.venue}" oninput="updatePub('patents', '${p._type}', ${p._idx}, 'venue', this.value)">
+                    </div>
+                `).join('');
+                addBtn.innerText = '+ New Patent';
+                addBtn.onclick = () => addPub('patent', 'registration');
+            }
+
+            container.innerHTML = html || '<p style="text-align:center; opacity:0.5; padding:40px;">등록된 데이터가 없습니다.</p>';
+        }
+
+        // Data Update Logic
+        function updatePub(section, type, index, field, val) {
+            currentData.publications[section][type][index][field] = val;
+        }
+
+        function addPub(mainType, subType) {
+            const sections = { journal: 'journals', conference: 'conferences', patent: 'patents' };
+            const templates = {
+                journal: { title: 'New Paper', authors: '', venue: '', link: '', doi: '' },
+                conference: { title: 'New Presentation', venue: '' },
+                patent: { title: 'New Invention', venue: '', number: '' }
+            };
+            currentData.publications[sections[mainType]][subType].unshift({ ...templates[mainType] });
+            renderPubItems();
+        }
+
+        function removePub(mainType, subType, index) {
+            const sections = { journal: 'journals', conference: 'conferences', patent: 'patents' };
+            currentData.publications[sections[mainType]][subType].splice(index, 1);
+            renderPubItems();
+        }
+
+        function movePub(mainType, oldSubType, index, newSubType) {
+            if (oldSubType === newSubType) return;
+            const sections = { journal: 'journals', conference: 'conferences', patent: 'patents' };
+            const item = currentData.publications[sections[mainType]][oldSubType].splice(index, 1)[0];
+            currentData.publications[sections[mainType]][newSubType].unshift(item);
+            renderPubItems();
         }
 
         function addItem(type) {
             if (type === 'edu') currentData.profile.education.unshift({ date: '', title: '', description: '' });
             if (type === 'activity') currentData.profile.academic_activities.unshift({ date: '', description: '' });
-            if (type === 'journal') currentData.publications.journals.sci.unshift({ title: '', authors: '', venue: '', category: 'sci' });
-            if (type === 'conf') currentData.publications.conferences.international.unshift({ title: '', venue: '', category: 'international' });
-            if (type === 'patent') currentData.publications.patents.registration.unshift({ title: '', venue: '', category: 'registration' });
-            renderAll();
+            renderProfileLists();
         }
 
         function removeItem(type, index) {
             if (type === 'edu') currentData.profile.education.splice(index, 1);
             if (type === 'activity') currentData.profile.academic_activities.splice(index, 1);
-            if (type === 'journal') {
-                const total = [...currentData.publications.journals.sci, ...currentData.publications.journals.kci];
-                total.splice(index, 1);
-                currentData.publications.journals.sci = total.filter(j => j.category === 'sci');
-                currentData.publications.journals.kci = total.filter(j => j.category === 'kci');
-            }
-            if (type === 'conf') {
-                const total = [...currentData.publications.conferences.international, ...currentData.publications.conferences.domestic];
-                total.splice(index, 1);
-                currentData.publications.conferences.international = total.filter(c => c.category === 'international');
-                currentData.publications.conferences.domestic = total.filter(c => c.category === 'domestic');
-            }
-            if (type === 'patent') {
-                const total = [...currentData.publications.patents.registration, ...currentData.publications.patents.application];
-                total.splice(index, 1);
-                currentData.publications.patents.registration = total.filter(p => p.category === 'registration');
-                currentData.publications.patents.application = total.filter(p => p.category === 'application');
-            }
-            renderAll();
+            renderProfileLists();
         }
 
-        function updateItem(type, index, field, value) {
-            // Logic to update nested objects (simplified here for brevity, but needed for robustness)
-            if (activeTab === 'profile') {
-                if (type === 'edu') currentData.profile.education[index][field] = value;
-                if (type === 'activity') currentData.profile.academic_activities[index][field] = value;
-            } else {
-                let list;
-                if (type === 'journal') {
-                    list = [...currentData.publications.journals.sci, ...currentData.publications.journals.kci];
-                    list[index][field] = value;
-                    currentData.publications.journals.sci = list.filter(j => j.category === 'sci');
-                    currentData.publications.journals.kci = list.filter(j => j.category === 'kci');
-                }
-                if (type === 'conf') {
-                    list = [...currentData.publications.conferences.international, ...currentData.publications.conferences.domestic];
-                    list[index][field] = value;
-                    currentData.publications.conferences.international = list.filter(c => c.category === 'international');
-                    currentData.publications.conferences.domestic = list.filter(c => c.category === 'domestic');
-                }
-                if (type === 'patent') {
-                    list = [...currentData.publications.patents.registration, ...currentData.publications.patents.application];
-                    list[index][field] = value;
-                    currentData.publications.patents.registration = list.filter(p => p.category === 'registration');
-                    currentData.publications.patents.application = list.filter(p => p.category === 'application');
-                }
-            }
-        }
-
+        // File Operations
         function downloadJSON() {
-            // Update profile root fields before collection
-            currentData.profile.profile = {
-                name: document.getElementById('prof-name').value,
-                title: document.getElementById('prof-title').value,
-                affiliation: document.getElementById('prof-affiliation').value,
-                email: document.getElementById('prof-email').value,
-                links: currentData.profile.profile?.links || []
-            };
-
             const target = activeTab === 'profile' ? currentData.profile : currentData.publications;
             const fileName = activeTab === 'profile' ? 'profile.json' : 'publications.json';
 
@@ -549,7 +626,7 @@
             a.href = url;
             a.download = fileName;
             a.click();
-            showToast(fileName + ' 파일이 다운로드되었습니다. data/ 폴더에 덮어씌워주세요!', '#28a745');
+            showToast(fileName + ' 다운로드 완료! data/ 폴더에 교체해 주세요.', '#28a745');
         }
 
         async function saveToGitHub() {
@@ -557,10 +634,9 @@
             const filePath = `data/${fileName}`;
             const targetData = activeTab === 'profile' ? currentData.profile : currentData.publications;
 
-            showToast('GitHub에 저장 중...', '#ffc107');
+            showToast('Pushing to GitHub...', '#faad14');
 
             try {
-                // Get SHA
                 const res = await fetch(`https://api.github.com/repos/${OWNER}/${REPO}/contents/${filePath}`, {
                     headers: { 'Authorization': `token ${GITHUB_TOKEN}` }
                 });
@@ -573,20 +649,20 @@
                         'Content-Type': 'application/json',
                     },
                     body: JSON.stringify({
-                        message: `Update ${filePath} via Admin Panel Form`,
+                        message: `Admin: Update ${filePath}`,
                         content: btoa(unescape(encodeURIComponent(JSON.stringify(targetData, null, 2)))),
                         sha: remoteFile.sha
                     })
                 });
 
                 if (response.ok) {
-                    showToast('성공적으로 저장되었습니다!', '#28a745');
+                    showToast('성공적으로 서버에 반영되었습니다!', '#28a745');
                 } else {
                     const error = await response.json();
                     throw new Error(error.message);
                 }
             } catch (error) {
-                showToast('GitHub 저장 실패: ' + error.message, '#dc3545');
+                showToast('GitHub 오류: ' + error.message, '#ff4d4f');
             }
         }
 

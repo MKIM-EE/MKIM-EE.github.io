@@ -53,7 +53,7 @@
             <h1 id="profile-name">Minseung Kim</h1>
             <div class="profile-container">
                 <div class="profile-img-wrapper">
-                    <img src="photo_24.jpg" alt="Minseung Kim" />
+                    <img src="photo_24.jpg" alt="Minseung Kim" id="profile-pic" style="cursor: pointer;" />
                 </div>
                 <div class="profile-text">
                     <p>
@@ -151,6 +151,16 @@
 
         // Initialize
         loadProfile();
+
+        // Admin Easter Egg
+        let clickCount = 0;
+        document.getElementById('profile-pic').addEventListener('click', () => {
+            clickCount++;
+            if (clickCount >= 5) {
+                window.location.href = 'admin.html';
+            }
+            setTimeout(() => { clickCount = 0; }, 3000); // 3초 내에 5번 클릭해야 함
+        });
 
         // Theme Toggle
         const themeToggle = document.getElementById('theme-toggle');
