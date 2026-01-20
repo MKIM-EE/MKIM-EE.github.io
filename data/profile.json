@@ -1,88 +1,87 @@
 {
-  "profile": {
-    "name": "Minseung Kim",
-    "image": "assets/images/photo_24.jpg",
-    "title": "Ph.D. Student",
-    "affiliation": "Department of Electrical and Electronic Engineering, Hanyang University",
-    "email": "minseung224@hanyang.ac.kr",
-    "links": [
-      {
-        "label": "Google Scholar",
-        "url": "https://scholar.google.com/citations?user=jCp59vcAAAAJ&hl=en"
-      },
-      {
-        "label": "IEEE Xplore",
-        "url": "https://ieeexplore.ieee.org/author/37067883700"
-      },
-      {
-        "label": "LinkedIn",
-        "url": "https://www.linkedin.com/in/mkim224/"
-      }
+    "profile": {
+        "name": "Minseung Kim",
+        "title": "Ph.D. Student",
+        "affiliation": "Department of Electrical and Electronic Engineering, Hanyang University",
+        "email": "minseung224@hanyang.ac.kr",
+        "links": [
+            {
+                "label": "Google Scholar",
+                "url": "https://scholar.google.com/citations?user=jCp59vcAAAAJ&hl=en"
+            },
+            {
+                "label": "IEEE Xplore",
+                "url": "https://ieeexplore.ieee.org/author/37067883700"
+            },
+            {
+                "label": "LinkedIn",
+                "url": "https://www.linkedin.com/in/mkim224/"
+            }
+        ]
+    },
+    "education": [
+        {
+            "date": "2024 - Present",
+            "title": "Ph.D. in Electrical and Electronic Engineering",
+            "description": "Hanyang University"
+        },
+        {
+            "date": "2022 - 2024",
+            "title": "M.S. in Electrical Engineering",
+            "description": "Mokpo National University"
+        },
+        {
+            "date": "2019 - 2022",
+            "title": "B.S. in Electrical and Control Engineering",
+            "description": "Mokpo National University"
+        }
+    ],
+    "academic_service": [
+        {
+            "role": "Peer Reviewer",
+            "venue": "IEEE Access"
+        }
+    ],
+    "academic_activities": [
+        {
+            "date": "2025.07.",
+            "description": "2025년도 전력전자학술대회, 평창, 대한민국"
+        },
+        {
+            "date": "2025.05.",
+            "description": "20th IEEE Energy Conversion Congress & Expo (ECCE ASIA 2025), Bangaluru, India"
+        },
+        {
+            "date": "2024.07.",
+            "description": "20th International Conference on AC and DC Power Transmission (ACDC 2024), Shanghai, China"
+        },
+        {
+            "date": "2024.07.",
+            "description": "2024년도 전력전자학술대회, 제주, 대한민국"
+        },
+        {
+            "date": "2023.10.",
+            "description": "대한전기학회 추계학술대회, 제주, 대한민국"
+        },
+        {
+            "date": "2022.07.",
+            "description": "제 53회 대한전기학회 하계학술대회, 여수, 대한민국"
+        },
+        {
+            "date": "2022.04.",
+            "description": "한국신재생에너지학회 춘계학술대회, 대구, 대한민국"
+        },
+        {
+            "date": "2022.04.",
+            "description": "대한전기학회 전력계통연구회 춘계학술대회 제1회 우수 연구개발 과제, 제주, 대한민국"
+        },
+        {
+            "date": "2022.02.",
+            "description": "대한전기학회 전력기술부문회 동계세미나, 인천, 대한민국"
+        },
+        {
+            "date": "2021.11.",
+            "description": "대한전기학회 전기기기 및 에너지변환시스템 부문회 추계학술대회, 경주, 대한민국"
+        }
     ]
-  },
-  "education": [
-    {
-      "date": "2024 - Present",
-      "title": "Ph.D. in Electrical and Electronic Engineering",
-      "description": "Hanyang University"
-    },
-    {
-      "date": "2022 - 2024",
-      "title": "M.S. in Electrical Engineering",
-      "description": "Mokpo National University"
-    },
-    {
-      "date": "2019 - 2022",
-      "title": "B.S. in Electrical and Control Engineering",
-      "description": "Mokpo National University"
-    }
-  ],
-  "academic_service": [
-    {
-      "role": "Peer Reviewer",
-      "venue": "IEEE Access"
-    }
-  ],
-  "academic_activities": [
-    {
-      "date": "2025.07.",
-      "description": "2025년도 전력전자학술대회, 평창, 대한민국"
-    },
-    {
-      "date": "2025.05.",
-      "description": "20th IEEE Energy Conversion Congress & Expo (ECCE ASIA 2025), Bangaluru, India"
-    },
-    {
-      "date": "2024.07.",
-      "description": "20th International Conference on AC and DC Power Transmission (ACDC 2024), Shanghai, China"
-    },
-    {
-      "date": "2024.07.",
-      "description": "2024년도 전력전자학술대회, 제주, 대한민국"
-    },
-    {
-      "date": "2023.10.",
-      "description": "대한전기학회 추계학술대회, 제주, 대한민국"
-    },
-    {
-      "date": "2022.07.",
-      "description": "제 53회 대한전기학회 하계학술대회, 여수, 대한민국"
-    },
-    {
-      "date": "2022.04.",
-      "description": "한국신재생에너지학회 춘계학술대회, 대구, 대한민국"
-    },
-    {
-      "date": "2022.04.",
-      "description": "대한전기학회 전력계통연구회 춘계학술대회 제1회 우수 연구개발 과제, 제주, 대한민국"
-    },
-    {
-      "date": "2022.02.",
-      "description": "대한전기학회 전력기술부문회 동계세미나, 인천, 대한민국"
-    },
-    {
-      "date": "2021.11.",
-      "description": "대한전기학회 전기기기 및 에너지변환시스템 부문회 추계학술대회, 경주, 대한민국"
-    }
-  ]
 }

@@ -56,7 +56,7 @@
             <h1 id="profile-name">Minseung Kim</h1>
             <div class="profile-container">
                 <div class="profile-img-wrapper">
-                    <img src="" alt="Minseung Kim" id="profile-pic" style="cursor: pointer; display: none;" />
+                    <img src="photo_24.jpg" alt="Minseung Kim" id="profile-pic" style="cursor: pointer;" />
                 </div>
                 <div class="profile-text">
                     <p>
@@ -109,11 +109,6 @@
                 const data = await response.json();
 
                 // Render Profile
-                const profileImg = document.getElementById('profile-pic');
-                if (data.profile.image) {
-                    profileImg.src = data.profile.image;
-                    profileImg.style.display = 'block';
-                }
                 document.getElementById('profile-name').textContent = data.profile.name;
                 document.getElementById('profile-title').textContent = data.profile.title;
                 document.getElementById('profile-affiliation').textContent = data.profile.affiliation;
