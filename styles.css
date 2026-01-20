@@ -335,10 +335,18 @@ h2::after {
   border-left-color: var(--primary-color);
 }
 
-.pub-title-link {
+.pub-title-link,
+.pub-title-link:visited,
+.pub-title-link:active,
+.pub-title-link:focus {
   text-decoration: none;
   color: inherit;
+  outline: none;
   transition: var(--transition);
+}
+
+.pub-title-link:hover {
+  text-decoration: none;
 }
 
 .pub-title-link:hover .pub-title {
