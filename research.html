@@ -7,55 +7,77 @@
     <title>Research | Kim, Minseung</title>
     <link rel="stylesheet" href="styles.css" />
     <style>
+        .research-list {
+            display: flex;
+            flex-direction: column;
+            gap: 1.5rem;
+            margin-top: 2rem;
+        }
+
         .research-project {
             background: var(--card-bg);
             border: 1px solid var(--border-color);
-            border-radius: 20px;
-            padding: 2rem;
-            margin-bottom: 2rem;
+            border-radius: 12px;
+            padding: 1.5rem;
+            display: flex;
+            gap: 2rem;
+            align-items: flex-start;
             transition: var(--transition);
         }
 
         .research-project:hover {
-            transform: translateY(-5px);
-            box-shadow: var(--shadow);
+            transform: translateX(5px);
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.05);
             border-color: var(--primary-color);
         }
 
-        .project-header {
-            display: flex;
-            justify-content: space-between;
-            align-items: flex-start;
-            margin-bottom: 1rem;
+        .project-image-container {
+            flex-shrink: 0;
+            width: 180px;
+        }
+
+        .project-image {
+            width: 100%;
+            height: 120px;
+            border-radius: 8px;
+            border: 1px solid var(--border-color);
+            object-fit: contain;
+            background: rgba(0, 0, 0, 0.02);
+        }
+
+        .project-details {
+            flex-grow: 1;
         }
 
         .project-title {
-            font-size: 1.5rem;
+            font-size: 1.25rem;
             font-weight: 800;
             color: var(--text-color);
+            margin-bottom: 0.8rem;
+            line-height: 1.4;
         }
 
-        .project-period {
-            font-family: var(--font-heading);
-            font-weight: 600;
-            color: var(--primary-color);
-            font-size: 0.9rem;
+        .project-description {
+            color: var(--text-color);
+            line-height: 1.6;
+            font-size: 1rem;
+            opacity: 0.85;
+            white-space: pre-wrap;
         }
 
-        .interest-tags {
-            display: flex;
-            flex-wrap: wrap;
-            gap: 10px;
-            margin-top: 2rem;
-        }
+        @media screen and (max-width: 600px) {
+            .research-project {
+                flex-direction: column;
+                gap: 1rem;
+            }
 
-        .interest-tag {
-            background: var(--accent-color);
-            color: var(--primary-color);
-            padding: 8px 16px;
-            border-radius: 50px;
-            font-weight: 700;
-            font-size: 0.9rem;
+            .project-image-container {
+                width: 100%;
+            }
+
+            .project-image {
+                height: 150px;
+            }
         }
     </style>
 </head>
@@ -101,7 +123,7 @@
 
     <main class="content">
         <h1>Research</h1>
-        <div id="project-list"></div>
+        <div id="project-list" class="research-list"></div>
     </main>
 
     <button class="back-to-top" id="back-to-top" aria-label="Back to top">
@@ -126,14 +148,14 @@
         function renderProjects(projects) {
             const container = document.getElementById('project-list');
             container.innerHTML = projects.map(p => `
-                <div class="research-project" style="margin-bottom: 5rem; border: none; padding: 0; background: none;">
-                    ${p.image ? `<img src="${p.image}" alt="${p.title}" style="width: 100%; height: auto; border-radius: 20px; box-shadow: 0 20px 50px rgba(0,0,0,0.15); margin-bottom: 2.5rem; border: 1px solid var(--border-color);">` : ''}
-                    <div style="padding: 0 1rem;">
-                        <div class="project-header" style="margin-bottom: 1.5rem;">
-                            <h2 style="font-size: 2rem; font-weight: 900; color: var(--text-color); margin: 0;">${p.title}</h2>
-                            <div class="project-period" style="font-size: 1.1rem; opacity: 0.8;">${p.period}</div>
-                        </div>
-                        <p style="color: var(--text-color); line-height: 2; font-size: 1.15rem; opacity: 0.9; white-space: pre-wrap;">${p.description}</p>
+                <div class="research-project">
+                    <div class="project-image-container">
+                        ${p.image ? `<img src="${p.image}" alt="${p.title}" class="project-image">` :
+                    `<div class="project-image" style="display:flex;align-items:center;justify-content:center;opacity:0.3;font-size:0.8rem;">No Image</div>`}
+                    </div>
+                    <div class="project-details">
+                        <div class="project-title">${p.title}</div>
+                        <div class="project-description">${p.description}</div>
                     </div>
                 </div>
             `).join('');

@@ -592,10 +592,7 @@
             projList.innerHTML = (currentData.research.projects || []).map((p, i) => `
                 <div class="item-card">
                     <button class="remove-btn" onclick="removeResearchItem('project', ${i})">삭제</button>
-                    <div class="form-row date-row">
-                        <div><label>기간</label><input type="text" value="${p.period}" oninput="currentData.research.projects[${i}].period = this.value"></div>
-                        <div><label>프로젝트명</label><input type="text" value="${p.title}" oninput="currentData.research.projects[${i}].title = this.value"></div>
-                    </div>
+                    <div style="flex:1;"><label>프로젝트명</label><input type="text" value="${p.title}" oninput="currentData.research.projects[${i}].title = this.value"></div>
                     <label>대표 이미지 URL (assets/images/...) 옵션</label>
                     <input type="text" value="${p.image || ''}" oninput="currentData.research.projects[${i}].image = this.value" placeholder="예: assets/images/project1.jpg" style="margin-bottom: 12px;">
                     <label>설명</label><textarea oninput="currentData.research.projects[${i}].description = this.value" rows="3">${p.description}</textarea>
@@ -654,7 +651,7 @@
         }
 
         function addResearchItem(type) {
-            if (type === 'project') currentData.research.projects.unshift({ title: "New Project", period: "", description: "", image: "" });
+            if (type === 'project') currentData.research.projects.unshift({ title: "New Project", description: "", image: "" });
             renderResearchItems();
         }
 
