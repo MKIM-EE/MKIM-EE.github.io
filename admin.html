@@ -94,6 +94,10 @@
             margin-bottom: 12px;
         }
 
+        .form-row.date-row {
+            grid-template-columns: 200px 1fr;
+        }
+
         label {
             display: block;
             margin-bottom: 6px;
@@ -476,7 +480,7 @@
             eduList.innerHTML = (currentData.profile.education || []).map((e, i) => `
                 <div class="item-card">
                     <button class="remove-btn" onclick="removeItem('edu', ${i})">삭제</button>
-                    <div class="form-row">
+                    <div class="form-row date-row">
                         <div><label>기간 (예: 2024 - Present)</label><input type="text" value="${e.date}" oninput="updateProfileItem('education', ${i}, 'date', this.value)"></div>
                         <div><label>학위 및 전공</label><input type="text" value="${e.title}" oninput="updateProfileItem('education', ${i}, 'title', this.value)"></div>
                     </div>
@@ -488,9 +492,9 @@
             actList.innerHTML = (currentData.profile.academic_activities || []).map((a, i) => `
                 <div class="item-card">
                     <button class="remove-btn" onclick="removeItem('activity', ${i})">삭제</button>
-                    <div class="form-row">
-                        <div style="grid-column: span 1;"><label>날짜 (예: 2024.11.)</label><input type="text" value="${a.date}" oninput="updateProfileItem('academic_activities', ${i}, 'date', this.value)"></div>
-                        <div style="grid-column: span 1;"><label>활동 내역/장소</label><input type="text" value="${a.description}" oninput="updateProfileItem('academic_activities', ${i}, 'description', this.value)"></div>
+                    <div class="form-row date-row">
+                        <div style="grid-column: span 1;"><label>날짜 (ex: xxxx.xx.)</label><input type="text" value="${a.date}" oninput="updateProfileItem('academic_activities', ${i}, 'date', this.value)"></div>
+                        <div style="grid-column: span 1;"><label>학회 및 장소</label><input type="text" value="${a.description}" oninput="updateProfileItem('academic_activities', ${i}, 'description', this.value)"></div>
                     </div>
                 </div>
             `).join('');
@@ -512,19 +516,17 @@
                 html = [...sci, ...kci].map(j => `
                     <div class="item-card">
                         <button class="remove-btn" onclick="removePub('journal', '${j._type}', ${j._idx})">삭제</button>
-                        <div class="form-row">
-                            <div><label>분류</label><select onchange="movePub('journal', '${j._type}', ${j._idx}, this.value)">
-                                <option value="sci" ${j._type === 'sci' ? 'selected' : ''}>SCI (International)</option>
-                                <option value="kci" ${j._type === 'kci' ? 'selected' : ''}>KCI (Domestic)</option>
+                        <div class="form-row date-row">
+                            <div><label>분류</label><select
+ onchange="movePub('journal', '${j._type}', ${j._idx}, this.value)">
+                                <option value="sci" ${j._type === 'sci' ? 'selected' : ''}>International</option>
+                                <option value="kci" ${j._type === 'kci' ? 'selected' : ''}>Domestic</option>
                             </select></div>
-                            <div><label>게재 정보 (날짜/권호)</label><input type="text" value="${j.venue}" oninput="updatePub('journals', '${j._type}', ${j._idx}, 'venue', this.value)"></div>
+                            <div><label>저널 및 날짜</label><input type="text" value="${j.venue}" oninput="updatePub('journals', '${j._type}', ${j._idx}, 'venue', this.value)"></div>
                         </div>
                         <label>논문 제목</label><input type="text" value="${j.title}" oninput="updatePub('journals', '${j._type}', ${j._idx}, 'title', this.value)">
-                        <label>저자 목록 (본인 성함은 &lt;strong&gt; 태그로 생략 가능)</label><input type="text" value="${j.authors}" oninput="updatePub('journals', '${j._type}', ${j._idx}, 'authors', this.value)">
-                        <div class="form-row">
-                            <div><label>Link URL</label><input type="text" value="${j.link || ''}" oninput="updatePub('journals', '${j._type}', ${j._idx}, 'link', this.value)"></div>
-                            <div><label>DOI / IF Display Text</label><input type="text" value="${j.doi || ''}" oninput="updatePub('journals', '${j._type}', ${j._idx}, 'doi', this.value)"></div>
-                        </div>
+                        <label>저자 목록</label><input type="text" value="${j.authors}" oninput="updatePub('journals', '${j._type}', ${j._idx}, 'authors', this.value)">
+                        <label>Link URL</label><input type="text" value="${j.link}" oninput="updatePub('journals', '${j._type}', ${j._idx}, 'link', this.value)">
                     </div>
                 `).join('');
                 addBtn.innerText = '+ New Journal Paper';
@@ -536,14 +538,16 @@
                 html = [...intl, ...dom].map(c => `
                     <div class="item-card">
                         <button class="remove-btn" onclick="removePub('conference', '${c._type}', ${c._idx})">삭제</button>
-                        <div class="form-row">
-                            <div><label>구분</label><select onchange="movePub('conference', '${c._type}', ${c._idx}, this.value)">
+                        <div class="form-row date-row">
+                            <div><label>구분</label><select
+ onchange="movePub('conference', '${c._type}', ${c._idx}, this.value)">
                                 <option value="international" ${c._type === 'international' ? 'selected' : ''}>International</option>
                                 <option value="domestic" ${c._type === 'domestic' ? 'selected' : ''}>Domestic</option>
                             </select></div>
                             <div><label>학회 및 기간</label><input type="text" value="${c.venue}" oninput="updatePub('conferences', '${c._type}', ${c._idx}, 'venue', this.value)"></div>
                         </div>
                         <label>발표 제목</label><input type="text" value="${c.title}" oninput="updatePub('conferences', '${c._type}', ${c._idx}, 'title', this.value)">
+                        <label>저자 목록</label><input type="text" value="${c.authors}" oninput="updatePub('conferences', '${c._type}', ${c._idx}, 'authors', this.value)">
                         <label>Link URL</label><input type="text" value="${c.link || ''}" oninput="updatePub('conferences', '${c._type}', ${c._idx}, 'link', this.value)">
                     </div>
                 `).join('');
@@ -556,8 +560,9 @@
                 html = [...reg, ...app].map(p => `
                     <div class="item-card">
                         <button class="remove-btn" onclick="removePub('patent', '${p._type}', ${p._idx})">삭제</button>
-                        <div class="form-row">
-                            <div><label>상태</label><select onchange="movePub('patent', '${p._type}', ${p._idx}, this.value)">
+                        <div class="form-row date-row">
+                            <div><label>상태</label><select
+ onchange="movePub('patent', '${p._type}', ${p._idx}, this.value)">
                                 <option value="registration" ${p._type === 'registration' ? 'selected' : ''}>Registered (등록)</option>
                                 <option value="application" ${p._type === 'application' ? 'selected' : ''}>Applied (출원)</option>
                             </select></div>
