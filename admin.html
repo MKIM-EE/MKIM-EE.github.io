@@ -544,6 +544,7 @@
                             <div><label>학회 및 기간</label><input type="text" value="${c.venue}" oninput="updatePub('conferences', '${c._type}', ${c._idx}, 'venue', this.value)"></div>
                         </div>
                         <label>발표 제목</label><input type="text" value="${c.title}" oninput="updatePub('conferences', '${c._type}', ${c._idx}, 'title', this.value)">
+                        <label>Link URL</label><input type="text" value="${c.link || ''}" oninput="updatePub('conferences', '${c._type}', ${c._idx}, 'link', this.value)">
                     </div>
                 `).join('');
                 addBtn.innerText = '+ New Conference Paper';
@@ -582,7 +583,7 @@
             const sections = { journal: 'journals', conference: 'conferences', patent: 'patents' };
             const templates = {
                 journal: { title: 'New Paper', authors: '', venue: '', link: '', doi: '' },
-                conference: { title: 'New Presentation', venue: '' },
+                conference: { title: 'New Presentation', venue: '', link: '' },
                 patent: { title: 'New Invention', venue: '', number: '' }
             };
             currentData.publications[sections[mainType]][subType].unshift({ ...templates[mainType] });

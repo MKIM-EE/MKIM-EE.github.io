@@ -100,15 +100,15 @@
 
             container.innerHTML = items.map(item => `
                 <div class="pub-item">
-                    <span class="pub-title">${item.title}</span>
+                    ${item.link ?
+                    `<a href="${item.link}" target="_blank" rel="noopener noreferrer" class="pub-title-link">
+                            <span class="pub-title">${item.title}</span>
+                         </a>` :
+                    `<span class="pub-title">${item.title}</span>`
+                }
                     ${item.authors ? `<p class="pub-authors">${item.authors}</p>` : ''}
                     <p class="pub-venue">${item.venue}</p>
                     ${item.number ? `<p class="pub-venue">${item.number}</p>` : ''}
-                    ${item.link ? `
-                        <a href="${item.link}" target="_blank" rel="noopener noreferrer" class="paper-link">
-                            ${item.doi ? `DOI: ${item.doi}` : 'Link'}
-                        </a>
-                    ` : ''}
                 </div>
             `).join('');
         }

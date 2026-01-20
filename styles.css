@@ -335,11 +335,23 @@ h2::after {
   border-left-color: var(--primary-color);
 }
 
+.pub-title-link {
+  text-decoration: none;
+  color: inherit;
+  transition: var(--transition);
+}
+
+.pub-title-link:hover .pub-title {
+  color: var(--primary-color);
+  text-decoration: underline;
+}
+
 .pub-title {
   font-weight: 700;
   font-size: 1.15rem;
   display: block;
   margin-bottom: 0.4rem;
+  transition: var(--transition);
 }
 
 .pub-authors {
