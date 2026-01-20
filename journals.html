@@ -1,0 +1,145 @@
+<!DOCTYPE html>
+<html lang="ko">
+
+<head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>Journals | Kim, Minseung</title>
+    <link rel="stylesheet" href="styles.css" />
+</head>
+
+<body data-theme="light">
+
+    <!-- Navigation Bar -->
+    <nav class="top-nav">
+        <div class="nav-container">
+            <div class="hamburger" id="hamburger">
+                <span></span>
+                <span></span>
+                <span></span>
+            </div>
+            <ul class="nav-list" id="nav-list">
+                <li class="nav-item"><a href="index.html">About</a></li>
+                <li class="nav-item"><a href="research.html">Research</a></li>
+                <li class="nav-item"><a href="journals.html">Journals</a></li>
+                <li class="nav-item"><a href="conferences.html">Conferences</a></li>
+                <li class="nav-item"><a href="patents.html">Patents</a></li>
+            </ul>
+            <button class="theme-toggle" id="theme-toggle" aria-label="Toggle dark mode">
+                <svg id="sun-icon" xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24"
+                    fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                    <circle cx="12" cy="12" r="5"></circle>
+                    <line x1="12" y1="1" x2="12" y2="3"></line>
+                    <line x1="12" y1="21" x2="12" y2="23"></line>
+                    <line x1="4.22" y1="4.22" x2="5.64" y2="5.64"></line>
+                    <line x1="18.36" y1="18.36" x2="19.78" y2="19.78"></line>
+                    <line x1="1" y1="12" x2="3" y2="12"></line>
+                    <line x1="21" y1="12" x2="23" y2="12"></line>
+                    <line x1="4.22" y1="19.78" x2="5.64" y2="18.36"></line>
+                    <line x1="18.36" y1="5.64" x2="19.78" y2="4.22"></line>
+                </svg>
+                <svg id="moon-icon" style="display:none" xmlns="http://www.w3.org/2000/svg" width="20" height="20"
+                    viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"
+                    stroke-linejoin="round">
+                    <path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z"></path>
+                </svg>
+            </button>
+        </div>
+    </nav>
+
+    <main class="content">
+        <h1>Journals</h1>
+        <h2>SCI</h2>
+        <div id="sci-list" class="pub-list"></div>
+
+        <h2 style="margin-top: 3rem;">KCI</h2>
+        <div id="kci-list" class="pub-list"></div>
+    </main>
+
+    <button class="back-to-top" id="back-to-top" aria-label="Back to top">
+        <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none"
+            stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+            <line x1="12" y1="19" x2="12" y2="5"></line>
+            <polyline points="5 12 12 5 19 12"></polyline>
+        </svg>
+    </button>
+
+    <script>
+        async function loadJournals() {
+            try {
+                const response = await fetch('data/publications.json');
+                const data = await response.json();
+                renderList(data.journals.sci, 'sci-list');
+                renderList(data.journals.kci, 'kci-list');
+            } catch (error) {
+                console.error('Error loading journals:', error);
+            }
+        }
+
+        function renderList(items, containerId) {
+            const container = document.getElementById(containerId);
+            if (!container) return;
+            container.innerHTML = items.map(item => `
+                <div class="pub-item">
+                    ${item.link ?
+                    `<a href="${item.link}" target="_blank" rel="noopener noreferrer" class="pub-title-link">
+                            <span class="pub-title">${item.title}</span>
+                         </a>` :
+                    `<span class="pub-title">${item.title}</span>`
+                }
+                    ${item.authors ? `<p class="pub-authors">${item.authors}</p>` : ''}
+                    <p class="pub-venue">${item.venue}</p>
+                </div>
+            `).join('');
+        }
+
+        loadJournals();
+
+        // Common UI Logic
+        const themeToggle = document.getElementById('theme-toggle');
+        const sunIcon = document.getElementById('sun-icon');
+        const moonIcon = document.getElementById('moon-icon');
+        const body = document.body;
+
+        function updateTheme(theme) {
+            body.setAttribute('data-theme', theme);
+            if (theme === 'dark') {
+                sunIcon.style.display = 'none';
+                moonIcon.style.display = 'block';
+            } else {
+                sunIcon.style.display = 'block';
+                moonIcon.style.display = 'none';
+            }
+        }
+
+        themeToggle.addEventListener('click', () => {
+            const currentTheme = body.getAttribute('data-theme');
+            const newTheme = currentTheme === 'light' ? 'dark' : 'light';
+            updateTheme(newTheme);
+            localStorage.setItem('theme', newTheme);
+        });
+
+        const hamburger = document.getElementById('hamburger');
+        const navList = document.getElementById('nav-list');
+        hamburger.addEventListener('click', () => {
+            navList.classList.toggle('active');
+        });
+
+        const backToTop = document.getElementById('back-to-top');
+        window.addEventListener('scroll', () => {
+            if (window.scrollY > 300) {
+                backToTop.classList.add('visible');
+            } else {
+                backToTop.classList.remove('visible');
+            }
+        });
+        backToTop.addEventListener('click', () => {
+            window.scrollTo({ top: 0, behavior: 'smooth' });
+        });
+
+        const savedTheme = localStorage.getItem('theme');
+        if (savedTheme) updateTheme(savedTheme);
+    </script>
+</body>
+
+</html>

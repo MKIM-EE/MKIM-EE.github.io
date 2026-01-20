@@ -148,9 +148,17 @@
             border: none;
             border-radius: 6px;
             cursor: pointer;
-            padding: 6px 12px;
+            padding: 8px 15px;
             font-size: 0.8rem;
             font-weight: 700;
+            z-index: 50;
+            /* Ensure button is clickable */
+            transition: all 0.2s;
+        }
+
+        .remove-btn:hover {
+            background: #d9363e;
+            transform: scale(1.05);
         }
 
         .add-btn {
@@ -315,17 +323,13 @@
         <div class="tab-menu">
             <button class="tab-btn active" id="tab-btn-profile" onclick="switchTab('profile')">Profile &
                 Education</button>
-            <button class="tab-btn" id="tab-btn-publications" onclick="switchTab('publications')">Publications &
-                Patents</button>
+            <button class="tab-btn" id="tab-btn-research" onclick="switchTab('research')">Research</button>
+            <button class="tab-btn" id="tab-btn-journals" onclick="switchTab('journals')">Journals</button>
+            <button class="tab-btn" id="tab-btn-conferences" onclick="switchTab('conferences')">Conferences</button>
+            <button class="tab-btn" id="tab-btn-patents" onclick="switchTab('patents')">Patents</button>
         </div>
 
-        <!-- Sub Tabs for Publications -->
-        <div id="pub-sub-tabs" class="sub-tab-menu" style="display:none;">
-            <button class="sub-tab-btn active" id="sub-tab-journal" onclick="switchSubTab('journal')">Journals</button>
-            <button class="sub-tab-btn" id="sub-tab-conference"
-                onclick="switchSubTab('conference')">Conferences</button>
-            <button class="sub-tab-btn" id="sub-tab-patent" onclick="switchSubTab('patent')">Patents</button>
-        </div>
+        <!-- (Sub tabs removed) -->
 
         <!-- Tab Contents -->
         <div id="profile-content" class="tab-content">
@@ -358,10 +362,27 @@
             </div>
         </div>
 
-        <div id="publications-content" class="tab-content" style="display:none;">
-            <!-- Content will be rendered based on active SubTab -->
-            <div id="pub-list-container"></div>
-            <button id="add-pub-btn" class="add-btn"></button>
+        <div id="research-content" class="tab-content" style="display:none;">
+            <div class="admin-section">
+                <h3>🚀 Research (Poster Style)</h3>
+                <div id="project-list-admin"></div>
+                <button class="add-btn" onclick="addResearchItem('project')">+ 프로젝트/포스터 추가</button>
+            </div>
+        </div>
+
+        <div id="journals-content" class="tab-content" style="display:none;">
+            <div id="journals-list-container"></div>
+            <button class="add-btn" onclick="addPub('journal', 'sci')">+ New Journal Paper</button>
+        </div>
+
+        <div id="conferences-content" class="tab-content" style="display:none;">
+            <div id="conferences-list-container"></div>
+            <button class="add-btn" onclick="addPub('conference', 'international')">+ New Conference Paper</button>
+        </div>
+
+        <div id="patents-content" class="tab-content" style="display:none;">
+            <div id="patent-list-container"></div>
+            <button id="add-patent-btn" class="add-btn" onclick="addPatent()">+ New Patent</button>
         </div>
 
         <!-- Sticky Footer -->
@@ -376,9 +397,10 @@
     <div id="toast" class="status-msg"></div>
 
     <script>
-        let currentData = { profile: {}, publications: {} };
+        let currentData = { profile: {}, research: {}, publications: {}, patents: {} };
         let activeTab = 'profile';
         let activeSubTab = 'journal';
+        let activePatentSubTab = 'registration';
         const OWNER = 'MKIM-EE';
         const REPO = 'MKIM-EE.github.io';
         let GITHUB_TOKEN = localStorage.getItem('github_token');
@@ -411,11 +433,13 @@
             document.querySelectorAll('.tab-btn').forEach(b => b.classList.remove('active'));
             document.getElementById('tab-btn-' + tab).classList.add('active');
 
-            document.getElementById('profile-content').style.display = tab === 'profile' ? 'block' : 'none';
-            document.getElementById('publications-content').style.display = tab === 'publications' ? 'block' : 'none';
-            document.getElementById('pub-sub-tabs').style.display = tab === 'publications' ? 'flex' : 'none';
+            document.querySelectorAll('.tab-content').forEach(c => c.style.display = 'none');
+            document.getElementById(tab + '-content').style.display = 'block';
 
-            if (tab === 'publications') renderPubItems();
+            if (tab === 'research') renderResearchItems();
+            if (tab === 'journals') renderPubItems('journal');
+            if (tab === 'conferences') renderPubItems('conference');
+            if (tab === 'patents') renderPatentItems();
         }
 
         function switchSubTab(sub) {
@@ -429,14 +453,21 @@
             if (!GITHUB_TOKEN) return;
 
             try {
-                const [profRes, pubRes] = await Promise.all([
+                const [profRes, resRes, pubRes, patRes] = await Promise.all([
                     fetch('data/profile.json?t=' + Date.now()).then(r => r.json()),
-                    fetch('data/publications.json?t=' + Date.now()).then(r => r.json())
+                    fetch('data/research.json?t=' + Date.now()).then(r => r.json()),
+                    fetch('data/publications.json?t=' + Date.now()).then(r => r.json()),
+                    fetch('data/patents.json?t=' + Date.now()).then(r => r.json())
                 ]);
                 currentData.profile = profRes;
+                currentData.research = resRes;
                 currentData.publications = pubRes;
+                currentData.patents = patRes;
+
                 renderProfileFields();
                 renderProfileLists();
+                renderResearchItems();
+                renderPatentItems();
 
                 // Show UI after data is successfully loaded
                 document.querySelector('.admin-container').style.display = 'block';
@@ -511,23 +542,19 @@
             currentData.profile[listName][index][field] = val;
         }
 
-        // Publications Rendering (Separated by SubTab)
-        function renderPubItems() {
-            const container = document.getElementById('pub-list-container');
-            const addBtn = document.getElementById('add-pub-btn');
-            let html = '';
-
-            if (activeSubTab === 'journal') {
+        function renderPubItems(mode) {
+            if (mode === 'journal') {
+                const container = document.getElementById('journals-list-container');
                 const sci = (currentData.publications.journals.sci || []).map((x, i) => ({ ...x, _idx: i, _type: 'sci' }));
                 const kci = (currentData.publications.journals.kci || []).map((x, i) => ({ ...x, _idx: i, _type: 'kci' }));
-                html = [...sci, ...kci].map(j => `
+
+                container.innerHTML = [...sci, ...kci].map(j => `
                     <div class="item-card">
                         <button class="remove-btn" onclick="removePub('journal', '${j._type}', ${j._idx})">삭제</button>
                         <div class="form-row date-row">
-                            <div><label>분류</label><select
- onchange="movePub('journal', '${j._type}', ${j._idx}, this.value)">
-                                <option value="sci" ${j._type === 'sci' ? 'selected' : ''}>International</option>
-                                <option value="kci" ${j._type === 'kci' ? 'selected' : ''}>Domestic</option>
+                            <div><label>분류</label><select onchange="movePub('journal', '${j._type}', ${j._idx}, this.value)">
+                                <option value="sci" ${j._type === 'sci' ? 'selected' : ''}>SCI</option>
+                                <option value="kci" ${j._type === 'kci' ? 'selected' : ''}>KCI</option>
                             </select></div>
                             <div><label>저널 및 날짜</label><input type="text" value="${j.venue}" oninput="updatePub('journals', '${j._type}', ${j._idx}, 'venue', this.value)"></div>
                         </div>
@@ -536,18 +563,17 @@
                         <label>Link URL</label><input type="text" value="${j.link}" oninput="updatePub('journals', '${j._type}', ${j._idx}, 'link', this.value)">
                     </div>
                 `).join('');
-                addBtn.innerText = '+ New Journal Paper';
-                addBtn.onclick = () => addPub('journal', 'sci');
             }
-            else if (activeSubTab === 'conference') {
+            else if (mode === 'conference') {
+                const container = document.getElementById('conferences-list-container');
                 const intl = (currentData.publications.conferences.international || []).map((x, i) => ({ ...x, _idx: i, _type: 'international' }));
                 const dom = (currentData.publications.conferences.domestic || []).map((x, i) => ({ ...x, _idx: i, _type: 'domestic' }));
-                html = [...intl, ...dom].map(c => `
+
+                container.innerHTML = [...intl, ...dom].map(c => `
                     <div class="item-card">
                         <button class="remove-btn" onclick="removePub('conference', '${c._type}', ${c._idx})">삭제</button>
                         <div class="form-row date-row">
-                            <div><label>구분</label><select
- onchange="movePub('conference', '${c._type}', ${c._idx}, this.value)">
+                            <div><label>구분</label><select onchange="movePub('conference', '${c._type}', ${c._idx}, this.value)">
                                 <option value="international" ${c._type === 'international' ? 'selected' : ''}>International</option>
                                 <option value="domestic" ${c._type === 'domestic' ? 'selected' : ''}>Domestic</option>
                             </select></div>
@@ -558,32 +584,44 @@
                         <label>Link URL</label><input type="text" value="${c.link || ''}" oninput="updatePub('conferences', '${c._type}', ${c._idx}, 'link', this.value)">
                     </div>
                 `).join('');
-                addBtn.innerText = '+ New Conference Paper';
-                addBtn.onclick = () => addPub('conference', 'international');
             }
-            else if (activeSubTab === 'patent') {
-                const reg = (currentData.publications.patents.registration || []).map((x, i) => ({ ...x, _idx: i, _type: 'registration' }));
-                const app = (currentData.publications.patents.application || []).map((x, i) => ({ ...x, _idx: i, _type: 'application' }));
-                html = [...reg, ...app].map(p => `
-                    <div class="item-card">
-                        <button class="remove-btn" onclick="removePub('patent', '${p._type}', ${p._idx})">삭제</button>
-                        <div class="form-row date-row">
-                            <div><label>상태</label><select
- onchange="movePub('patent', '${p._type}', ${p._idx}, this.value)">
-                                <option value="registration" ${p._type === 'registration' ? 'selected' : ''}>Registered (등록)</option>
-                                <option value="application" ${p._type === 'application' ? 'selected' : ''}>Applied (출원)</option>
-                            </select></div>
-                            <div><label>특허 번호</label><input type="text" value="${p.number || ''}" oninput="updatePub('patents', '${p._type}', ${p._idx}, 'number', this.value)"></div>
-                        </div>
-                        <label>발명 명칭</label><input type="text" value="${p.title}" oninput="updatePub('patents', '${p._type}', ${p._idx}, 'title', this.value)">
-                        <label>발명자 및 날짜</label><input type="text" value="${p.venue}" oninput="updatePub('patents', '${p._type}', ${p._idx}, 'venue', this.value)">
-                    </div>
-                `).join('');
-                addBtn.innerText = '+ New Patent';
-                addBtn.onclick = () => addPub('patent', 'registration');
-            }
+        }
 
-            container.innerHTML = html || '<p style="text-align:center; opacity:0.5; padding:40px;">등록된 데이터가 없습니다.</p>';
+        function renderResearchItems() {
+            const projList = document.getElementById('project-list-admin');
+            projList.innerHTML = (currentData.research.projects || []).map((p, i) => `
+                <div class="item-card">
+                    <button class="remove-btn" onclick="removeResearchItem('project', ${i})">삭제</button>
+                    <div class="form-row date-row">
+                        <div><label>기간</label><input type="text" value="${p.period}" oninput="currentData.research.projects[${i}].period = this.value"></div>
+                        <div><label>프로젝트명</label><input type="text" value="${p.title}" oninput="currentData.research.projects[${i}].title = this.value"></div>
+                    </div>
+                    <label>대표 이미지 URL (assets/images/...) 옵션</label>
+                    <input type="text" value="${p.image || ''}" oninput="currentData.research.projects[${i}].image = this.value" placeholder="예: assets/images/project1.jpg" style="margin-bottom: 12px;">
+                    <label>설명</label><textarea oninput="currentData.research.projects[${i}].description = this.value" rows="3">${p.description}</textarea>
+                </div>
+            `).join('');
+        }
+
+        function renderPatentItems() {
+            const container = document.getElementById('patent-list-container');
+            const reg = (currentData.patents.registration || []).map((x, i) => ({ ...x, _idx: i, _type: 'registration' }));
+            const app = (currentData.patents.application || []).map((x, i) => ({ ...x, _idx: i, _type: 'application' }));
+
+            container.innerHTML = [...reg, ...app].map(p => `
+                <div class="item-card">
+                    <button class="remove-btn" onclick="removePatent('${p._type}', ${p._idx})">삭제</button>
+                    <div class="form-row date-row">
+                        <div><label>상태</label><select onchange="movePatent('${p._type}', ${p._idx}, this.value)">
+                            <option value="registration" ${p._type === 'registration' ? 'selected' : ''}>Registration</option>
+                            <option value="application" ${p._type === 'application' ? 'selected' : ''}>Application</option>
+                        </select></div>
+                        <div><label>특허 번호</label><input type="text" value="${p.number || ''}" oninput="currentData.patents['${p._type}'][${p._idx}].number = this.value"></div>
+                    </div>
+                    <label>발명 명칭</label><input type="text" value="${p.title}" oninput="currentData.patents['${p._type}'][${p._idx}].title = this.value">
+                    <label>발명자 및 날짜</label><input type="text" value="${p.venue}" oninput="currentData.patents['${p._type}'][${p._idx}].venue = this.value">
+                </div>
+            `).join('');
         }
 
         // Data Update Logic
@@ -592,28 +630,54 @@
         }
 
         function addPub(mainType, subType) {
-            const sections = { journal: 'journals', conference: 'conferences', patent: 'patents' };
+            const sections = { journal: 'journals', conference: 'conferences' };
             const templates = {
-                journal: { title: 'New Paper', authors: '', venue: '', link: '', doi: '' },
-                conference: { title: 'New Presentation', venue: '', link: '' },
-                patent: { title: 'New Invention', venue: '', number: '' }
+                journal: { title: 'New Paper', authors: '', venue: '', link: '' },
+                conference: { title: 'New Presentation', authors: '', venue: '', link: '' }
             };
             currentData.publications[sections[mainType]][subType].unshift({ ...templates[mainType] });
-            renderPubItems();
+            renderPubItems(mainType);
         }
 
         function removePub(mainType, subType, index) {
-            const sections = { journal: 'journals', conference: 'conferences', patent: 'patents' };
+            const sections = { journal: 'journals', conference: 'conferences' };
             currentData.publications[sections[mainType]][subType].splice(index, 1);
-            renderPubItems();
+            renderPubItems(mainType);
         }
 
         function movePub(mainType, oldSubType, index, newSubType) {
             if (oldSubType === newSubType) return;
-            const sections = { journal: 'journals', conference: 'conferences', patent: 'patents' };
+            const sections = { journal: 'journals', conference: 'conferences' };
             const item = currentData.publications[sections[mainType]][oldSubType].splice(index, 1)[0];
             currentData.publications[sections[mainType]][newSubType].unshift(item);
-            renderPubItems();
+            renderPubItems(mainType);
+        }
+
+        function addResearchItem(type) {
+            if (type === 'project') currentData.research.projects.unshift({ title: "New Project", period: "", description: "", image: "" });
+            renderResearchItems();
+        }
+
+        function removeResearchItem(type, index) {
+            if (type === 'project') currentData.research.projects.splice(index, 1);
+            renderResearchItems();
+        }
+
+        function addPatent() {
+            currentData.patents.registration.unshift({ title: "New Patent", venue: "", number: "" });
+            renderPatentItems();
+        }
+
+        function removePatent(type, index) {
+            currentData.patents[type].splice(index, 1);
+            renderPatentItems();
+        }
+
+        function movePatent(oldType, index, newType) {
+            if (oldType === newType) return;
+            const item = currentData.patents[oldType].splice(index, 1)[0];
+            currentData.patents[newType].unshift(item);
+            renderPatentItems();
         }
 
         function addItem(type) {
@@ -630,22 +694,34 @@
 
         // File Operations
         function downloadJSON() {
-            const target = activeTab === 'profile' ? currentData.profile : currentData.publications;
-            const fileName = activeTab === 'profile' ? 'profile.json' : 'publications.json';
-
-            const blob = new Blob([JSON.stringify(target, null, 2)], { type: 'application/json' });
+            const config = {
+                profile: { data: currentData.profile, file: 'profile.json' },
+                research: { data: currentData.research, file: 'research.json' },
+                journals: { data: currentData.publications, file: 'publications.json' },
+                conferences: { data: currentData.publications, file: 'publications.json' },
+                patents: { data: currentData.patents, file: 'patents.json' }
+            };
+            const target = config[activeTab];
+            const blob = new Blob([JSON.stringify(target.data, null, 2)], { type: 'application/json' });
             const url = URL.createObjectURL(blob);
             const a = document.createElement('a');
             a.href = url;
-            a.download = fileName;
+            a.download = target.file;
             a.click();
-            showToast(fileName + ' 다운로드 완료! data/ 폴더에 교체해 주세요.', '#28a745');
+            showToast(target.file + ' 다운로드 완료! data/ 폴더에 교체해 주세요.', '#28a745');
         }
 
         async function saveToGitHub() {
-            const fileName = activeTab === 'profile' ? 'profile.json' : 'publications.json';
-            const filePath = `data/${fileName}`;
-            const targetData = activeTab === 'profile' ? currentData.profile : currentData.publications;
+            const config = {
+                profile: { file: 'profile.json', data: currentData.profile },
+                research: { file: 'research.json', data: currentData.research },
+                journals: { file: 'publications.json', data: currentData.publications },
+                conferences: { file: 'publications.json', data: currentData.publications },
+                patents: { file: 'patents.json', data: currentData.patents }
+            };
+            const target = config[activeTab];
+            const filePath = `data/${target.file}`;
+            const targetData = target.data;
 
             showToast('Pushing to GitHub...', '#faad14');
 

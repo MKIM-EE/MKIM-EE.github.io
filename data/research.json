@@ -1,0 +1,22 @@
+{
+    "interests": [
+        "Grid-Forming Inverter Control",
+        "Machine Learning for Power Electronics",
+        "Wireless Power Transfer Systems",
+        "Digital Twin for Energy Systems"
+    ],
+    "projects": [
+        {
+            "title": "Grid-Forming Inverter Stability Analysis",
+            "period": "2024 - Present",
+            "description": "Research on stability enhancement and islanding detection for GFM inverters in weak grid conditions.",
+            "image": "mfc.png"
+        },
+        {
+            "title": "Grid-Forming Inverter Stability Analysis",
+            "period": "2024 - Present",
+            "description": "Research on stability enhancement and islanding detection for GFM inverters in weak grid conditions.",
+            "image": "mfc.png"
+        }
+    ]
+}

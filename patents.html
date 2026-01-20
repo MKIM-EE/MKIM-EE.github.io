@@ -4,7 +4,7 @@
 <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1" />
-    <title>Publications | Kim, Minseung</title>
+    <title>Patents | Kim, Minseung</title>
     <link rel="stylesheet" href="styles.css" />
 </head>
 
@@ -20,7 +20,10 @@
             </div>
             <ul class="nav-list" id="nav-list">
                 <li class="nav-item"><a href="index.html">About</a></li>
-                <li class="nav-item"><a href="publications.html">Publications</a></li>
+                <li class="nav-item"><a href="research.html">Research</a></li>
+                <li class="nav-item"><a href="journals.html">Journals</a></li>
+                <li class="nav-item"><a href="conferences.html">Conferences</a></li>
+                <li class="nav-item"><a href="patents.html">Patents</a></li>
             </ul>
             <button class="theme-toggle" id="theme-toggle" aria-label="Toggle dark mode">
                 <svg id="sun-icon" xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24"
@@ -45,21 +48,8 @@
     </nav>
 
     <main class="content">
-        <h1>Journal</h1>
-        <h2>SCI</h2>
-        <div id="sci-list" class="pub-list"></div>
-
-        <h2>KCI</h2>
-        <div id="kci-list" class="pub-list"></div>
-
-        <h1>Conference</h1>
-        <h2>International</h2>
-        <div id="intl-conf-list" class="pub-list"></div>
-
-        <h2>Domestic</h2>
-        <div id="dom-conf-list" class="pub-list"></div>
-
         <h1>Patents</h1>
+
         <h2>Registration</h2>
         <div id="patent-reg-list" class="pub-list"></div>
 
@@ -76,47 +66,35 @@
     </button>
 
     <script>
-        // Data Fetching and Rendering
-        async function loadPublications() {
+        async function loadPatents() {
             try {
-                const response = await fetch('data/publications.json');
+                const response = await fetch('data/patents.json');
                 const data = await response.json();
 
-                renderList(data.journals.sci, 'sci-list');
-                renderList(data.journals.kci, 'kci-list');
-                renderList(data.conferences.international, 'intl-conf-list');
-                renderList(data.conferences.domestic, 'dom-conf-list');
-                renderList(data.patents.registration, 'patent-reg-list', true);
-                renderList(data.patents.application, 'patent-app-list', true);
+                renderList(data.registration, 'patent-reg-list');
+                renderList(data.application, 'patent-app-list');
 
             } catch (error) {
-                console.error('Error loading publications:', error);
+                console.error('Error loading patents:', error);
             }
         }
 
-        function renderList(items, containerId, isPatent = false) {
+        function renderList(items, containerId) {
             const container = document.getElementById(containerId);
             if (!container) return;
 
             container.innerHTML = items.map(item => `
                 <div class="pub-item">
-                    ${item.link ?
-                    `<a href="${item.link}" target="_blank" rel="noopener noreferrer" class="pub-title-link">
-                            <span class="pub-title">${item.title}</span>
-                         </a>` :
-                    `<span class="pub-title">${item.title}</span>`
-                }
-                    ${item.authors ? `<p class="pub-authors">${item.authors}</p>` : ''}
-                    <p class="pub-venue">${item.venue}</p>
-                    ${item.number ? `<p class="pub-venue">${item.number}</p>` : ''}
+                    <span class="pub-title">${item.title}</span>
+                    <p class="pub-authors">${item.venue}</p>
+                    <p class="pub-venue" style="font-weight: 600; color: var(--primary-color);">${item.number}</p>
                 </div>
             `).join('');
         }
 
-        // Initialize
-        loadPublications();
+        loadPatents();
 
-        // Theme Toggle (Shared Logic)
+        // Common UI Logic
         const themeToggle = document.getElementById('theme-toggle');
         const sunIcon = document.getElementById('sun-icon');
         const moonIcon = document.getElementById('moon-icon');
@@ -140,17 +118,13 @@
             localStorage.setItem('theme', newTheme);
         });
 
-        // Hamburger Menu
         const hamburger = document.getElementById('hamburger');
         const navList = document.getElementById('nav-list');
-
         hamburger.addEventListener('click', () => {
             navList.classList.toggle('active');
         });
 
-        // Back to Top Button
         const backToTop = document.getElementById('back-to-top');
-
         window.addEventListener('scroll', () => {
             if (window.scrollY > 300) {
                 backToTop.classList.add('visible');
@@ -158,16 +132,12 @@
                 backToTop.classList.remove('visible');
             }
         });
-
         backToTop.addEventListener('click', () => {
             window.scrollTo({ top: 0, behavior: 'smooth' });
         });
 
-        // Persist Theme
         const savedTheme = localStorage.getItem('theme');
-        if (savedTheme) {
-            updateTheme(savedTheme);
-        }
+        if (savedTheme) updateTheme(savedTheme);
     </script>
 </body>
 

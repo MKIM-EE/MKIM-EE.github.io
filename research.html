@@ -1,0 +1,191 @@
+<!DOCTYPE html>
+<html lang="ko">
+
+<head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>Research | Kim, Minseung</title>
+    <link rel="stylesheet" href="styles.css" />
+    <style>
+        .research-project {
+            background: var(--card-bg);
+            border: 1px solid var(--border-color);
+            border-radius: 20px;
+            padding: 2rem;
+            margin-bottom: 2rem;
+            transition: var(--transition);
+        }
+
+        .research-project:hover {
+            transform: translateY(-5px);
+            box-shadow: var(--shadow);
+            border-color: var(--primary-color);
+        }
+
+        .project-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: flex-start;
+            margin-bottom: 1rem;
+        }
+
+        .project-title {
+            font-size: 1.5rem;
+            font-weight: 800;
+            color: var(--text-color);
+        }
+
+        .project-period {
+            font-family: var(--font-heading);
+            font-weight: 600;
+            color: var(--primary-color);
+            font-size: 0.9rem;
+        }
+
+        .interest-tags {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 10px;
+            margin-top: 2rem;
+        }
+
+        .interest-tag {
+            background: var(--accent-color);
+            color: var(--primary-color);
+            padding: 8px 16px;
+            border-radius: 50px;
+            font-weight: 700;
+            font-size: 0.9rem;
+        }
+    </style>
+</head>
+
+<body data-theme="light">
+
+    <!-- Navigation Bar -->
+    <nav class="top-nav">
+        <div class="nav-container">
+            <div class="hamburger" id="hamburger">
+                <span></span>
+                <span></span>
+                <span></span>
+            </div>
+            <ul class="nav-list" id="nav-list">
+                <li class="nav-item"><a href="index.html">About</a></li>
+                <li class="nav-item"><a href="research.html">Research</a></li>
+                <li class="nav-item"><a href="journals.html">Journals</a></li>
+                <li class="nav-item"><a href="conferences.html">Conferences</a></li>
+                <li class="nav-item"><a href="patents.html">Patents</a></li>
+            </ul>
+            <button class="theme-toggle" id="theme-toggle" aria-label="Toggle dark mode">
+                <svg id="sun-icon" xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24"
+                    fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                    <circle cx="12" cy="12" r="5"></circle>
+                    <line x1="12" y1="1" x2="12" y2="3"></line>
+                    <line x1="12" y1="21" x2="12" y2="23"></line>
+                    <line x1="4.22" y1="4.22" x2="5.64" y2="5.64"></line>
+                    <line x1="18.36" y1="18.36" x2="19.78" y2="19.78"></line>
+                    <line x1="1" y1="12" x2="3" y2="12"></line>
+                    <line x1="21" y1="12" x2="23" y2="12"></line>
+                    <line x1="4.22" y1="19.78" x2="5.64" y2="18.36"></line>
+                    <line x1="18.36" y1="5.64" x2="19.78" y2="4.22"></line>
+                </svg>
+                <svg id="moon-icon" style="display:none" xmlns="http://www.w3.org/2000/svg" width="20" height="20"
+                    viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"
+                    stroke-linejoin="round">
+                    <path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z"></path>
+                </svg>
+            </button>
+        </div>
+    </nav>
+
+    <main class="content">
+        <h1>Research</h1>
+        <div id="project-list"></div>
+    </main>
+
+    <button class="back-to-top" id="back-to-top" aria-label="Back to top">
+        <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none"
+            stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+            <line x1="12" y1="19" x2="12" y2="5"></line>
+            <polyline points="5 12 12 5 19 12"></polyline>
+        </svg>
+    </button>
+
+    <script>
+        async function loadResearch() {
+            try {
+                const response = await fetch('data/research.json');
+                const data = await response.json();
+                renderProjects(data.projects);
+            } catch (error) {
+                console.error('Error loading research:', error);
+            }
+        }
+
+        function renderProjects(projects) {
+            const container = document.getElementById('project-list');
+            container.innerHTML = projects.map(p => `
+                <div class="research-project" style="margin-bottom: 5rem; border: none; padding: 0; background: none;">
+                    ${p.image ? `<img src="${p.image}" alt="${p.title}" style="width: 100%; height: auto; border-radius: 20px; box-shadow: 0 20px 50px rgba(0,0,0,0.15); margin-bottom: 2.5rem; border: 1px solid var(--border-color);">` : ''}
+                    <div style="padding: 0 1rem;">
+                        <div class="project-header" style="margin-bottom: 1.5rem;">
+                            <h2 style="font-size: 2rem; font-weight: 900; color: var(--text-color); margin: 0;">${p.title}</h2>
+                            <div class="project-period" style="font-size: 1.1rem; opacity: 0.8;">${p.period}</div>
+                        </div>
+                        <p style="color: var(--text-color); line-height: 2; font-size: 1.15rem; opacity: 0.9; white-space: pre-wrap;">${p.description}</p>
+                    </div>
+                </div>
+            `).join('');
+        }
+
+        loadResearch();
+
+        // Common UI Logic
+        const themeToggle = document.getElementById('theme-toggle');
+        const sunIcon = document.getElementById('sun-icon');
+        const moonIcon = document.getElementById('moon-icon');
+        const body = document.body;
+
+        function updateTheme(theme) {
+            body.setAttribute('data-theme', theme);
+            if (theme === 'dark') {
+                sunIcon.style.display = 'none';
+                moonIcon.style.display = 'block';
+            } else {
+                sunIcon.style.display = 'block';
+                moonIcon.style.display = 'none';
+            }
+        }
+
+        themeToggle.addEventListener('click', () => {
+            const currentTheme = body.getAttribute('data-theme');
+            const newTheme = currentTheme === 'light' ? 'dark' : 'light';
+            updateTheme(newTheme);
+            localStorage.setItem('theme', newTheme);
+        });
+
+        const hamburger = document.getElementById('hamburger');
+        const navList = document.getElementById('nav-list');
+        hamburger.addEventListener('click', () => {
+            navList.classList.toggle('active');
+        });
+
+        const backToTop = document.getElementById('back-to-top');
+        window.addEventListener('scroll', () => {
+            if (window.scrollY > 300) {
+                backToTop.classList.add('visible');
+            } else {
+                backToTop.classList.remove('visible');
+            }
+        });
+        backToTop.addEventListener('click', () => {
+            window.scrollTo({ top: 0, behavior: 'smooth' });
+        });
+
+        const savedTheme = localStorage.getItem('theme');
+        if (savedTheme) updateTheme(savedTheme);
+    </script>
+</body>
+
+</html>
