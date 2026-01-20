@@ -3,12 +3,12 @@
         {
             "title": "Magnetic field focusing",
             "description": "머신러닝 기반 자기장 집속 기술을 연구함",
-            "image": "mfc.png"
+            "image": "assets/images/mfc.png"
         },
         {
             "title": "Grid-Forming Inverter Stability Analysis",
             "description": "Research on stability enhancement and islanding detection for GFM inverters in weak grid conditions.",
-            "image": "mfc.png"
+            "image": "assets/images/mfc.png"
         }
     ]
 }
