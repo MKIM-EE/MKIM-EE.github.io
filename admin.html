@@ -11,6 +11,8 @@
             max-width: 1000px;
             margin: 0 auto;
             padding: 5rem 2rem 2rem 2rem;
+            display: none;
+            /* Hidden by default for security */
         }
 
         .admin-section {
@@ -279,8 +281,7 @@
             <input type="password" id="github-token" placeholder="ghp_xxxxxxxxxxxx"
                 style="margin-bottom: 2rem; text-align: center; border-radius: 15px;">
             <div style="display: flex; flex-direction: column; gap: 12px;">
-                <button class="btn btn-save" onclick="authenticate()">GitHub 연동 로그인</button>
-                <button class="btn btn-cancel" onclick="skipAuth()">오프라인 수정 (다운로드 모드)</button>
+                <button class="btn btn-save" onclick="authenticate()">Admin Login (GitHub PAT)</button>
             </div>
         </div>
     </div>
@@ -390,14 +391,14 @@
         function authenticate() {
             const token = document.getElementById('github-token').value.trim();
             if (token) {
+                // Verify token format briefly
+                if (!token.startsWith('ghp_') && !token.startsWith('github_pat_')) {
+                    alert('올바른 GitHub PAT 형식이 아닙니다.');
+                    return;
+                }
                 localStorage.setItem('github_token', token);
                 location.reload();
             }
-        }
-
-        function skipAuth() {
-            document.getElementById('auth-overlay').style.display = 'none';
-            showToast('수정 전용 모드입니다. 저장 시 파일을 직접 교체하셔야 합니다.', '#31708f');
         }
 
         function logout() {
@@ -425,6 +426,8 @@
         }
 
         async function init() {
+            if (!GITHUB_TOKEN) return;
+
             try {
                 const [profRes, pubRes] = await Promise.all([
                     fetch('data/profile.json?t=' + Date.now()).then(r => r.json()),
@@ -434,9 +437,13 @@
                 currentData.publications = pubRes;
                 renderProfileFields();
                 renderProfileLists();
+
+                // Show UI after data is successfully loaded
+                document.querySelector('.admin-container').style.display = 'block';
             } catch (error) {
                 console.warn('Initial load failed:', error);
                 document.getElementById('load-helper').style.display = 'block';
+                document.querySelector('.admin-container').style.display = 'block';
             }
         }
 
@@ -680,7 +687,9 @@
             setTimeout(() => toast.style.display = 'none', 4000);
         }
 
-        init();
+        if (GITHUB_TOKEN) {
+            init();
+        }
     </script>
 </body>
 
