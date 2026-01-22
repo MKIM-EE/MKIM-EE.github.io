@@ -61,10 +61,54 @@
         <h1>Patents</h1>
 
         <h2>Registration</h2>
-        <div id="patent-reg-list" class="pub-list"></div>
+        <div id="patent-reg-list" class="pub-list">
+            <div class="pub-item fade-in" style="animation-delay: 0s">
+                <span class="pub-title">양방향 컨버터에 적용되는 고주파 변압기와 고주파 변압기의 설계 방법</span>
+                <p class="pub-authors">이은규, 이은수, 최준범, <strong>김민승</strong>, 김재준, 표기현, 2025.11.19.</p>
+                <p class="pub-venue" style="font-weight: 600; color: var(--primary-color);">Patent Number: 10-2889946
+                </p>
+            </div>
+            <div class="pub-item fade-in" style="animation-delay: 0.1s">
+                <span class="pub-title">거리에 따른 개별 차량 맞춤형 신호등 시스템 및 방법</span>
+                <p class="pub-authors">이수형, <strong>김민승</strong>, 2024.03.25.</p>
+                <p class="pub-venue" style="font-weight: 600; color: var(--primary-color);">Patent Number: 10-2652239
+                </p>
+            </div>
+        </div>
 
         <h2>Application</h2>
-        <div id="patent-app-list" class="pub-list"></div>
+        <div id="patent-app-list" class="pub-list">
+            <div class="pub-item fade-in" style="animation-delay: 0.2s">
+                <span class="pub-title">멀티 액티브 브릿지 컨버터용 통합 변압기</span>
+                <p class="pub-authors">이은수, <strong>김민승</strong>, 이슬, 이호준, 김소연, 이은규, 최준범, 최종석, 2025.04.28.</p>
+                <p class="pub-venue" style="font-weight: 600; color: var(--primary-color);">Application Number:
+                    10-2025-0055251</p>
+            </div>
+            <div class="pub-item fade-in" style="animation-delay: 0.3s">
+                <span class="pub-title">EV 감지코일을 이용한 EV 정렬편차 감지장치 및 이를 이용한 감지방법</span>
+                <p class="pub-authors">이은수, <strong>김민승</strong>, 한동연, 2024.09.06.</p>
+                <p class="pub-venue" style="font-weight: 600; color: var(--primary-color);">Application Number:
+                    10-2024-0121737</p>
+            </div>
+            <div class="pub-item fade-in" style="animation-delay: 0.4s">
+                <span class="pub-title">무효전력 주입을 기반으로 단독 운전을 검출하는 그리드포밍 인버터 및 단독운전 검출 방법</span>
+                <p class="pub-authors">이은규, 이은수, <strong>김민승</strong>, 최준범, 이호준, 2024.09.06.</p>
+                <p class="pub-venue" style="font-weight: 600; color: var(--primary-color);">Application Number:
+                    10-2024-0121301</p>
+            </div>
+            <div class="pub-item fade-in" style="animation-delay: 0.5s">
+                <span class="pub-title">CCM 모드 비절연 양방향 DC 컨버터 및 그 제어방법</span>
+                <p class="pub-authors">이수형, <strong>김민승</strong>, 최동휘 2023.10.19.</p>
+                <p class="pub-venue" style="font-weight: 600; color: var(--primary-color);">Application Number:
+                    10-2023-0139284</p>
+            </div>
+            <div class="pub-item fade-in" style="animation-delay: 0.6s">
+                <span class="pub-title">차량 속도 및 거리 맞춤형 보조 신호등 시스템</span>
+                <p class="pub-authors">이수형, <strong>김민승</strong>, 2022.09.26.</p>
+                <p class="pub-venue" style="font-weight: 600; color: var(--primary-color);">Application Number:
+                    10-2022-0121889</p>
+            </div>
+        </div>
     </main>
 
     <button class="back-to-top" id="back-to-top" aria-label="Back to top">
@@ -76,35 +120,7 @@
     </button>
 
     <script>
-        async function loadPatents() {
-            try {
-                const response = await fetch('../data/patents.json');
-                const data = await response.json();
-
-                renderList(data.registration, 'patent-reg-list');
-                renderList(data.application, 'patent-app-list');
-
-            } catch (error) {
-                console.error('Error loading patents:', error);
-            }
-        }
-
-        function renderList(items, containerId) {
-            const container = document.getElementById(containerId);
-            if (!container) return;
-
-            container.innerHTML = items.map((item, index) => `
-                <div class="pub-item fade-in" style="animation-delay: ${index * 0.1}s">
-                    <span class="pub-title">${item.title}</span>
-                    <p class="pub-authors">${item.venue}</p>
-                    <p class="pub-venue" style="font-weight: 600; color: var(--primary-color);">${item.number}</p>
-                </div>
-            `).join('');
-        }
-
-        loadPatents();
-
-        // Common UI Logic
+        // Theme Toggle
         const themeToggle = document.getElementById('theme-toggle');
         const sunIcon = document.getElementById('sun-icon');
         const moonIcon = document.getElementById('moon-icon');
@@ -128,13 +144,24 @@
             localStorage.setItem('theme', newTheme);
         });
 
+        // Hamburger Menu
         const hamburger = document.getElementById('hamburger');
         const navList = document.getElementById('nav-list');
+
         hamburger.addEventListener('click', () => {
             navList.classList.toggle('active');
         });
 
+        // Close menu when clicking a link
+        document.querySelectorAll('.nav-item a').forEach(link => {
+            link.addEventListener('click', () => {
+                navList.classList.remove('active');
+            });
+        });
+
+        // Back to Top Button
         const backToTop = document.getElementById('back-to-top');
+
         window.addEventListener('scroll', () => {
             if (window.scrollY > 300) {
                 backToTop.classList.add('visible');
@@ -142,12 +169,16 @@
                 backToTop.classList.remove('visible');
             }
         });
+
         backToTop.addEventListener('click', () => {
             window.scrollTo({ top: 0, behavior: 'smooth' });
         });
 
+        // Persist Theme
         const savedTheme = localStorage.getItem('theme');
-        if (savedTheme) updateTheme(savedTheme);
+        if (savedTheme) {
+            updateTheme(savedTheme);
+        }
     </script>
 </body>
 

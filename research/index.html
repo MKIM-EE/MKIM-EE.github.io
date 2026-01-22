@@ -136,7 +136,28 @@
 
     <main class="content fade-in">
         <h1>Research</h1>
-        <div id="project-list" class="research-list"></div>
+        <div id="project-list" class="research-list">
+            <div class="research-project fade-in" style="animation-delay: 0s">
+                <div class="project-image-container">
+                    <img src="../assets/images/mfc.png" alt="Magnetic field focusing" class="project-image">
+                </div>
+                <div class="project-details">
+                    <div class="project-title">Magnetic field focusing</div>
+                    <div class="project-description">머신러닝 기반 자기장 집속 기술을 연구함</div>
+                </div>
+            </div>
+            <div class="research-project fade-in" style="animation-delay: 0.1s">
+                <div class="project-image-container">
+                    <img src="../assets/images/mfc.png" alt="Grid-Forming Inverter Stability Analysis"
+                        class="project-image">
+                </div>
+                <div class="project-details">
+                    <div class="project-title">Grid-Forming Inverter Stability Analysis</div>
+                    <div class="project-description">Research on stability enhancement and islanding detection for GFM
+                        inverters in weak grid conditions.</div>
+                </div>
+            </div>
+        </div>
     </main>
 
     <button class="back-to-top" id="back-to-top" aria-label="Back to top">
@@ -148,35 +169,7 @@
     </button>
 
     <script>
-        async function loadResearch() {
-            try {
-                const response = await fetch('../data/research.json');
-                const data = await response.json();
-                renderProjects(data.projects);
-            } catch (error) {
-                console.error('Error loading research:', error);
-            }
-        }
-
-        function renderProjects(projects) {
-            const container = document.getElementById('project-list');
-            container.innerHTML = projects.map((p, index) => `
-                <div class="research-project fade-in" style="animation-delay: ${index * 0.1}s">
-                    <div class="project-image-container">
-                        ${p.image ? `<img src="${p.image}" alt="${p.title}" class="project-image">` :
-                    `<div class="project-image" style="display:flex;align-items:center;justify-content:center;opacity:0.3;font-size:0.8rem;">No Image</div>`}
-                    </div>
-                    <div class="project-details">
-                        <div class="project-title">${p.title}</div>
-                        <div class="project-description">${p.description}</div>
-                    </div>
-                </div>
-            `).join('');
-        }
-
-        loadResearch();
-
-        // Common UI Logic
+        // Theme Toggle
         const themeToggle = document.getElementById('theme-toggle');
         const sunIcon = document.getElementById('sun-icon');
         const moonIcon = document.getElementById('moon-icon');
@@ -200,13 +193,24 @@
             localStorage.setItem('theme', newTheme);
         });
 
+        // Hamburger Menu
         const hamburger = document.getElementById('hamburger');
         const navList = document.getElementById('nav-list');
+
         hamburger.addEventListener('click', () => {
             navList.classList.toggle('active');
         });
 
+        // Close menu when clicking a link
+        document.querySelectorAll('.nav-item a').forEach(link => {
+            link.addEventListener('click', () => {
+                navList.classList.remove('active');
+            });
+        });
+
+        // Back to Top Button
         const backToTop = document.getElementById('back-to-top');
+
         window.addEventListener('scroll', () => {
             if (window.scrollY > 300) {
                 backToTop.classList.add('visible');
@@ -214,12 +218,16 @@
                 backToTop.classList.remove('visible');
             }
         });
+
         backToTop.addEventListener('click', () => {
             window.scrollTo({ top: 0, behavior: 'smooth' });
         });
 
+        // Persist Theme
         const savedTheme = localStorage.getItem('theme');
-        if (savedTheme) updateTheme(savedTheme);
+        if (savedTheme) {
+            updateTheme(savedTheme);
+        }
     </script>
 </body>
 
