@@ -4,8 +4,8 @@
 <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1" />
-    <title>Patents | Kim, Minseung</title>
-    <link rel="stylesheet" href="styles.css" />
+    <title>Conferences | Kim, Minseung</title>
+    <link rel="stylesheet" href="../styles.css" />
 </head>
 
 <body data-theme="light">
@@ -19,11 +19,11 @@
                 <span></span>
             </div>
             <ul class="nav-list" id="nav-list">
-                <li class="nav-item"><a href="index.html">About</a></li>
-                <li class="nav-item"><a href="research.html">Research</a></li>
-                <li class="nav-item"><a href="journals.html">Journals</a></li>
-                <li class="nav-item"><a href="conferences.html">Conferences</a></li>
-                <li class="nav-item"><a href="patents.html">Patents</a></li>
+                <li class="nav-item"><a href="../">About</a></li>
+                <li class="nav-item"><a href="../research/">Research</a></li>
+                <li class="nav-item"><a href="../journals/">Journals</a></li>
+                <li class="nav-item"><a href="../conferences/">Conferences</a></li>
+                <li class="nav-item"><a href="../patents/">Patents</a></li>
             </ul>
             <button class="theme-toggle" id="theme-toggle" aria-label="Toggle dark mode">
                 <svg id="sun-icon" xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24"
@@ -48,13 +48,12 @@
     </nav>
 
     <main class="content">
-        <h1>Patents</h1>
+        <h1>Conferences</h1>
+        <h2>International</h2>
+        <div id="intl-conf-list" class="pub-list"></div>
 
-        <h2>Registration</h2>
-        <div id="patent-reg-list" class="pub-list"></div>
-
-        <h2>Application</h2>
-        <div id="patent-app-list" class="pub-list"></div>
+        <h2 style="margin-top: 3rem;">Domestic</h2>
+        <div id="dom-conf-list" class="pub-list"></div>
     </main>
 
     <button class="back-to-top" id="back-to-top" aria-label="Back to top">
@@ -66,33 +65,35 @@
     </button>
 
     <script>
-        async function loadPatents() {
+        async function loadConferences() {
             try {
-                const response = await fetch('data/patents.json');
+                const response = await fetch('../data/publications.json');
                 const data = await response.json();
-
-                renderList(data.registration, 'patent-reg-list');
-                renderList(data.application, 'patent-app-list');
-
+                renderList(data.conferences.international, 'intl-conf-list');
+                renderList(data.conferences.domestic, 'dom-conf-list');
             } catch (error) {
-                console.error('Error loading patents:', error);
+                console.error('Error loading conferences:', error);
             }
         }
 
         function renderList(items, containerId) {
             const container = document.getElementById(containerId);
             if (!container) return;
-
             container.innerHTML = items.map(item => `
                 <div class="pub-item">
-                    <span class="pub-title">${item.title}</span>
-                    <p class="pub-authors">${item.venue}</p>
-                    <p class="pub-venue" style="font-weight: 600; color: var(--primary-color);">${item.number}</p>
+                    ${item.link ?
+                    `<a href="${item.link}" target="_blank" rel="noopener noreferrer" class="pub-title-link">
+                            <span class="pub-title">${item.title}</span>
+                         </a>` :
+                    `<span class="pub-title">${item.title}</span>`
+                }
+                    ${item.authors ? `<p class="pub-authors">${item.authors}</p>` : ''}
+                    <p class="pub-venue">${item.venue}</p>
                 </div>
             `).join('');
         }
 
-        loadPatents();
+        loadConferences();
 
         // Common UI Logic
         const themeToggle = document.getElementById('theme-toggle');

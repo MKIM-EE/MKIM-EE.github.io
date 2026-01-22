@@ -21,11 +21,11 @@
                 <span></span>
             </div>
             <ul class="nav-list" id="nav-list">
-                <li class="nav-item"><a href="index.html">About</a></li>
-                <li class="nav-item"><a href="research.html">Research</a></li>
-                <li class="nav-item"><a href="journals.html">Journals</a></li>
-                <li class="nav-item"><a href="conferences.html">Conferences</a></li>
-                <li class="nav-item"><a href="patents.html">Patents</a></li>
+                <li class="nav-item"><a href="./">About</a></li>
+                <li class="nav-item"><a href="research/">Research</a></li>
+                <li class="nav-item"><a href="journals/">Journals</a></li>
+                <li class="nav-item"><a href="conferences/">Conferences</a></li>
+                <li class="nav-item"><a href="patents/">Patents</a></li>
             </ul>
             <button class="theme-toggle" id="theme-toggle" aria-label="Toggle dark mode">
                 <svg id="sun-icon" xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24"
@@ -160,7 +160,7 @@
         document.getElementById('profile-pic').addEventListener('click', () => {
             clickCount++;
             if (clickCount >= 5) {
-                window.location.href = 'admin.html';
+                window.location.href = 'admin/';
             }
             setTimeout(() => { clickCount = 0; }, 3000); // 3초 내에 5번 클릭해야 함
         });
