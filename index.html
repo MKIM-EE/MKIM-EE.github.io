@@ -52,7 +52,7 @@
     <!-- Main Content -->
     <main class="content">
 
-        <section id="introduction">
+        <section id="introduction" class="fade-in">
             <h1 id="profile-name">Minseung Kim</h1>
             <div class="profile-container">
                 <div class="profile-img-wrapper">
@@ -79,7 +79,7 @@
             </div>
         </section>
 
-        <section id="academic">
+        <section id="academic" class="fade-in">
             <h2>Academic Service</h2>
             <div class="activities-list" id="academic-service-list">
                 <!-- Service items will be rendered here -->
@@ -133,17 +133,19 @@
 
                 // Render Academic Service
                 const serviceContainer = document.getElementById('academic-service-list');
-                serviceContainer.innerHTML = data.academic_service.map(item => `
-                    <div class="activity-item">
-                        <strong>${item.role}</strong>: ${item.venue}
+                serviceContainer.innerHTML = data.academic_service.map((item, index) => `
+                    <div class="activity-item" style="animation-delay: ${index * 0.1}s">
+                        <strong>${item.role}</strong>
+                        <span>${item.venue}</span>
                     </div>
                 `).join('');
 
                 // Render Academic Activities
                 const activitiesContainer = document.getElementById('academic-activities-list');
-                activitiesContainer.innerHTML = data.academic_activities.map(item => `
-                    <div class="activity-item">
-                        <strong>${item.date}</strong> &bull; ${item.description}
+                activitiesContainer.innerHTML = data.academic_activities.map((item, index) => `
+                    <div class="activity-item" style="animation-delay: ${(index + 5) * 0.1}s">
+                        <strong>${item.date}</strong>
+                        <span>${item.description}</span>
                     </div>
                 `).join('');
 

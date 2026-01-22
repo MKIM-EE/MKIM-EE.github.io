@@ -47,7 +47,7 @@
         </div>
     </nav>
 
-    <main class="content">
+    <main class="content fade-in">
         <h1>Patents</h1>
 
         <h2>Registration</h2>
@@ -83,8 +83,8 @@
             const container = document.getElementById(containerId);
             if (!container) return;
 
-            container.innerHTML = items.map(item => `
-                <div class="pub-item">
+            container.innerHTML = items.map((item, index) => `
+                <div class="pub-item fade-in" style="animation-delay: ${index * 0.1}s">
                     <span class="pub-title">${item.title}</span>
                     <p class="pub-authors">${item.venue}</p>
                     <p class="pub-venue" style="font-weight: 600; color: var(--primary-color);">${item.number}</p>

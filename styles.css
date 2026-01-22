@@ -211,6 +211,12 @@ h2::after {
   object-fit: cover;
   border-radius: 20px;
   box-shadow: var(--shadow);
+  transition: var(--transition);
+}
+
+.profile-container img:hover {
+  transform: scale(1.02);
+  box-shadow: 0 10px 30px rgba(0, 0, 0, 0.1);
 }
 
 .profile-text p {
@@ -303,20 +309,47 @@ h2::after {
 }
 
 .activity-item {
-  padding: 1.5rem;
-  background-color: var(--card-bg);
-  border: 1px solid var(--border-color);
-  border-radius: 12px;
-  margin-bottom: 1rem;
+  padding: 0.8rem 0;
+  background-color: transparent;
+  border: none;
+  border-bottom: 1px solid var(--border-color);
+  border-radius: 0;
+  margin-bottom: 0;
+  display: flex;
+  gap: 1.5rem;
   transition: var(--transition);
   position: relative;
-  overflow: hidden;
+}
+
+.activity-item:last-child {
+  border-bottom: none;
+}
+
+.activity-item strong {
+  min-width: 120px;
+  color: var(--primary-color);
+  font-weight: 700;
 }
 
 .activity-item:hover {
-  transform: translateY(-3px);
-  box-shadow: var(--shadow);
-  border-color: var(--primary-color);
+  transform: translateX(5px);
+  background-color: transparent;
+  box-shadow: none;
+  color: var(--primary-color);
+}
+
+/* Animation */
+.fade-in {
+  opacity: 0;
+  transform: translateY(20px);
+  animation: fadeInUp 0.8s ease forwards;
+}
+
+@keyframes fadeInUp {
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
 }
 
 /* Publications List */

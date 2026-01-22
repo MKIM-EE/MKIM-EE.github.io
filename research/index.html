@@ -121,7 +121,7 @@
         </div>
     </nav>
 
-    <main class="content">
+    <main class="content fade-in">
         <h1>Research</h1>
         <div id="project-list" class="research-list"></div>
     </main>
@@ -147,8 +147,8 @@
 
         function renderProjects(projects) {
             const container = document.getElementById('project-list');
-            container.innerHTML = projects.map(p => `
-                <div class="research-project">
+            container.innerHTML = projects.map((p, index) => `
+                <div class="research-project fade-in" style="animation-delay: ${index * 0.1}s">
                     <div class="project-image-container">
                         ${p.image ? `<img src="${p.image}" alt="${p.title}" class="project-image">` :
                     `<div class="project-image" style="display:flex;align-items:center;justify-content:center;opacity:0.3;font-size:0.8rem;">No Image</div>`}

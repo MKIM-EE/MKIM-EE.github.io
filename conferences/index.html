@@ -47,7 +47,7 @@
         </div>
     </nav>
 
-    <main class="content">
+    <main class="content fade-in">
         <h1>Conferences</h1>
         <h2>International</h2>
         <div id="intl-conf-list" class="pub-list"></div>
@@ -79,8 +79,8 @@
         function renderList(items, containerId) {
             const container = document.getElementById(containerId);
             if (!container) return;
-            container.innerHTML = items.map(item => `
-                <div class="pub-item">
+            container.innerHTML = items.map((item, index) => `
+                <div class="pub-item fade-in" style="animation-delay: ${index * 0.1}s">
                     ${item.link ?
                     `<a href="${item.link}" target="_blank" rel="noopener noreferrer" class="pub-title-link">
                             <span class="pub-title">${item.title}</span>
