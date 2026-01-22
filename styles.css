@@ -326,9 +326,12 @@ h2::after {
 }
 
 .activity-item strong {
-  min-width: 120px;
+  /* width: 120px; */
+  flex-shrink: 0;
   color: var(--primary-color);
   font-weight: 700;
+  font-variant-numeric: tabular-nums;
+  letter-spacing: -0.01em;
 }
 
 .activity-item:hover {
@@ -358,8 +361,8 @@ h2::after {
 }
 
 .pub-item {
-  margin-bottom: 2.5rem;
-  padding-left: 1rem;
+  margin-bottom: 1.2rem;
+  padding-left: 1.2rem;
   border-left: 4px solid var(--accent-color);
   transition: var(--transition);
 }
@@ -389,16 +392,18 @@ h2::after {
 
 .pub-title {
   font-weight: 700;
-  font-size: 1.15rem;
+  font-size: 1.1rem;
   display: block;
-  margin-bottom: 0.4rem;
+  margin-bottom: 0.3rem;
+  line-height: 1.5;
   transition: var(--transition);
 }
 
 .pub-authors {
   color: var(--text-color);
   font-size: 1rem;
-  margin-bottom: 0.2rem;
+  margin-bottom: 0.3rem;
+  line-height: 1.5;
 }
 
 .pub-authors strong {
@@ -407,7 +412,8 @@ h2::after {
 
 .pub-venue {
   color: var(--text-muted);
-  font-size: 0.95rem;
+  font-size: 0.9rem;
+  line-height: 1.5;
   font-style: italic;
 }
 
