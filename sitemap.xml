@@ -3,36 +3,26 @@
   <!-- 메인 About 페이지 -->
   <url>
     <loc>https://mkim-ee.github.io/</loc>
-    <lastmod>2026-01-22</lastmod>
-    <changefreq>monthly</changefreq>
-    <priority>1.0</priority>
+    <lastmod>2026-01-23</lastmod>
   </url>
   <!-- Research 페이지 -->
   <url>
     <loc>https://mkim-ee.github.io/research/</loc>
-    <lastmod>2026-01-22</lastmod>
-    <changefreq>monthly</changefreq>
-    <priority>0.8</priority>
+    <lastmod>2026-01-23</lastmod>
   </url>
   <!-- Journals 페이지 -->
   <url>
     <loc>https://mkim-ee.github.io/journals/</loc>
-    <lastmod>2026-01-22</lastmod>
-    <changefreq>monthly</changefreq>
-    <priority>0.8</priority>
+    <lastmod>2026-01-23</lastmod>
   </url>
   <!-- Conferences 페이지 -->
   <url>
     <loc>https://mkim-ee.github.io/conferences/</loc>
-    <lastmod>2026-01-22</lastmod>
-    <changefreq>monthly</changefreq>
-    <priority>0.8</priority>
+    <lastmod>2026-01-23</lastmod>
   </url>
   <!-- Patents 페이지 -->
   <url>
     <loc>https://mkim-ee.github.io/patents/</loc>
-    <lastmod>2026-01-22</lastmod>
-    <changefreq>monthly</changefreq>
-    <priority>0.8</priority>
+    <lastmod>2026-01-23</lastmod>
   </url>
 </urlset>
