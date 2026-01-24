@@ -68,6 +68,15 @@
             color: var(--text-color);
             margin-bottom: 0.8rem;
             line-height: 1.4;
+            display: flex;
+            align-items: center;
+            gap: 0.8rem;
+        }
+
+        .project-title .project-tag {
+            flex-shrink: 0;
+            font-size: 0.75rem;
+            padding: 0.25rem 0.7rem;
         }
 
         .project-description {
@@ -75,7 +84,72 @@
             line-height: 1.6;
             font-size: 1rem;
             opacity: 0.85;
-            white-space: pre-wrap;
+            margin-bottom: 1rem;
+        }
+
+        .project-tags {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 0.5rem;
+            margin-top: 0.8rem;
+        }
+
+        .project-tag {
+            display: inline-block;
+            padding: 0.3rem 0.8rem;
+            background-color: var(--accent-color);
+            color: var(--primary-color);
+            border-radius: 20px;
+            font-size: 0.8rem;
+            font-weight: 600;
+            transition: var(--transition);
+            border: 1px solid transparent;
+        }
+
+        .project-tag:hover {
+            background-color: var(--primary-color);
+            color: white;
+            border-color: var(--primary-color);
+        }
+
+        /* Research Theme Filters */
+        .research-filters {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 0.8rem;
+            margin-bottom: 2.5rem;
+            padding: 1.5rem;
+            background-color: var(--accent-color);
+            border-radius: 12px;
+        }
+
+        .filter-btn {
+            padding: 0.6rem 1.2rem;
+            background-color: var(--card-bg);
+            color: var(--text-color);
+            border: 2px solid var(--border-color);
+            border-radius: 25px;
+            font-size: 0.9rem;
+            font-weight: 600;
+            cursor: pointer;
+            transition: var(--transition);
+            font-family: var(--font-body);
+        }
+
+        .filter-btn:hover {
+            border-color: var(--primary-color);
+            color: var(--primary-color);
+            transform: translateY(-2px);
+        }
+
+        .filter-btn.active {
+            background-color: var(--primary-color);
+            color: white;
+            border-color: var(--primary-color);
+        }
+
+        .research-project.hidden {
+            display: none;
         }
 
         @media screen and (max-width: 600px) {
@@ -136,25 +210,71 @@
 
     <main class="content fade-in">
         <h1>Research</h1>
+
+        <!-- Research Theme Filters -->
+        <div class="research-filters">
+            <button class="filter-btn active" data-filter="all">All</button>
+            <button class="filter-btn" data-filter="ml">Machine Learning</button>
+            <button class="filter-btn" data-filter="pe">Power Electronics</button>
+            <button class="filter-btn" data-filter="fem">Finite Element Method</button>
+        </div>
+
         <div id="project-list" class="research-list">
-            <div class="research-project fade-in" style="animation-delay: 0s">
+            <div class="research-project fade-in" style="animation-delay: 0.1s" data-category="ml fem">
                 <div class="project-image-container">
                     <img src="../assets/images/mfc.png" alt="Magnetic field focusing" class="project-image">
                 </div>
                 <div class="project-details">
-                    <div class="project-title">Magnetic field focusing</div>
-                    <div class="project-description">머신러닝 기반 자기장 집속 기술을 연구함</div>
+                    <div class="project-title">
+                        <span class="project-tag">ML</span>
+                        <span class="project-tag">FEM</span>
+                        Machine Learning Based Magnetic Field Focusing
+                    </div>
+                    <div class="project-description">Implementing magnetic field focusing in three-dimensional space
+                        using machine learning.</div>
                 </div>
             </div>
-            <div class="research-project fade-in" style="animation-delay: 0.1s">
+            <div class="research-project fade-in" style="animation-delay: 0.1s" data-category="ml fem">
                 <div class="project-image-container">
-                    <img src="../assets/images/mfc.png" alt="Grid-Forming Inverter Stability Analysis"
+                    <img src="../assets/images/planar.png" alt="Planar Transformer" class="project-image">
+                </div>
+                <div class="project-details">
+                    <div class="project-title">
+                        <span class="project-tag">ML</span>
+                        <span class="project-tag">FEM</span>
+                        Optimal Planar Transformer Design Based on Reinforcement Learning
+                    </div>
+                    <div class="project-description">Finding optimal planar transformer design using reinforcement
+                        learning.</div>
+                </div>
+            </div>
+            <div class="research-project fade-in" style="animation-delay: 0.1s" data-category="pe">
+                <div class="project-image-container">
+                    <img src="../assets/images/gfm.png" alt="Grid-Forming Inverter Islanding Detection"
                         class="project-image">
                 </div>
                 <div class="project-details">
-                    <div class="project-title">Grid-Forming Inverter Stability Analysis</div>
-                    <div class="project-description">Research on stability enhancement and islanding detection for GFM
-                        inverters in weak grid conditions.</div>
+                    <div class="project-title">
+                        <span class="project-tag">PE</span>
+                        Grid-Forming Inverter Islanding Detection Method
+                    </div>
+                    <div class="project-description">Developing a grid-forming inverter islanding detection method
+                        by reactive power injection.</div>
+                </div>
+            </div>
+            <div class="research-project fade-in" style="animation-delay: 0.1s" data-category="pe">
+                <div class="project-image-container">
+                    <img src="../assets/images/mmc.png" alt="Non-Isolated Modular Multilevel Converter"
+                        class="project-image">
+                </div>
+                <div class="project-details">
+                    <div class="project-title">
+                        <span class="project-tag">PE</span>
+                        Non-Isolated Modular Multilevel Converter
+                    </div>
+                    <div class="project-description">A non-isolated step-down (NISD) DC transformer based on
+                        discontinuous conduction mode (DCM)
+                    </div>
                 </div>
             </div>
         </div>
@@ -191,6 +311,34 @@
             const newTheme = currentTheme === 'light' ? 'dark' : 'light';
             updateTheme(newTheme);
             localStorage.setItem('theme', newTheme);
+        });
+
+        // Research Theme Filter
+        const filterBtns = document.querySelectorAll('.filter-btn');
+        const projects = document.querySelectorAll('.research-project');
+
+        filterBtns.forEach(btn => {
+            btn.addEventListener('click', () => {
+                // Remove active class from all buttons
+                filterBtns.forEach(b => b.classList.remove('active'));
+                // Add active class to clicked button
+                btn.classList.add('active');
+
+                const filter = btn.getAttribute('data-filter');
+
+                projects.forEach(project => {
+                    if (filter === 'all') {
+                        project.classList.remove('hidden');
+                    } else {
+                        const categories = project.getAttribute('data-category').split(' ');
+                        if (categories.includes(filter)) {
+                            project.classList.remove('hidden');
+                        } else {
+                            project.classList.add('hidden');
+                        }
+                    }
+                });
+            });
         });
 
         // Hamburger Menu
