@@ -188,22 +188,7 @@ h2::after {
   flex-shrink: 0;
 }
 
-.profile-img-wrapper::before {
-  content: '';
-  position: absolute;
-  top: 10px;
-  left: 10px;
-  right: -10px;
-  bottom: -10px;
-  border: 2px solid var(--primary-color);
-  border-radius: 20px;
-  z-index: -1;
-  transition: var(--transition);
-}
 
-.profile-img-wrapper:hover::before {
-  transform: translate(-5px, -5px);
-}
 
 .profile-container img {
   width: 180px;
