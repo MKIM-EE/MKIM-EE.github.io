@@ -50,7 +50,7 @@
             color: #1a1a1a;
             width: 21cm;
             min-height: 29.7cm;
-            padding: 2cm 2.2cm;
+            padding: 2cm 1.6cm;
             box-shadow: 0 4px 24px rgba(0, 0, 0, 0.12);
             border-radius: 2px;
         }
@@ -295,6 +295,69 @@
             color: #007acc;
             text-decoration: underline;
         }
+
+        /* Print / Save as PDF */
+        @page {
+            size: A4;
+            margin: 2cm 1.6cm;
+        }
+
+        @media print {
+            .top-nav,
+            .back-to-top,
+            .cv-save-btn {
+                display: none !important;
+            }
+
+            body {
+                background: white !important;
+            }
+
+            .content {
+                margin: 0 !important;
+                padding: 0 !important;
+                width: 100% !important;
+                max-width: 100% !important;
+            }
+
+            .cv-wrapper {
+                width: 100% !important;
+            }
+
+            /* Remove the paper-shadow on print — page handles margins */
+            .cv-doc {
+                width: 100% !important;
+                padding: 0 !important;
+                box-shadow: none !important;
+                border-radius: 0 !important;
+            }
+
+            /* Solid color for name (gradient not supported in print) */
+            .cv-doc .cv-name {
+                background: none !important;
+                -webkit-text-fill-color: #007acc !important;
+                color: #007acc !important;
+            }
+
+            /* Add top padding after page break so content isn't flush to edge */
+            .cv-section {
+                break-inside: avoid;
+                page-break-inside: avoid;
+            }
+
+            .cv-pub-item,
+            .cv-patent-item,
+            .cv-edu-item,
+            .cv-activity-item {
+                break-inside: avoid;
+                page-break-inside: avoid;
+            }
+
+            /* Breathing room at top of a continued section */
+            .cv-section + .cv-section {
+                padding-top: 0.3cm;
+            }
+        }
     </style>
 </head>
 
@@ -304,7 +367,9 @@
     <main class="content fade-in">
         <div class="cv-wrapper">
             <div class="cv-save-btn">
-                <button id="save-pdf-btn" onclick="savePDF()">Save as PDF</button>
+                <a href="CV _ Kim, Minseung.pdf" download="Kim, Minseung_CV.pdf">
+                    <button>Save as PDF</button>
+                </a>
             </div>
 
             <div class="cv-doc" id="cv-doc">
@@ -322,33 +387,9 @@
         </svg>
     </button>
 
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/html2pdf.js/0.10.1/html2pdf.bundle.min.js"
-        integrity="sha512-GsLlZN/3F2ErC5ifS5QtgpiJtWd43JWSuIgh7mbzZ8zBps+dvLusV+eNQATqgA/HdeKFVgA5v3S/cIrLF7QnQ=="
-        crossorigin="anonymous" referrerpolicy="no-referrer"></script>
     <script src="../js/common.js"></script>
     <script>
         initPage('../');
-
-        function savePDF() {
-            const btn = document.getElementById('save-pdf-btn');
-            btn.disabled = true;
-            btn.textContent = 'Generating...';
-
-            const el = document.getElementById('cv-doc');
-            const opt = {
-                margin: 0,
-                filename: 'CV_Minseung_Kim.pdf',
-                image: { type: 'jpeg', quality: 0.98 },
-                html2canvas: { scale: 2, useCORS: true, letterRendering: true },
-                jsPDF: { unit: 'mm', format: 'a4', orientation: 'portrait' },
-                pagebreak: { mode: ['avoid-all', 'css', 'legacy'] }
-            };
-
-            html2pdf().set(opt).from(el).save().then(() => {
-                btn.disabled = false;
-                btn.textContent = 'Save as PDF';
-            });
-        }
 
         Promise.all([
             fetch('../data/profile.json').then(r => r.json()),
