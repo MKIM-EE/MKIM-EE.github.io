@@ -11,17 +11,18 @@
     <style>
         /* CV-specific screen styles */
         .cv-wrapper {
-            max-width: 850px;
+            width: 21cm;
             margin: 0 auto;
         }
 
-        .cv-print-btn {
+        .cv-save-btn {
             display: flex;
             justify-content: flex-end;
-            margin-bottom: 2rem;
+            margin-bottom: 1.2rem;
+            gap: 0.7rem;
         }
 
-        .cv-print-btn button {
+        .cv-save-btn button {
             padding: 0.6rem 1.4rem;
             background-color: var(--primary-color);
             color: white;
@@ -34,16 +35,31 @@
             transition: var(--transition);
         }
 
-        .cv-print-btn button:hover {
+        .cv-save-btn button:hover {
             background-color: var(--primary-hover);
         }
 
-        /* CV document styles */
+        .cv-save-btn button:disabled {
+            opacity: 0.6;
+            cursor: not-allowed;
+        }
+
+        /* CV document styles — A4 paper sheet */
         .cv-doc {
-            background: var(--card-bg);
-            border: 1px solid var(--border-color);
-            border-radius: 12px;
-            padding: 3rem;
+            background: white;
+            color: #1a1a1a;
+            width: 21cm;
+            min-height: 29.7cm;
+            padding: 2cm 2.2cm;
+            box-shadow: 0 4px 24px rgba(0, 0, 0, 0.12);
+            border-radius: 2px;
+        }
+
+        /* Override dark mode for the CV doc (always white paper) */
+        [data-theme="dark"] .cv-doc {
+            background: white;
+            color: #1a1a1a;
+            border: none;
         }
 
         .cv-header {
@@ -224,67 +240,60 @@
             color: var(--text-muted);
         }
 
-        /* Print styles */
-        @media print {
-            body {
-                background: white !important;
-                color: black !important;
-            }
+        /* Fixed colors for the CV doc (always rendered as white paper) */
+        .cv-doc .cv-header {
+            border-bottom-color: #007acc;
+        }
 
-            .top-nav,
-            .back-to-top,
-            .cv-print-btn {
-                display: none !important;
-            }
+        .cv-doc .cv-name {
+            background: linear-gradient(135deg, #007acc, #6366f1);
+            -webkit-background-clip: text;
+            background-clip: text;
+            -webkit-text-fill-color: transparent;
+        }
 
-            .content {
-                margin: 0 !important;
-                padding: 0 !important;
-                max-width: 100% !important;
-                width: 100% !important;
-            }
+        .cv-doc .cv-title-line,
+        .cv-doc .cv-contact,
+        .cv-doc .cv-edu-period,
+        .cv-doc .cv-edu-body span,
+        .cv-doc .cv-interests,
+        .cv-doc .pub-meta,
+        .cv-doc .cv-activity-date {
+            color: #666;
+        }
 
-            .cv-doc {
-                border: none !important;
-                border-radius: 0 !important;
-                padding: 0 !important;
-                background: white !important;
-            }
+        .cv-doc .cv-section-title {
+            color: #007acc;
+            border-bottom-color: #eee;
+        }
 
-            .cv-name {
-                -webkit-text-fill-color: #1a1a1a !important;
-                color: #1a1a1a !important;
-                background: none !important;
-            }
+        .cv-doc .cv-pub-num,
+        .cv-doc .cv-patent-num {
+            color: #007acc;
+        }
 
-            .cv-section-title {
-                color: #1a1a1a !important;
-            }
+        .cv-doc .cv-pub-body strong,
+        .cv-doc .cv-patent-body strong {
+            color: #007acc;
+        }
 
-            .cv-pub-num,
-            .cv-patent-num,
-            .cv-activity-date,
-            .cv-edu-period {
-                color: #555 !important;
-            }
+        .cv-doc .cv-contact a {
+            color: #007acc;
+            text-decoration: none;
+        }
 
-            .cv-pub-body strong,
-            .cv-patent-body strong {
-                color: #1a1a1a !important;
-            }
+        .cv-doc .cv-subsection {
+            color: #1a1a1a;
+        }
 
-            .cv-contact a {
-                color: #1a1a1a !important;
-            }
+        .cv-doc a {
+            text-decoration: none;
+            color: inherit;
+        }
 
-            a {
-                text-decoration: none !important;
-                color: inherit !important;
-            }
-
-            .cv-section {
-                page-break-inside: avoid;
-            }
+        .cv-doc a:hover {
+            color: #007acc;
+            text-decoration: underline;
         }
     </style>
 </head>
@@ -294,8 +303,8 @@
 
     <main class="content fade-in">
         <div class="cv-wrapper">
-            <div class="cv-print-btn">
-                <button onclick="window.print()">Print / Save as PDF</button>
+            <div class="cv-save-btn">
+                <button id="save-pdf-btn" onclick="savePDF()">Save as PDF</button>
             </div>
 
             <div class="cv-doc" id="cv-doc">
@@ -313,9 +322,33 @@
         </svg>
     </button>
 
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/html2pdf.js/0.10.1/html2pdf.bundle.min.js"
+        integrity="sha512-GsLlZN/3F2ErC5ifS5QtgpiJtWd43JWSuIgh7mbzZ8zBps+dvLusV+eNQATqgA/HdeKFVgA5v3S/cIrLF7QnQ=="
+        crossorigin="anonymous" referrerpolicy="no-referrer"></script>
     <script src="../js/common.js"></script>
     <script>
         initPage('../');
+
+        function savePDF() {
+            const btn = document.getElementById('save-pdf-btn');
+            btn.disabled = true;
+            btn.textContent = 'Generating...';
+
+            const el = document.getElementById('cv-doc');
+            const opt = {
+                margin: 0,
+                filename: 'CV_Minseung_Kim.pdf',
+                image: { type: 'jpeg', quality: 0.98 },
+                html2canvas: { scale: 2, useCORS: true, letterRendering: true },
+                jsPDF: { unit: 'mm', format: 'a4', orientation: 'portrait' },
+                pagebreak: { mode: ['avoid-all', 'css', 'legacy'] }
+            };
+
+            html2pdf().set(opt).from(el).save().then(() => {
+                btn.disabled = false;
+                btn.textContent = 'Save as PDF';
+            });
+        }
 
         Promise.all([
             fetch('../data/profile.json').then(r => r.json()),
@@ -339,6 +372,17 @@
                     <div class="cv-edu-body">
                         <strong>${e.degree}</strong>
                         <span>${e.institution}</span>
+                    </div>
+                </div>
+            `).join('');
+
+            // --- Experiences ---
+            const expHtml = profile.experiences.map(e => `
+                <div class="cv-edu-item">
+                    <div class="cv-edu-period">${e.period}</div>
+                    <div class="cv-edu-body">
+                        <strong>${e.company}</strong>
+                        <span>${e.title}</span>
                     </div>
                 </div>
             `).join('');
@@ -421,6 +465,11 @@
                 <div class="cv-section">
                     <div class="cv-section-title">Education</div>
                     ${eduHtml}
+                </div>
+
+                <div class="cv-section">
+                    <div class="cv-section-title">Experiences</div>
+                    ${expHtml}
                 </div>
 
                 <div class="cv-section">
