@@ -1,0 +1,44 @@
+{
+  "projects": [
+    {
+      "title": "Machine Learning Based Magnetic Field Focusing",
+      "tags": ["ML", "FEM"],
+      "categories": ["ml", "fem"],
+      "description": "Implementing magnetic field focusing in three-dimensional space using machine learning.",
+      "image": "mfc.png",
+      "image_alt": "Magnetic field focusing"
+    },
+    {
+      "title": "Optimal Planar Transformer Design Based on Reinforcement Learning",
+      "tags": ["ML", "FEM"],
+      "categories": ["ml", "fem"],
+      "description": "Finding optimal planar transformer design using reinforcement learning.",
+      "image": "planar.png",
+      "image_alt": "Planar Transformer"
+    },
+    {
+      "title": "Grid-Forming Inverter Islanding Detection Method",
+      "tags": ["PE"],
+      "categories": ["pe"],
+      "description": "Developing a grid-forming inverter islanding detection method by reactive power injection.",
+      "image": "gfm.png",
+      "image_alt": "Grid-Forming Inverter Islanding Detection"
+    },
+    {
+      "title": "MVDC/MVAC Converter Station",
+      "tags": ["PE"],
+      "categories": ["pe"],
+      "description": "MVDC/MVAC Converter station for railway system. Comparative analysis of AC/DC and DC/DC converter stations.",
+      "image": "MVDC.png",
+      "image_alt": "MVDC/MVAC Converter Station"
+    },
+    {
+      "title": "Non-Isolated Modular Multilevel Converter",
+      "tags": ["PE"],
+      "categories": ["pe"],
+      "description": "A non-isolated step-down (NISD) DC transformer based on discontinuous conduction mode (DCM).",
+      "image": "mmc.png",
+      "image_alt": "Non-Isolated Modular Multilevel Converter"
+    }
+  ]
+}

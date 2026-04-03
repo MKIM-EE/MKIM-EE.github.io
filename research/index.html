@@ -84,14 +84,6 @@
             line-height: 1.6;
             font-size: 1rem;
             opacity: 0.85;
-            margin-bottom: 1rem;
-        }
-
-        .project-tags {
-            display: flex;
-            flex-wrap: wrap;
-            gap: 0.5rem;
-            margin-top: 0.8rem;
         }
 
         .project-tag {
@@ -112,7 +104,6 @@
             border-color: var(--primary-color);
         }
 
-        /* Research Theme Filters */
         .research-filters {
             display: flex;
             flex-wrap: wrap;
@@ -169,49 +160,12 @@
     </style>
 </head>
 
-<body data-theme="light">
-
-    <!-- Navigation Bar -->
-    <nav class="top-nav">
-        <div class="nav-container">
-            <div class="hamburger" id="hamburger">
-                <span></span>
-                <span></span>
-                <span></span>
-            </div>
-            <ul class="nav-list" id="nav-list">
-                <li class="nav-item"><a href="../">About</a></li>
-                <li class="nav-item"><a href="../research/">Research</a></li>
-                <li class="nav-item"><a href="../journals/">Journals</a></li>
-                <li class="nav-item"><a href="../conferences/">Conferences</a></li>
-                <li class="nav-item"><a href="../patents/">Patents</a></li>
-            </ul>
-            <button class="theme-toggle" id="theme-toggle" aria-label="Toggle dark mode">
-                <svg id="sun-icon" xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24"
-                    fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
-                    <circle cx="12" cy="12" r="5"></circle>
-                    <line x1="12" y1="1" x2="12" y2="3"></line>
-                    <line x1="12" y1="21" x2="12" y2="23"></line>
-                    <line x1="4.22" y1="4.22" x2="5.64" y2="5.64"></line>
-                    <line x1="18.36" y1="18.36" x2="19.78" y2="19.78"></line>
-                    <line x1="1" y1="12" x2="3" y2="12"></line>
-                    <line x1="21" y1="12" x2="23" y2="12"></line>
-                    <line x1="4.22" y1="19.78" x2="5.64" y2="18.36"></line>
-                    <line x1="18.36" y1="5.64" x2="19.78" y2="4.22"></line>
-                </svg>
-                <svg id="moon-icon" style="display:none" xmlns="http://www.w3.org/2000/svg" width="20" height="20"
-                    viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"
-                    stroke-linejoin="round">
-                    <path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z"></path>
-                </svg>
-            </button>
-        </div>
-    </nav>
+<body>
+    <script>document.body.setAttribute('data-theme', localStorage.getItem('theme') || 'light');</script>
 
     <main class="content fade-in">
         <h1>Research</h1>
 
-        <!-- Research Theme Filters -->
         <div class="research-filters">
             <button class="filter-btn active" data-filter="all">All</button>
             <button class="filter-btn" data-filter="ml">Machine Learning</button>
@@ -219,78 +173,7 @@
             <button class="filter-btn" data-filter="fem">Finite Element Method</button>
         </div>
 
-        <div id="project-list" class="research-list">
-            <div class="research-project fade-in" style="animation-delay: 0.1s" data-category="ml fem">
-                <div class="project-image-container">
-                    <img src="../assets/images/mfc.png" alt="Magnetic field focusing" class="project-image">
-                </div>
-                <div class="project-details">
-                    <div class="project-title">
-                        <span class="project-tag">ML</span>
-                        <span class="project-tag">FEM</span>
-                        Machine Learning Based Magnetic Field Focusing
-                    </div>
-                    <div class="project-description">Implementing magnetic field focusing in three-dimensional space
-                        using machine learning.</div>
-                </div>
-            </div>
-            <div class="research-project fade-in" style="animation-delay: 0.1s" data-category="ml fem">
-                <div class="project-image-container">
-                    <img src="../assets/images/planar.png" alt="Planar Transformer" class="project-image">
-                </div>
-                <div class="project-details">
-                    <div class="project-title">
-                        <span class="project-tag">ML</span>
-                        <span class="project-tag">FEM</span>
-                        Optimal Planar Transformer Design Based on Reinforcement Learning
-                    </div>
-                    <div class="project-description">Finding optimal planar transformer design using reinforcement
-                        learning.</div>
-                </div>
-            </div>
-            <div class="research-project fade-in" style="animation-delay: 0.1s" data-category="pe">
-                <div class="project-image-container">
-                    <img src="../assets/images/gfm.png" alt="Grid-Forming Inverter Islanding Detection"
-                        class="project-image">
-                </div>
-                <div class="project-details">
-                    <div class="project-title">
-                        <span class="project-tag">PE</span>
-                        Grid-Forming Inverter Islanding Detection Method
-                    </div>
-                    <div class="project-description">Developing a grid-forming inverter islanding detection method
-                        by reactive power injection.</div>
-                </div>
-            </div>
-            <div class="research-project fade-in" style="animation-delay: 0.1s" data-category="pe">
-                <div class="project-image-container">
-                    <img src="../assets/images/MVDC.png" alt="MVDC/MVAC Converter Station" class="project-image">
-                </div>
-                <div class="project-details">
-                    <div class="project-title">
-                        <span class="project-tag">PE</span>
-                        MVDC/MVAC Converter Station
-                    </div>
-                    <div class="project-description">MVDC/MVAC Converter station for railway system. Comparative
-                        analysis of AC/DC and DC/DC converter stations.</div>
-                </div>
-            </div>
-            <div class="research-project fade-in" style="animation-delay: 0.1s" data-category="pe">
-                <div class="project-image-container">
-                    <img src="../assets/images/mmc.png" alt="Non-Isolated Modular Multilevel Converter"
-                        class="project-image">
-                </div>
-                <div class="project-details">
-                    <div class="project-title">
-                        <span class="project-tag">PE</span>
-                        Non-Isolated Modular Multilevel Converter
-                    </div>
-                    <div class="project-description">A non-isolated step-down (NISD) DC transformer based on
-                        discontinuous conduction mode (DCM)
-                    </div>
-                </div>
-            </div>
-        </div>
+        <div id="project-list" class="research-list"></div>
     </main>
 
     <button class="back-to-top" id="back-to-top" aria-label="Back to top">
@@ -301,94 +184,46 @@
         </svg>
     </button>
 
+    <script src="../js/common.js"></script>
     <script>
-        // Theme Toggle
-        const themeToggle = document.getElementById('theme-toggle');
-        const sunIcon = document.getElementById('sun-icon');
-        const moonIcon = document.getElementById('moon-icon');
-        const body = document.body;
+        initPage('../');
 
-        function updateTheme(theme) {
-            body.setAttribute('data-theme', theme);
-            if (theme === 'dark') {
-                sunIcon.style.display = 'none';
-                moonIcon.style.display = 'block';
-            } else {
-                sunIcon.style.display = 'block';
-                moonIcon.style.display = 'none';
-            }
-        }
+        fetch('../data/research.json')
+            .then(r => r.json())
+            .then(data => {
+                document.getElementById('project-list').innerHTML = data.projects.map((p, i) => `
+                    <div class="research-project fade-in" style="animation-delay: ${(i * 0.1).toFixed(1)}s"
+                         data-category="${p.categories.join(' ')}">
+                        <div class="project-image-container">
+                            <img src="../assets/images/${p.image}" alt="${p.image_alt}" class="project-image">
+                        </div>
+                        <div class="project-details">
+                            <div class="project-title">
+                                ${p.tags.map(t => `<span class="project-tag">${t}</span>`).join('')}
+                                ${p.title}
+                            </div>
+                            <div class="project-description">${p.description}</div>
+                        </div>
+                    </div>
+                `).join('');
 
-        themeToggle.addEventListener('click', () => {
-            const currentTheme = body.getAttribute('data-theme');
-            const newTheme = currentTheme === 'light' ? 'dark' : 'light';
-            updateTheme(newTheme);
-            localStorage.setItem('theme', newTheme);
-        });
-
-        // Research Theme Filter
-        const filterBtns = document.querySelectorAll('.filter-btn');
-        const projects = document.querySelectorAll('.research-project');
-
-        filterBtns.forEach(btn => {
-            btn.addEventListener('click', () => {
-                // Remove active class from all buttons
-                filterBtns.forEach(b => b.classList.remove('active'));
-                // Add active class to clicked button
-                btn.classList.add('active');
-
-                const filter = btn.getAttribute('data-filter');
-
-                projects.forEach(project => {
-                    if (filter === 'all') {
-                        project.classList.remove('hidden');
-                    } else {
-                        const categories = project.getAttribute('data-category').split(' ');
-                        if (categories.includes(filter)) {
-                            project.classList.remove('hidden');
-                        } else {
-                            project.classList.add('hidden');
-                        }
-                    }
+                // Filter buttons
+                document.querySelectorAll('.filter-btn').forEach(btn => {
+                    btn.addEventListener('click', () => {
+                        document.querySelectorAll('.filter-btn').forEach(b => b.classList.remove('active'));
+                        btn.classList.add('active');
+                        const filter = btn.getAttribute('data-filter');
+                        document.querySelectorAll('.research-project').forEach(proj => {
+                            if (filter === 'all') {
+                                proj.classList.remove('hidden');
+                            } else {
+                                const cats = proj.getAttribute('data-category').split(' ');
+                                proj.classList.toggle('hidden', !cats.includes(filter));
+                            }
+                        });
+                    });
                 });
             });
-        });
-
-        // Hamburger Menu
-        const hamburger = document.getElementById('hamburger');
-        const navList = document.getElementById('nav-list');
-
-        hamburger.addEventListener('click', () => {
-            navList.classList.toggle('active');
-        });
-
-        // Close menu when clicking a link
-        document.querySelectorAll('.nav-item a').forEach(link => {
-            link.addEventListener('click', () => {
-                navList.classList.remove('active');
-            });
-        });
-
-        // Back to Top Button
-        const backToTop = document.getElementById('back-to-top');
-
-        window.addEventListener('scroll', () => {
-            if (window.scrollY > 300) {
-                backToTop.classList.add('visible');
-            } else {
-                backToTop.classList.remove('visible');
-            }
-        });
-
-        backToTop.addEventListener('click', () => {
-            window.scrollTo({ top: 0, behavior: 'smooth' });
-        });
-
-        // Persist Theme
-        const savedTheme = localStorage.getItem('theme');
-        if (savedTheme) {
-            updateTheme(savedTheme);
-        }
     </script>
 </body>
 

@@ -1,0 +1,103 @@
+{
+  "name": "Minseung Kim",
+  "name_ko": "김민승",
+  "title": "Ph.D. Student",
+  "affiliation": "Department of Electrical and Electronic Engineering, Hanyang University",
+  "email": "minseung224@hanyang.ac.kr",
+  "photo": "assets/images/mkim.jpg",
+  "research_interests": [
+    "Power Electronics",
+    "High-Frequency Transformer",
+    "Machine Learning",
+    "Finite Element Method"
+  ],
+  "links": [
+    {
+      "label": "Google Scholar",
+      "url": "https://scholar.google.com/citations?user=jCp59vcAAAAJ&hl=en"
+    },
+    {
+      "label": "IEEE Xplore",
+      "url": "https://ieeexplore.ieee.org/author/37067883700"
+    },
+    {
+      "label": "LinkedIn",
+      "url": "https://www.linkedin.com/in/mkim224/"
+    }
+  ],
+  "education": [
+    {
+      "period": "2024 - Present",
+      "degree": "Ph.D. in Electrical and Electronic Engineering",
+      "institution": "Hanyang University (한양대학교)"
+    },
+    {
+      "period": "2022 - 2024",
+      "degree": "M.S. in Electrical Engineering",
+      "institution": "Mokpo National University (국립목포대학교)"
+    },
+    {
+      "period": "2019 - 2022",
+      "degree": "B.S. in Electrical and Control Engineering",
+      "institution": "Mokpo National University (국립목포대학교)"
+    }
+  ],
+  "academic_service": [
+    {
+      "role": "Peer Reviewer",
+      "venue": "IEEE Access"
+    }
+  ],
+  "academic_activities": [
+    {
+      "date": "2025.07.",
+      "description": "2025년도 전력전자학술대회, 평창, 대한민국",
+      "badges": ["oral", "award"]
+    },
+    {
+      "date": "2025.05.",
+      "description": "20th IEEE Energy Conversion Congress & Expo (ECCE ASIA 2025), Bangaluru, India",
+      "badges": ["oral"]
+    },
+    {
+      "date": "2024.07.",
+      "description": "20th International Conference on AC and DC Power Transmission (ACDC 2024), Shanghai, China",
+      "badges": ["oral"]
+    },
+    {
+      "date": "2024.07.",
+      "description": "2024년도 전력전자학술대회, 제주, 대한민국",
+      "badges": ["oral", "award"]
+    },
+    {
+      "date": "2023.10.",
+      "description": "대한전기학회 추계학술대회, 제주, 대한민국",
+      "badges": ["poster"]
+    },
+    {
+      "date": "2023.04.",
+      "description": "대한전기학회 전력계통연구회 춘계학술대회, 제주, 대한민국",
+      "badges": ["poster", "award"]
+    },
+    {
+      "date": "2022.07.",
+      "description": "제 53회 대한전기학회 하계학술대회, 여수, 대한민국",
+      "badges": ["poster"]
+    },
+    {
+      "date": "2022.04.",
+      "description": "한국신재생에너지학회 춘계학술대회, 대구, 대한민국",
+      "badges": []
+    },
+    {
+      "date": "2022.02.",
+      "description": "대한전기학회 전력기술부문회 동계세미나, 인천, 대한민국",
+      "badges": []
+    },
+    {
+      "date": "2021.11.",
+      "description": "대한전기학회 전기기기 및 에너지변환시스템 부문회 추계학술대회, 경주, 대한민국",
+      "badges": []
+    }
+  ]
+}

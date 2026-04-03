@@ -1,0 +1,487 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>CV | Kim, Minseung</title>
+    <meta name="description" content="Curriculum Vitae of Minseung Kim, Ph.D. Student at Hanyang University." />
+    <link rel="canonical" href="https://mkim-ee.github.io/cv/" />
+    <link rel="stylesheet" href="../styles.css" />
+    <style>
+        /* CV-specific screen styles */
+        .cv-wrapper {
+            max-width: 850px;
+            margin: 0 auto;
+        }
+
+        .cv-print-btn {
+            display: flex;
+            justify-content: flex-end;
+            margin-bottom: 2rem;
+        }
+
+        .cv-print-btn button {
+            padding: 0.6rem 1.4rem;
+            background-color: var(--primary-color);
+            color: white;
+            border: none;
+            border-radius: 8px;
+            font-size: 0.95rem;
+            font-weight: 600;
+            cursor: pointer;
+            font-family: var(--font-body);
+            transition: var(--transition);
+        }
+
+        .cv-print-btn button:hover {
+            background-color: var(--primary-hover);
+        }
+
+        /* CV document styles */
+        .cv-doc {
+            background: var(--card-bg);
+            border: 1px solid var(--border-color);
+            border-radius: 12px;
+            padding: 3rem;
+        }
+
+        .cv-header {
+            border-bottom: 2px solid var(--primary-color);
+            padding-bottom: 1.5rem;
+            margin-bottom: 2rem;
+        }
+
+        .cv-name {
+            font-size: 2rem;
+            font-weight: 800;
+            font-family: var(--font-heading);
+            background: linear-gradient(135deg, var(--primary-color), #6366f1);
+            -webkit-background-clip: text;
+            background-clip: text;
+            -webkit-text-fill-color: transparent;
+            margin-bottom: 0.3rem;
+        }
+
+        .cv-title-line {
+            font-size: 1rem;
+            color: var(--text-muted);
+            margin-bottom: 0.8rem;
+        }
+
+        .cv-contact {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 0.5rem 1.5rem;
+            font-size: 0.9rem;
+            color: var(--text-muted);
+        }
+
+        .cv-contact a {
+            color: var(--primary-color);
+            text-decoration: none;
+        }
+
+        .cv-section {
+            margin-bottom: 2rem;
+        }
+
+        .cv-section-title {
+            font-size: 1.1rem;
+            font-weight: 700;
+            font-family: var(--font-heading);
+            text-transform: uppercase;
+            letter-spacing: 0.08em;
+            color: var(--primary-color);
+            border-bottom: 1px solid var(--border-color);
+            padding-bottom: 0.4rem;
+            margin-bottom: 1rem;
+        }
+
+        /* Education */
+        .cv-edu-item {
+            display: flex;
+            gap: 1.5rem;
+            margin-bottom: 0.8rem;
+        }
+
+        .cv-edu-period {
+            flex-shrink: 0;
+            width: 130px;
+            font-size: 0.85rem;
+            color: var(--text-muted);
+            padding-top: 0.15rem;
+        }
+
+        .cv-edu-body strong {
+            display: block;
+            font-size: 0.95rem;
+        }
+
+        .cv-edu-body span {
+            font-size: 0.85rem;
+            color: var(--text-muted);
+        }
+
+        /* Publications */
+        .cv-pub-item {
+            display: flex;
+            gap: 0.8rem;
+            margin-bottom: 0.9rem;
+            font-size: 0.9rem;
+            line-height: 1.55;
+        }
+
+        .cv-pub-num {
+            flex-shrink: 0;
+            width: 40px;
+            text-align: right;
+            color: var(--primary-color);
+            font-weight: 700;
+            font-size: 0.85rem;
+            padding-top: 0.05rem;
+        }
+
+        .cv-pub-body .pub-title-text {
+            font-weight: 600;
+            display: block;
+            margin-bottom: 0.2rem;
+        }
+
+        .cv-pub-body .pub-title-text a {
+            color: inherit;
+            text-decoration: none;
+        }
+
+        .cv-pub-body .pub-title-text a:hover {
+            color: var(--primary-color);
+            text-decoration: underline;
+        }
+
+        .cv-pub-body .pub-meta {
+            color: var(--text-muted);
+            font-size: 0.85rem;
+        }
+
+        .cv-pub-body strong {
+            color: var(--primary-color);
+        }
+
+        /* Patent */
+        .cv-patent-item {
+            display: flex;
+            gap: 0.8rem;
+            margin-bottom: 0.9rem;
+            font-size: 0.9rem;
+            line-height: 1.55;
+        }
+
+        .cv-patent-num {
+            flex-shrink: 0;
+            width: 40px;
+            text-align: right;
+            color: var(--primary-color);
+            font-weight: 700;
+            font-size: 0.85rem;
+            padding-top: 0.05rem;
+        }
+
+        .cv-patent-body strong {
+            color: var(--primary-color);
+        }
+
+        .cv-patent-body .pub-meta {
+            color: var(--text-muted);
+            font-size: 0.85rem;
+        }
+
+        /* Activities */
+        .cv-activity-item {
+            display: flex;
+            gap: 1rem;
+            margin-bottom: 0.5rem;
+            font-size: 0.9rem;
+        }
+
+        .cv-activity-date {
+            flex-shrink: 0;
+            width: 75px;
+            color: var(--primary-color);
+            font-weight: 600;
+            font-size: 0.85rem;
+        }
+
+        /* Sub-section heading inside a section */
+        .cv-subsection {
+            font-size: 0.95rem;
+            font-weight: 700;
+            margin: 1.2rem 0 0.6rem;
+            color: var(--text-color);
+        }
+
+        .cv-interests {
+            font-size: 0.9rem;
+            color: var(--text-muted);
+        }
+
+        /* Print styles */
+        @media print {
+            body {
+                background: white !important;
+                color: black !important;
+            }
+
+            .top-nav,
+            .back-to-top,
+            .cv-print-btn {
+                display: none !important;
+            }
+
+            .content {
+                margin: 0 !important;
+                padding: 0 !important;
+                max-width: 100% !important;
+                width: 100% !important;
+            }
+
+            .cv-doc {
+                border: none !important;
+                border-radius: 0 !important;
+                padding: 0 !important;
+                background: white !important;
+            }
+
+            .cv-name {
+                -webkit-text-fill-color: #1a1a1a !important;
+                color: #1a1a1a !important;
+                background: none !important;
+            }
+
+            .cv-section-title {
+                color: #1a1a1a !important;
+            }
+
+            .cv-pub-num,
+            .cv-patent-num,
+            .cv-activity-date,
+            .cv-edu-period {
+                color: #555 !important;
+            }
+
+            .cv-pub-body strong,
+            .cv-patent-body strong {
+                color: #1a1a1a !important;
+            }
+
+            .cv-contact a {
+                color: #1a1a1a !important;
+            }
+
+            a {
+                text-decoration: none !important;
+                color: inherit !important;
+            }
+
+            .cv-section {
+                page-break-inside: avoid;
+            }
+        }
+    </style>
+</head>
+
+<body>
+    <script>document.body.setAttribute('data-theme', localStorage.getItem('theme') || 'light');</script>
+
+    <main class="content fade-in">
+        <div class="cv-wrapper">
+            <div class="cv-print-btn">
+                <button onclick="window.print()">Print / Save as PDF</button>
+            </div>
+
+            <div class="cv-doc" id="cv-doc">
+                <!-- Rendered by JS -->
+                <p style="color: var(--text-muted); font-size: 0.9rem;">Loading CV...</p>
+            </div>
+        </div>
+    </main>
+
+    <button class="back-to-top" id="back-to-top" aria-label="Back to top">
+        <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none"
+            stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+            <line x1="12" y1="19" x2="12" y2="5"></line>
+            <polyline points="5 12 12 5 19 12"></polyline>
+        </svg>
+    </button>
+
+    <script src="../js/common.js"></script>
+    <script>
+        initPage('../');
+
+        Promise.all([
+            fetch('../data/profile.json').then(r => r.json()),
+            fetch('../data/journals.json').then(r => r.json()),
+            fetch('../data/conferences.json').then(r => r.json()),
+            fetch('../data/patents.json').then(r => r.json()),
+        ]).then(([profile, journals, conferences, patents]) => {
+            renderCV(profile, journals, conferences, patents);
+        });
+
+        function renderCV(profile, journals, conferences, patents) {
+            // --- Header ---
+            const linksHtml = profile.links.map(l =>
+                `<a href="${l.url}" target="_blank">${l.label}</a>`
+            ).join(' · ');
+
+            // --- Education ---
+            const eduHtml = profile.education.map(e => `
+                <div class="cv-edu-item">
+                    <div class="cv-edu-period">${e.period}</div>
+                    <div class="cv-edu-body">
+                        <strong>${e.degree}</strong>
+                        <span>${e.institution}</span>
+                    </div>
+                </div>
+            `).join('');
+
+            // --- Research Interests ---
+            const interestsHtml = `<div class="cv-interests">${profile.research_interests.join(', ')}</div>`;
+
+            // --- Publications (numbered in reverse order per category) ---
+            function renderCVPubs(items, prefix, globalOffset) {
+                return items.map((item, i) => {
+                    const num = globalOffset + i + 1;
+                    const authorsHtml = highlightAuthor(item.authors, item.highlight);
+                    const titleHtml = item.url
+                        ? `<a href="${item.url}" target="_blank" rel="noopener noreferrer">${item.title}</a>`
+                        : item.title;
+                    return `
+                        <div class="cv-pub-item">
+                            <div class="cv-pub-num">[${prefix}${num}]</div>
+                            <div class="cv-pub-body">
+                                <span class="pub-title-text">${titleHtml}</span>
+                                <span class="pub-meta">${authorsHtml} — <em>${item.venue}</em>, ${item.date}</span>
+                            </div>
+                        </div>`;
+                }).join('');
+            }
+
+            const sciHtml = renderCVPubs(journals.sci, 'J', 0);
+            const kciHtml = renderCVPubs(journals.kci, 'J', journals.sci.length);
+            const intlConfHtml = renderCVPubs(conferences.international, 'C', 0);
+            const domConfHtml = renderCVPubs(conferences.domestic, 'C', conferences.international.length);
+
+            // --- Patents ---
+            function renderCVPatents(items, prefix, globalOffset) {
+                return items.map((item, i) => {
+                    const num = globalOffset + i + 1;
+                    const authorsHtml = highlightAuthor(item.authors, item.highlight);
+                    return `
+                        <div class="cv-patent-item">
+                            <div class="cv-patent-num">[${prefix}${num}]</div>
+                            <div class="cv-patent-body">
+                                <span class="pub-title-text">${item.title}</span>
+                                <span class="pub-meta">${authorsHtml} — No. ${item.number}, ${item.date}</span>
+                            </div>
+                        </div>`;
+                }).join('');
+            }
+
+            const regPatentHtml = renderCVPatents(patents.registration, 'P', 0);
+            const appPatentHtml = renderCVPatents(patents.application, 'P', patents.registration.length);
+
+            // --- Academic Service ---
+            const serviceHtml = profile.academic_service.map(s =>
+                `<div class="cv-activity-item">
+                    <div class="cv-activity-date">${s.role}</div>
+                    <div>${s.venue}</div>
+                </div>`
+            ).join('');
+
+            // --- Academic Activities ---
+            const activitiesHtml = profile.academic_activities.map(a => {
+                const badges = renderBadges(a.badges);
+                return `
+                    <div class="cv-activity-item">
+                        <div class="cv-activity-date">${a.date}</div>
+                        <div>${a.description}${badges}</div>
+                    </div>`;
+            }).join('');
+
+            // --- Assemble ---
+            document.getElementById('cv-doc').innerHTML = `
+                <div class="cv-header">
+                    <div class="cv-name">${profile.name} (${profile.name_ko})</div>
+                    <div class="cv-title-line">${profile.title} · ${profile.affiliation}</div>
+                    <div class="cv-contact">
+                        <span>${profile.email}</span>
+                        ${linksHtml}
+                    </div>
+                </div>
+
+                <div class="cv-section">
+                    <div class="cv-section-title">Education</div>
+                    ${eduHtml}
+                </div>
+
+                <div class="cv-section">
+                    <div class="cv-section-title">Research Interests</div>
+                    ${interestsHtml}
+                </div>
+
+                <div class="cv-section">
+                    <div class="cv-section-title">
+                        Journal Publications
+                        <span style="font-weight:400; font-size:0.85rem; text-transform:none; letter-spacing:0;">
+                            (${journals.sci.length + journals.kci.length} total:
+                            SCI ${journals.sci.length}, KCI ${journals.kci.length})
+                        </span>
+                    </div>
+                    <div class="cv-subsection">SCI</div>
+                    ${sciHtml}
+                    <div class="cv-subsection">KCI</div>
+                    ${kciHtml}
+                </div>
+
+                <div class="cv-section">
+                    <div class="cv-section-title">
+                        Conference Papers
+                        <span style="font-weight:400; font-size:0.85rem; text-transform:none; letter-spacing:0;">
+                            (${conferences.international.length + conferences.domestic.length} total:
+                            International ${conferences.international.length}, Domestic ${conferences.domestic.length})
+                        </span>
+                    </div>
+                    <div class="cv-subsection">International</div>
+                    ${intlConfHtml}
+                    <div class="cv-subsection">Domestic</div>
+                    ${domConfHtml}
+                </div>
+
+                <div class="cv-section">
+                    <div class="cv-section-title">
+                        Patents
+                        <span style="font-weight:400; font-size:0.85rem; text-transform:none; letter-spacing:0;">
+                            (${patents.registration.length + patents.application.length} total:
+                            Registered ${patents.registration.length}, Applied ${patents.application.length})
+                        </span>
+                    </div>
+                    <div class="cv-subsection">Registration</div>
+                    ${regPatentHtml}
+                    <div class="cv-subsection">Application</div>
+                    ${appPatentHtml}
+                </div>
+
+                <div class="cv-section">
+                    <div class="cv-section-title">Academic Service</div>
+                    ${serviceHtml}
+                </div>
+
+                <div class="cv-section">
+                    <div class="cv-section-title">Academic Activities</div>
+                    ${activitiesHtml}
+                </div>
+            `;
+        }
+    </script>
+</body>
+
+</html>
