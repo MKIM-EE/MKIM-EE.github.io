@@ -73,74 +73,11 @@
             gap: 0.8rem;
         }
 
-        .project-title .project-tag {
-            flex-shrink: 0;
-            font-size: 0.75rem;
-            padding: 0.25rem 0.7rem;
-        }
-
         .project-description {
             color: var(--text-color);
             line-height: 1.6;
             font-size: 1rem;
             opacity: 0.85;
-        }
-
-        .project-tag {
-            display: inline-block;
-            padding: 0.3rem 0.8rem;
-            background-color: var(--accent-color);
-            color: var(--primary-color);
-            border-radius: 20px;
-            font-size: 0.8rem;
-            font-weight: 600;
-            transition: var(--transition);
-            border: 1px solid transparent;
-        }
-
-        .project-tag:hover {
-            background-color: var(--primary-color);
-            color: white;
-            border-color: var(--primary-color);
-        }
-
-        .research-filters {
-            display: flex;
-            flex-wrap: wrap;
-            gap: 0.8rem;
-            margin-bottom: 2.5rem;
-            padding: 1.5rem;
-            background-color: var(--accent-color);
-            border-radius: 12px;
-        }
-
-        .filter-btn {
-            padding: 0.6rem 1.2rem;
-            background-color: var(--card-bg);
-            color: var(--text-color);
-            border: 2px solid var(--border-color);
-            border-radius: 25px;
-            font-size: 0.9rem;
-            font-weight: 600;
-            cursor: pointer;
-            transition: var(--transition);
-            font-family: var(--font-body);
-        }
-
-        .filter-btn:hover {
-            border-color: var(--primary-color);
-            color: var(--primary-color);
-            transform: translateY(-2px);
-        }
-
-        .filter-btn.active {
-            background-color: var(--primary-color);
-            color: white;
-            border-color: var(--primary-color);
-        }
-
-        .research-project.hidden {
-            display: none;
         }
 
         @media screen and (max-width: 600px) {
@@ -166,13 +103,6 @@
     <main class="content fade-in">
         <h1>Research</h1>
 
-        <div class="research-filters">
-            <button class="filter-btn active" data-filter="all">All</button>
-            <button class="filter-btn" data-filter="ml">Machine Learning</button>
-            <button class="filter-btn" data-filter="pe">Power Electronics</button>
-            <button class="filter-btn" data-filter="fem">Finite Element Method</button>
-        </div>
-
         <div id="project-list" class="research-list"></div>
     </main>
 
@@ -192,37 +122,16 @@
             .then(r => r.json())
             .then(data => {
                 document.getElementById('project-list').innerHTML = data.projects.map((p, i) => `
-                    <div class="research-project fade-in" style="animation-delay: ${(i * 0.1).toFixed(1)}s"
-                         data-category="${p.categories.join(' ')}">
+                    <div class="research-project fade-in" style="animation-delay: ${(i * 0.1).toFixed(1)}s">
                         <div class="project-image-container">
                             <img src="../assets/images/${p.image}" alt="${p.image_alt}" class="project-image">
                         </div>
                         <div class="project-details">
-                            <div class="project-title">
-                                ${p.tags.map(t => `<span class="project-tag">${t}</span>`).join('')}
-                                ${p.title}
-                            </div>
+                            <div class="project-title">${p.title}</div>
                             <div class="project-description">${p.description}</div>
                         </div>
                     </div>
                 `).join('');
-
-                // Filter buttons
-                document.querySelectorAll('.filter-btn').forEach(btn => {
-                    btn.addEventListener('click', () => {
-                        document.querySelectorAll('.filter-btn').forEach(b => b.classList.remove('active'));
-                        btn.classList.add('active');
-                        const filter = btn.getAttribute('data-filter');
-                        document.querySelectorAll('.research-project').forEach(proj => {
-                            if (filter === 'all') {
-                                proj.classList.remove('hidden');
-                            } else {
-                                const cats = proj.getAttribute('data-category').split(' ');
-                                proj.classList.toggle('hidden', !cats.includes(filter));
-                            }
-                        });
-                    });
-                });
             });
     </script>
 </body>
