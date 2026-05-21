@@ -104,7 +104,7 @@
 
         <section id="academic" class="fade-in">
             <h2>Academic Service</h2>
-            <div class="activities-list" id="academic-service-list"></div>
+            <div class="activities-list service-grid" id="academic-service-list"></div>
 
             <h2 style="margin-top: 3rem;">Academic Activities</h2>
             <div class="activities-list" id="academic-activities-list"></div>
@@ -153,10 +153,20 @@
                     </div>
                 `).join('');
 
+                const publisherLogos = {
+                    'IEEE': `<svg viewBox="0 0 120 40" xmlns="http://www.w3.org/2000/svg" aria-label="IEEE"><text x="0" y="30" font-family="Arial,sans-serif" font-weight="900" font-size="32" fill="#00629B">IEEE</text></svg>`,
+                    'Elsevier': `<svg viewBox="0 0 120 40" xmlns="http://www.w3.org/2000/svg" aria-label="Elsevier"><text x="0" y="28" font-family="Arial,sans-serif" font-weight="700" font-size="20" fill="#FF6B00">Elsevier</text></svg>`,
+                    'Wiley': `<svg viewBox="0 0 80 40" xmlns="http://www.w3.org/2000/svg" aria-label="Wiley"><text x="0" y="28" font-family="Arial,sans-serif" font-weight="700" font-size="22" fill="#003A70">Wiley</text></svg>`,
+                    'Springer': `<svg viewBox="0 0 120 40" xmlns="http://www.w3.org/2000/svg" aria-label="Springer"><text x="0" y="28" font-family="Arial,sans-serif" font-weight="700" font-size="20" fill="#FF6C00">Springer</text></svg>`,
+                    'MDPI': `<svg viewBox="0 0 80 40" xmlns="http://www.w3.org/2000/svg" aria-label="MDPI"><text x="0" y="28" font-family="Arial,sans-serif" font-weight="700" font-size="22" fill="#444444">MDPI</text></svg>`,
+                };
+                const roleBadgeClass = { 'Reviewer': 'role-reviewer', 'AE': 'role-ae', 'Guest Editor': 'role-guest-editor' };
+
                 document.getElementById('academic-service-list').innerHTML = p.academic_service.map(s => `
-                    <div class="activity-item">
-                        <strong>${s.role}</strong>
-                        <span>${s.venue}</span>
+                    <div class="service-card">
+                        <div class="service-logo">${publisherLogos[s.publisher] ?? `<span class="service-publisher-text">${s.publisher}</span>`}</div>
+                        <div class="service-journal">${s.journal}</div>
+                        <span class="service-role-badge ${roleBadgeClass[s.role] ?? ''}">${s.role}</span>
                     </div>
                 `).join('');
 

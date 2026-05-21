@@ -51,8 +51,14 @@
   ],
   "academic_service": [
     {
-      "role": "Peer Reviewer",
-      "venue": "IEEE Transactions on Industrial Electronics, IEEE Access"
+      "role": "Reviewer",
+      "journal": "IEEE Transactions on Industrial Electronics",
+      "publisher": "IEEE"
+    },
+    {
+      "role": "Reviewer",
+      "journal": "IEEE Access",
+      "publisher": "IEEE"
     }
   ],
   "academic_activities": [
