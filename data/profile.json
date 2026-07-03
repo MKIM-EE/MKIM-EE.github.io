@@ -52,6 +52,11 @@
   "academic_service": [
     {
       "role": "Reviewer",
+      "journal": "IEEE Journal of Emerging and Selected Topics in Power Electronics",
+      "publisher": "IEEE"
+    },
+    {
+      "role": "Reviewer",
       "journal": "IEEE Transactions on Industrial Electronics",
       "publisher": "IEEE"
     },
