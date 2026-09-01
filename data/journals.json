@@ -1,6 +1,14 @@
 {
   "sci": [
     {
+      "title": "Performance Analysis and Design Guidelines of Single and Multi-PA Driving Architectures for 5.8 GHz RF-Based Wireless Power Transfer Systems",
+      "authors": "Kang M. Seo, Min S. Kim, Keon W. Kim, Moon Y. Kim and Eun S. Lee",
+      "highlight": "Min S. Kim",
+      "venue": "IEEE Access",
+      "date": "2026.08.",
+      "url": "https://scholar.google.com/citations?view_op=view_citation&hl=en&user=jCp59vcAAAAJ&citation_for_view=jCp59vcAAAAJ:MXK_kJrjxJIC"
+    },
+    {
       "title": "Feedforward Droop Control for Reactive Power Balancing in Grid-Forming Inverters With Line Impedance Compensation",
       "authors": "Hyun J. Kim, Min S. Kim, Ho J. Lee, and Eun S. Lee",
       "highlight": "Min S. Kim",
