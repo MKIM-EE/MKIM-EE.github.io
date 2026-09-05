@@ -44,6 +44,31 @@
             cursor: not-allowed;
         }
 
+        .cv-mode-toggle {
+            display: flex;
+            margin-right: auto;
+            border: 1px solid var(--border-color);
+            border-radius: 8px;
+            overflow: hidden;
+        }
+
+        .cv-mode-toggle button {
+            padding: 0.55rem 1.1rem;
+            background: transparent;
+            color: var(--text-color);
+            border: none;
+            font-size: 0.9rem;
+            font-weight: 600;
+            cursor: pointer;
+            font-family: var(--font-body);
+            transition: var(--transition);
+        }
+
+        .cv-mode-toggle button.active {
+            background-color: var(--primary-color);
+            color: white;
+        }
+
         /* CV document styles — A4 paper sheet */
         .cv-doc {
             background: white;
@@ -227,6 +252,13 @@
             font-size: 0.85rem;
         }
 
+        .cv-service-role {
+            flex-shrink: 0;
+            color: var(--primary-color);
+            font-weight: 600;
+            font-size: 0.85rem;
+        }
+
         /* Sub-section heading inside a section */
         .cv-subsection {
             font-size: 0.95rem;
@@ -258,7 +290,8 @@
         .cv-doc .cv-edu-body span,
         .cv-doc .cv-interests,
         .cv-doc .pub-meta,
-        .cv-doc .cv-activity-date {
+        .cv-doc .cv-activity-date,
+        .cv-doc .cv-service-role {
             color: #666;
         }
 
@@ -305,7 +338,8 @@
         @media print {
             .top-nav,
             .back-to-top,
-            .cv-save-btn {
+            .cv-save-btn,
+            .cv-mode-toggle {
                 display: none !important;
             }
 
@@ -367,6 +401,10 @@
     <main class="content fade-in">
         <div class="cv-wrapper">
             <div class="cv-save-btn">
+                <div class="cv-mode-toggle" id="cv-mode-toggle">
+                    <button type="button" data-mode="domestic">Domestic (KR)</button>
+                    <button type="button" data-mode="international">International (EN)</button>
+                </div>
                 <button onclick="window.print()">Save as PDF</button>
             </div>
 
@@ -389,16 +427,75 @@
     <script>
         initPage('../');
 
+        // --- Korean -> official English translations for domestic academic activities ---
+        const ACADEMIC_ACTIVITY_TRANSLATIONS = [
+            [/전력전자학회 (\d+)년도 전력전자학술대회/, 'The Korean Institute of Power Electronics $1 Annual Conference'],
+            [/전력전자학회 (\d+)년도 추계학술대회/, 'The Korean Institute of Power Electronics $1 Fall Conference'],
+            [/(\d+)년도 전력전자학술대회/, 'The Korean Institute of Power Electronics $1 Annual Conference'],
+            [/(\d+)년도 추계학술대회/, 'The Korean Institute of Power Electronics $1 Fall Conference'],
+            [/제(\d+)회 대한전기학회 하계학술대회/, 'The $1th Korean Institute of Electrical Engineers Summer Conference'],
+            [/대한전기학회 하계학술대회/, 'The Korean Institute of Electrical Engineers Summer Conference'],
+            [/대한전기학회 추계학술대회/, 'The Korean Institute of Electrical Engineers Fall Conference'],
+            [/대한전기학회 전력계통연구회 춘계학술대회/, 'The Korean Institute of Electrical Engineers Power System Research Society Spring Conference'],
+            [/대한전기학회 전력기술부문회 동계세미나/, 'The Korean Institute of Electrical Engineers Power Technology Division Winter Seminar'],
+            [/대한전기학회 전기기기 및 에너지변환시스템 부문회 추계학술대회/, 'The Korean Institute of Electrical Engineers Electric Machinery and Energy Conversion Systems Division Fall Conference'],
+            [/한국신재생에너지학회 춘계학술대회/, 'Korean Society for New and Renewable Energy Spring Conference'],
+            [/한국신재생에너지학회/, 'Korean Society for New and Renewable Energy'],
+            [/대한전기학회/, 'The Korean Institute of Electrical Engineers'],
+            [/경주/, 'Gyeongju'],
+            [/평창/, 'Pyeongchang'],
+            [/제주/, 'Jeju'],
+            [/여수/, 'Yeosu'],
+            [/대구/, 'Daegu'],
+            [/인천/, 'Incheon'],
+            [/대한민국/, 'South Korea'],
+        ];
+
+        function translateAcademicActivity(description) {
+            let result = description;
+            for (const [pattern, replacement] of ACADEMIC_ACTIVITY_TRANSLATIONS) {
+                result = result.replace(pattern, replacement);
+            }
+            return result;
+        }
+
+        // Strips a trailing Korean parenthetical, e.g. "Hanyang University (한양대학교)" -> "Hanyang University"
+        function stripKoreanParen(str) {
+            return str.replace(/\s*\([^()]*[가-힣][^()]*\)\s*$/, '');
+        }
+
+        // --- Mode state (persisted) ---
+        let cvMode = localStorage.getItem('cvMode') || 'domestic';
+        let cvData = null;
+
         Promise.all([
             fetch('../data/profile.json').then(r => r.json()),
             fetch('../data/journals.json').then(r => r.json()),
             fetch('../data/conferences.json').then(r => r.json()),
             fetch('../data/patents.json').then(r => r.json()),
         ]).then(([profile, journals, conferences, patents]) => {
-            renderCV(profile, journals, conferences, patents);
+            cvData = { profile, journals, conferences, patents };
+            updateToggleUI();
+            renderCV(profile, journals, conferences, patents, cvMode);
         });
 
-        function renderCV(profile, journals, conferences, patents) {
+        function updateToggleUI() {
+            document.querySelectorAll('#cv-mode-toggle button').forEach(btn => {
+                btn.classList.toggle('active', btn.dataset.mode === cvMode);
+            });
+        }
+
+        document.getElementById('cv-mode-toggle').addEventListener('click', (e) => {
+            const btn = e.target.closest('button[data-mode]');
+            if (!btn || !cvData) return;
+            cvMode = btn.dataset.mode;
+            localStorage.setItem('cvMode', cvMode);
+            updateToggleUI();
+            renderCV(cvData.profile, cvData.journals, cvData.conferences, cvData.patents, cvMode);
+        });
+
+        function renderCV(profile, journals, conferences, patents, mode) {
+            const isIntl = mode === 'international';
             // --- Header ---
             const linksHtml = profile.links.map(l =>
                 `<a href="${l.url}" target="_blank">${l.label}</a>`
@@ -410,7 +507,7 @@
                     <div class="cv-edu-period">${e.period}</div>
                     <div class="cv-edu-body">
                         <strong>${e.degree}</strong>
-                        <span>${e.institution}</span>
+                        <span>${isIntl ? stripKoreanParen(e.institution) : e.institution}</span>
                     </div>
                 </div>
             `).join('');
@@ -453,6 +550,9 @@
             const intlConfHtml = renderCVPubs(conferences.international, 'C', 0);
             const domConfHtml = renderCVPubs(conferences.domestic, 'C', conferences.international.length);
 
+            const journalTotal = isIntl ? journals.sci.length : journals.sci.length + journals.kci.length;
+            const confTotal = isIntl ? conferences.international.length : conferences.international.length + conferences.domestic.length;
+
             // --- Patents ---
             function renderCVPatents(items, prefix, globalOffset) {
                 return items.map((item, i) => {
@@ -475,7 +575,7 @@
             // --- Academic Service ---
             const serviceHtml = profile.academic_service.map(s =>
                 `<div class="cv-activity-item">
-                    <div class="cv-activity-date">${s.role}</div>
+                    <div class="cv-service-role">${s.role}</div>
                     <div>${s.journal}</div>
                 </div>`
             ).join('');
@@ -483,17 +583,18 @@
             // --- Academic Activities ---
             const activitiesHtml = profile.academic_activities.map(a => {
                 const badges = renderBadges(a.badges);
+                const description = isIntl ? translateAcademicActivity(a.description) : a.description;
                 return `
                     <div class="cv-activity-item">
                         <div class="cv-activity-date">${a.date}</div>
-                        <div>${a.description}${badges}</div>
+                        <div>${description}${badges}</div>
                     </div>`;
             }).join('');
 
             // --- Assemble ---
             document.getElementById('cv-doc').innerHTML = `
                 <div class="cv-header">
-                    <div class="cv-name">${profile.name} (${profile.name_ko})</div>
+                    <div class="cv-name">${isIntl ? profile.name : `${profile.name} (${profile.name_ko})`}</div>
                     <div class="cv-title-line">${profile.title} · ${profile.affiliation}</div>
                     <div class="cv-contact">
                         <span>${profile.email}</span>
@@ -520,30 +621,31 @@
                     <div class="cv-section-title">
                         Journal Publications
                         <span style="font-weight:400; font-size:0.85rem; text-transform:none; letter-spacing:0;">
-                            (${journals.sci.length + journals.kci.length} total:
-                            SCI ${journals.sci.length}, KCI ${journals.kci.length})
+                            ${isIntl
+                                ? `(${journalTotal} total: SCI ${journals.sci.length})`
+                                : `(${journalTotal} total: SCI ${journals.sci.length}, KCI ${journals.kci.length})`}
                         </span>
                     </div>
-                    <div class="cv-subsection">SCI</div>
+                    ${isIntl ? '' : '<div class="cv-subsection">SCI</div>'}
                     ${sciHtml}
-                    <div class="cv-subsection">KCI</div>
-                    ${kciHtml}
+                    ${isIntl ? '' : `<div class="cv-subsection">KCI</div>${kciHtml}`}
                 </div>
 
                 <div class="cv-section">
                     <div class="cv-section-title">
                         Conference Papers
                         <span style="font-weight:400; font-size:0.85rem; text-transform:none; letter-spacing:0;">
-                            (${conferences.international.length + conferences.domestic.length} total:
-                            International ${conferences.international.length}, Domestic ${conferences.domestic.length})
+                            ${isIntl
+                                ? `(${confTotal} total: International ${conferences.international.length})`
+                                : `(${confTotal} total: International ${conferences.international.length}, Domestic ${conferences.domestic.length})`}
                         </span>
                     </div>
-                    <div class="cv-subsection">International</div>
+                    ${isIntl ? '' : '<div class="cv-subsection">International</div>'}
                     ${intlConfHtml}
-                    <div class="cv-subsection">Domestic</div>
-                    ${domConfHtml}
+                    ${isIntl ? '' : `<div class="cv-subsection">Domestic</div>${domConfHtml}`}
                 </div>
 
+                ${isIntl ? '' : `
                 <div class="cv-section">
                     <div class="cv-section-title">
                         Patents
@@ -556,7 +658,7 @@
                     ${regPatentHtml}
                     <div class="cv-subsection">Application</div>
                     ${appPatentHtml}
-                </div>
+                </div>`}
 
                 <div class="cv-section">
                     <div class="cv-section-title">Academic Service</div>
