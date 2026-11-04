@@ -103,7 +103,14 @@
     <main class="content fade-in">
         <h1>Research</h1>
 
-        <div id="project-list" class="research-list"></div>
+        <div id="project-list" class="research-list"><!--BUILD:projects-->
+<div class="research-project fade-in" style="animation-delay: 0.0s"><div class="project-image-container"><img src="../assets/images/sr.png" alt="synchronous rectifier" class="project-image"></div><div class="project-details"><div class="project-title">Impedance-transforming synchronous rectifier for EV</div><div class="project-description">Impedance-transforming synchronous rectifier enabling single-stage output power control for LCC-resonant EV wireless charging receivers.</div></div></div>
+<div class="research-project fade-in" style="animation-delay: 0.1s"><div class="project-image-container"><img src="../assets/images/mfc.png" alt="Magnetic field focusing" class="project-image"></div><div class="project-details"><div class="project-title">Machine Learning Based Magnetic Field Focusing</div><div class="project-description">Implementing magnetic field focusing in three-dimensional space using machine learning.</div></div></div>
+<div class="research-project fade-in" style="animation-delay: 0.2s"><div class="project-image-container"><img src="../assets/images/planar.png" alt="Planar Transformer" class="project-image"></div><div class="project-details"><div class="project-title">Optimal Planar Transformer Design Based on Reinforcement Learning</div><div class="project-description">Finding optimal planar transformer design using reinforcement learning.</div></div></div>
+<div class="research-project fade-in" style="animation-delay: 0.3s"><div class="project-image-container"><img src="../assets/images/gfm.png" alt="Grid-Forming Inverter Islanding Detection" class="project-image"></div><div class="project-details"><div class="project-title">Grid-Forming Inverter Islanding Detection Method</div><div class="project-description">Developing a grid-forming inverter islanding detection method by reactive power injection.</div></div></div>
+<div class="research-project fade-in" style="animation-delay: 0.4s"><div class="project-image-container"><img src="../assets/images/MVDC.png" alt="MVDC/MVAC Converter Station" class="project-image"></div><div class="project-details"><div class="project-title">MVDC/MVAC Converter Station</div><div class="project-description">MVDC/MVAC Converter station for railway system. Comparative analysis of AC/DC and DC/DC converter stations.</div></div></div>
+<div class="research-project fade-in" style="animation-delay: 0.5s"><div class="project-image-container"><img src="../assets/images/mmc.png" alt="Non-Isolated Modular Multilevel Converter" class="project-image"></div><div class="project-details"><div class="project-title">Non-Isolated Modular Multilevel Converter</div><div class="project-description">A non-isolated step-down (NISD) DC transformer based on discontinuous conduction mode (DCM).</div></div></div>
+<!--/BUILD:projects--></div>
     </main>
 
     <button class="back-to-top" id="back-to-top" aria-label="Back to top">
@@ -117,22 +124,6 @@
     <script src="../js/common.js"></script>
     <script>
         initPage('../');
-
-        fetch('../data/research.json')
-            .then(r => r.json())
-            .then(data => {
-                document.getElementById('project-list').innerHTML = data.projects.map((p, i) => `
-                    <div class="research-project fade-in" style="animation-delay: ${(i * 0.1).toFixed(1)}s">
-                        <div class="project-image-container">
-                            <img src="../assets/images/${p.image}" alt="${p.image_alt}" class="project-image">
-                        </div>
-                        <div class="project-details">
-                            <div class="project-title">${p.title}</div>
-                            <div class="project-description">${p.description}</div>
-                        </div>
-                    </div>
-                `).join('');
-            });
     </script>
 </body>
 

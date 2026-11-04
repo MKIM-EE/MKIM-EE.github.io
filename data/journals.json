@@ -6,7 +6,7 @@
       "highlight": "Min S. Kim",
       "venue": "IEEE Access",
       "date": "2026.08.",
-      "url": "https://scholar.google.com/citations?view_op=view_citation&hl=en&user=jCp59vcAAAAJ&citation_for_view=jCp59vcAAAAJ:MXK_kJrjxJIC"
+      "url": "https://doi.org/10.1109/ACCESS.2026.3727462"
     },
     {
       "title": "Feedforward Droop Control for Reactive Power Balancing in Grid-Forming Inverters With Line Impedance Compensation",
@@ -14,7 +14,7 @@
       "highlight": "Min S. Kim",
       "venue": "IEEE Transactions on Industrial Electronics",
       "date": "2025.11.",
-      "url": "https://scholar.google.com/citations?view_op=view_citation&hl=en&user=jCp59vcAAAAJ&citation_for_view=jCp59vcAAAAJ:0EnyYjriUFMC"
+      "url": "https://doi.org/10.1109/TIE.2025.3613647"
     },
     {
       "title": "A machine learning optimized Dielectric Ultra-focused Oscillatory (DUO) electrode for low temperature electrosurgery",
@@ -22,7 +22,7 @@
       "highlight": "Min S. Kim",
       "venue": "Scientific Reports",
       "date": "2025.07.",
-      "url": "https://scholar.google.com/citations?view_op=view_citation&hl=en&user=jCp59vcAAAAJ&citation_for_view=jCp59vcAAAAJ:WF5omc3nYNoC"
+      "url": "https://doi.org/10.1038/s41598-025-12578-3"
     },
     {
       "title": "Seamless Transition Control Method of Grid-connected Inverters under Unbalanced Voltage Conditions",
@@ -30,7 +30,7 @@
       "highlight": "Min S. Kim",
       "venue": "IEEE Open Journal of Power Electronics",
       "date": "2025.07.",
-      "url": "https://scholar.google.com/citations?view_op=view_citation&hl=en&user=jCp59vcAAAAJ&citation_for_view=jCp59vcAAAAJ:eQOLeE2rZwMC"
+      "url": "https://doi.org/10.1109/OJPEL.2025.3591640"
     },
     {
       "title": "Enhanced Islanding Detection for GFM and GFL Inverters Using Negative Sequence Current Injection",
@@ -38,7 +38,7 @@
       "highlight": "Min S. Kim",
       "venue": "IEEE Transactions on Industrial Electronics",
       "date": "2025.03.",
-      "url": "https://scholar.google.com/citations?view_op=view_citation&hl=en&user=jCp59vcAAAAJ&citation_for_view=jCp59vcAAAAJ:UeHWp8X0CEIC"
+      "url": "https://doi.org/10.1109/TIE.2025.3549103"
     },
     {
       "title": "A DCM-Based Non-Isolated Step-Down DC Transformer",
@@ -46,7 +46,7 @@
       "highlight": "Minseung Kim",
       "venue": "MDPI Energies",
       "date": "2024.02.",
-      "url": "https://scholar.google.com/citations?view_op=view_citation&hl=en&user=jCp59vcAAAAJ&citation_for_view=jCp59vcAAAAJ:u-x6o8ySG0sC"
+      "url": "https://doi.org/10.3390/en17040940"
     }
   ],
   "kci": [
@@ -56,7 +56,7 @@
       "highlight": "김민승",
       "venue": "전력전자학회논문지",
       "date": "2025.12.",
-      "url": "https://scholar.google.com/citations?view_op=view_citation&hl=en&user=jCp59vcAAAAJ&citation_for_view=jCp59vcAAAAJ:5nxA0vEk-isC"
+      "url": "https://doi.org/10.6113/TKPE.2025.30.6.513"
     },
     {
       "title": "강화학습 기반 DAB 컨버터용 PCB 평면 변압기 최적 설계 연구",
@@ -64,7 +64,7 @@
       "highlight": "김민승",
       "venue": "전력전자학회논문지",
       "date": "2025.08.",
-      "url": "https://scholar.google.com/citations?view_op=view_citation&hl=en&user=jCp59vcAAAAJ&citation_for_view=jCp59vcAAAAJ:_FxGoFyzp5QC"
+      "url": "https://doi.org/10.6113/TKPE.2025.30.4.340"
     },
     {
       "title": "MMC 기반 직류철도 급전시스템 모델링 연구",
@@ -72,7 +72,7 @@
       "highlight": "김민승",
       "venue": "전력전자학회논문지",
       "date": "2024.10.",
-      "url": "https://scholar.google.com/citations?view_op=view_citation&hl=en&user=jCp59vcAAAAJ&citation_for_view=jCp59vcAAAAJ:W7OEmFMy1HYC"
+      "url": "https://doi.org/10.6113/TKPE.2024.29.5.345"
     }
   ]
 }

@@ -1,12 +1,28 @@
 {
   "international": [
     {
+      "title": "Neural-Network-Assisted Multi-Objective Optimization of High-Frequency Transformers",
+      "authors": "Minseung Kim, Joon H. Jeon, and Eun S. Lee",
+      "highlight": "Minseung Kim",
+      "venue": "2026 Energy Conversion Congress & Expo Europe (ECCE Europe)",
+      "date": "2026.09.",
+      "url": "https://doi.org/10.1109/ECCEEurope67962.2026.11737751"
+    },
+    {
+      "title": "Compact Filter Design of Electrosurgical Generators for Stable Tissue Cutting Under Wide Load Variations",
+      "authors": "Minseob Lee, Junho Heo, Seonho Kim, Minseung Kim, Hyoungchul Shin, Changok Kim, and Eun S. Lee",
+      "highlight": "Minseung Kim",
+      "venue": "2026 Energy Conversion Congress & Expo Europe (ECCE Europe)",
+      "date": "2026.09.",
+      "url": "https://doi.org/10.1109/ECCEEurope67962.2026.11737849"
+    },
+    {
       "title": "Optimal Design of Planar Transformers for DAB Converters Based on Model-Free Reinforcement Learning",
       "authors": "Minseung Kim, and Eun S. Lee",
       "highlight": "Minseung Kim",
       "venue": "20th IEEE Energy Conversion Congress & Expo (ECCE ASIA 2025)",
       "date": "2025.05.",
-      "url": "https://scholar.google.com/citations?view_op=view_citation&hl=en&user=jCp59vcAAAAJ&citation_for_view=jCp59vcAAAAJ:ufrVoPGSRksC"
+      "url": "https://doi.org/10.1109/ECCE-Asia63110.2025.11112328"
     },
     {
       "title": "Islanding Detection Method for Grid-Forming Inverter by Reactive Power Injection",
@@ -14,10 +30,26 @@
       "highlight": "Minseung Kim",
       "venue": "20th International Conference on AC and DC Power Transmission (ACDC 2024)",
       "date": "2024.07.",
-      "url": "https://scholar.google.com/citations?view_op=view_citation&hl=en&user=jCp59vcAAAAJ&citation_for_view=jCp59vcAAAAJ:2osOgNQ5qMEC"
+      "url": "https://doi.org/10.1049/icp.2024.2407"
     }
   ],
   "domestic": [
+    {
+      "title": "인공신경망 대리모델 기반 CLLC 컨버터용 고주파 변압기 다목적 최적 설계 연구",
+      "authors": "김민승, 전준혁, 권혁진, 이은수",
+      "highlight": "김민승",
+      "venue": "전력전자학회 2026년도 전력전자학술대회",
+      "date": "2026.07.",
+      "url": "https://www.dbpia.co.kr/journal/articleDetail?nodeId=NODE12948461"
+    },
+    {
+      "title": "위상 동기화 동기 정류기의 임피던스 변환을 이용한 무선전력전송 수신기 출력 전력 제어 연구",
+      "authors": "김민승, 오준영, 이은수",
+      "highlight": "김민승",
+      "venue": "2026년도 대한전기학회 하계학술대회",
+      "date": "2026.07.",
+      "url": "https://www.dbpia.co.kr/journal/articleDetail?nodeId=NODE12939082"
+    },
     {
       "title": "비정방 2D 루프코일 기반 3D 독립 자기장 집속 머신러닝 알고리즘 연구",
       "authors": "김민승, 이은수",
@@ -80,7 +112,7 @@
       "highlight": "김민승",
       "venue": "대한전기학회 추계학술대회",
       "date": "2023.10.",
-      "url": "https://scholar.google.com/citations?view_op=view_citation&hl=en&user=jCp59vcAAAAJ&citation_for_view=jCp59vcAAAAJ:zYLM7Y9cAGgC"
+      "url": "https://www.dbpia.co.kr/journal/articleDetail?nodeId=NODE11610865"
     },
     {
       "title": "고장전류 고속 차단을 위한 모듈러 멀티레벨 컨버터 기반의 출력 커패시터 용량 최소화 연구",
