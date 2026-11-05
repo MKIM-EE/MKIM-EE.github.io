@@ -474,8 +474,10 @@
             fetch('../data/journals.json').then(r => r.json()),
             fetch('../data/conferences.json').then(r => r.json()),
             fetch('../data/patents.json').then(r => r.json()),
-        ]).then(([profile, journals, conferences, patents]) => {
+            fetch('../data/scholar.json').then(r => r.json()).catch(() => null),
+        ]).then(([profile, journals, conferences, patents, scholar]) => {
             cvData = { profile, journals, conferences, patents };
+            window.scholarData = scholar;
             updateToggleUI();
             renderCV(profile, journals, conferences, patents, cvMode);
         });
@@ -599,7 +601,9 @@
                     <div class="cv-title-line">${profile.title} · ${profile.affiliation}</div>
                     <div class="cv-contact">
                         <span>${profile.email}</span>
-                        ${linksHtml}
+                        ${window.scholarData
+                            ? `<span>${window.scholarData.citations} citations · h-index ${window.scholarData.h_index} · i10-index ${window.scholarData.i10_index}</span>`
+                            : linksHtml}
                     </div>
                 </div>
 

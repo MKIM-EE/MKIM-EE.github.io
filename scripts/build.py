@@ -124,6 +124,15 @@ def projects(items):
     )
 
 
+def scholar_stats(sc):
+    cells = "".join(
+        f'<div class="scholar-stat"><span class="scholar-num">{sc[k]}</span>'
+        f'<span class="scholar-label">{label}</span></div>'
+        for k, label in (("citations", "Citations"), ("h_index", "h-index"), ("i10_index", "i10-index")))
+    return (f'<a class="scholar-stats" href="{esc(sc["url"])}" target="_blank" rel="noopener noreferrer" '
+            f'title="Google Scholar, updated {esc(sc["updated"])}">{cells}</a>')
+
+
 # ---------- marker replacement ----------
 def fill(path, blocks):
     p = ROOT / path
@@ -148,6 +157,7 @@ def main():
         "affiliation": esc(prof["affiliation"]),
         "email": esc(prof["email"]),
         "interests": "<strong>Research Interests:</strong> " + esc(", ".join(prof["research_interests"])),
+        "scholar": scholar_stats(load("scholar.json")),
         "links": "".join(
             f'<a href="{esc(l["url"])}" class="profile-link" target="_blank" rel="noopener noreferrer">{esc(l["label"])}</a>'
             for l in prof["links"]),
